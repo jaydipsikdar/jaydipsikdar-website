@@ -8,8 +8,17 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      // Brand colors, fonts, and spacing will be added here
-      // once visual design decisions are confirmed
+      colors: {
+        brand: {
+          bg: '#FAF7F2',
+          text: '#1A1A1A',
+          accent: '#E8450A',
+        },
+      },
+      fontFamily: {
+        sans: ['var(--font-inter)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        serif: ['var(--font-playfair)', 'ui-serif', 'Georgia', 'serif'],
+      },
     },
   },
   plugins: [],

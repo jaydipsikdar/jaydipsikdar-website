@@ -20,7 +20,7 @@ export default function AboutPage() {
       </div>
 
       {/* Long bio — FINAL, locked 2026-06-19, Variation A ~155 words */}
-      <div className="prose prose-gray max-w-none space-y-5 text-gray-700 text-lg leading-relaxed">
+      <div className="prose prose-gray max-w-none space-y-5 text-brand-text text-lg leading-relaxed">
         <p>
           Jaydip Sikdar is a Fractional CMO and B2B marketing leader with over 20 years of experience at companies including IBM and Adobe, and five years in Customer Success at Adobe and MoEngage, where he worked closely with 200+ CMOs to solve their growth, engagement, and retention problems.
         </p>
