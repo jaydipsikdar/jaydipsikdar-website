@@ -1,3 +1,5 @@
+import MailerLiteForm from '@/components/MailerLiteForm'
+
 export default function HomePage() {
   return (
     <main>
@@ -17,14 +19,7 @@ export default function HomePage() {
           I help early-stage startup founders build that engine — from positioning and go-to-market to demand generation and customer advocacy. I&apos;ve worked closely with 200+ CMOs to solve exactly these problems. I know what breaks and I know what works.
         </p>
 
-        {/* TODO: Replace this placeholder with the MailerLite embed form.
-            Form must: capture email, tag subscriber, trigger PDF auto-delivery of CMO Boardroom Kit.
-            MailerLite embed code goes here. */}
-        <div className="border-2 border-dashed border-gray-300 rounded p-6 mb-4 text-center text-gray-400">
-          [ MailerLite email capture form — CMO Boardroom Kit ]
-          <br />
-          <span className="text-sm">Primary CTA: &ldquo;Start with the CMO Boardroom Kit — free →&rdquo;</span>
-        </div>
+        <MailerLiteForm />
 
         {/* Secondary CTA */}
         <p className="text-sm text-gray-500 text-center">
