@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import MailerLiteForm from '@/components/MailerLiteForm'
 
 export default function HomePage() {
@@ -139,7 +138,8 @@ export default function HomePage() {
           <h2 className="text-2xl font-semibold text-center mb-6">The Marketing Couch Podcast</h2>
 
           <div className="flex justify-center mb-8">
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src="/images/marketing-couch-cover.jpg"
               alt="The Marketing Couch Podcast"
               width={320}
