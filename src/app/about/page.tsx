@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 
 export const metadata: Metadata = {
   title: 'About — Jaydip Sikdar',
@@ -11,13 +12,14 @@ export default function AboutPage() {
     <main className="px-6 py-20 max-w-2xl mx-auto">
       <h1 className="text-3xl font-bold mb-10">About</h1>
 
-      {/* ============================================================
-          PHOTO PLACEHOLDER
-          TODO: Add professional photo to 02-assets/photo/ and reference here
-          ============================================================ */}
-      <div className="border-2 border-dashed border-gray-300 rounded mb-10 h-48 flex items-center justify-center text-gray-400 text-sm">
-        [ Professional photo — placeholder ]
-      </div>
+      <Image
+        src="/images/jaydip-sikdar.png"
+        alt="Jaydip Sikdar"
+        width={200}
+        height={200}
+        className="rounded-lg mb-10"
+        priority
+      />
 
       {/* Long bio — FINAL, locked 2026-06-19, Variation A ~155 words */}
       <div className="prose prose-gray max-w-none space-y-5 text-brand-text text-lg leading-relaxed">

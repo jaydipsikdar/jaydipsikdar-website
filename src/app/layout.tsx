@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
 import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 import './globals.css'
 
 const inter = Inter({
@@ -70,9 +71,10 @@ export default function RootLayout({
          * </Script>
          */}
       </head>
-      <body className="bg-brand-bg text-brand-text font-sans antialiased">
+      <body className="bg-brand-bg text-brand-text font-sans antialiased flex flex-col min-h-screen">
         <Navbar />
-        {children}
+        <div className="flex-1">{children}</div>
+        <Footer />
       </body>
     </html>
   )
