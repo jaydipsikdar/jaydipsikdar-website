@@ -37,13 +37,6 @@ export default function AboutPage() {
         </p>
       </div>
 
-      {/* ============================================================
-          SPEAKING / MEDIA / PUBLICATIONS
-          TODO: Add once asset checklist is complete
-          ============================================================ */}
-      <div className="mt-12 border-t border-gray-100 pt-10 text-gray-400 text-sm text-center">
-        [ Speaking, media, and publications — placeholder ]
-      </div>
     </main>
   )
 }

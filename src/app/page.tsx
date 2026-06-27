@@ -99,8 +99,8 @@ export default function HomePage() {
             think like one.
           </p>
 
-          {/* Card grid — built to scale to 3 columns */}
-          <div className="grid grid-cols-1 md:grid-cols-3 justify-items-center">
+          {/* Card grid — built to scale to 3 columns. flex justify-center for single card. */}
+          <div className="flex justify-center">
             <div className="border border-gray-200 rounded-lg p-6 w-full max-w-sm">
               <h3 className="text-base font-semibold mb-3">CMO Boardroom Kit</h3>
               <p className="text-brand-text text-sm leading-relaxed mb-6">
@@ -135,7 +135,16 @@ export default function HomePage() {
           ============================================================ */}
       <section id="podcast" className="px-6 py-16 border-t border-gray-200">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-2xl font-semibold text-center mb-6">The Marketing Couch</h2>
+          <h2 className="text-2xl font-semibold text-center mb-6">The Marketing Couch Podcast</h2>
+
+          {/* TODO: Replace with actual cover art — add file to public/images/ and swap src */}
+          <div className="flex justify-center mb-8">
+            <div className="w-32 h-32 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center text-gray-400 text-xs text-center">
+              Cover art
+              <br />placeholder
+            </div>
+          </div>
+
           <p className="text-brand-text leading-relaxed mb-8">
             A podcast about marketing strategy, leadership, and what actually works in B2B — hosted
             by someone who&apos;s been in the room for most of it. Season 1 is live: 21 episodes,
