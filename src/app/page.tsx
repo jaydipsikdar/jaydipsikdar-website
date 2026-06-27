@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import MailerLiteForm from '@/components/MailerLiteForm'
 
 export default function HomePage() {
@@ -137,12 +138,14 @@ export default function HomePage() {
         <div className="max-w-3xl mx-auto">
           <h2 className="text-2xl font-semibold text-center mb-6">The Marketing Couch Podcast</h2>
 
-          {/* TODO: Replace with actual cover art — add file to public/images/ and swap src */}
           <div className="flex justify-center mb-8">
-            <div className="w-32 h-32 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center text-gray-400 text-xs text-center">
-              Cover art
-              <br />placeholder
-            </div>
+            <Image
+              src="/images/marketing-couch-cover.jpg"
+              alt="The Marketing Couch Podcast"
+              width={320}
+              height={180}
+              className="rounded-lg"
+            />
           </div>
 
           <p className="text-brand-text leading-relaxed mb-8">
