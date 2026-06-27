@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
+import Navbar from '@/components/Navbar'
 import './globals.css'
 
 const inter = Inter({
@@ -70,6 +71,7 @@ export default function RootLayout({
          */}
       </head>
       <body className="bg-brand-bg text-brand-text font-sans antialiased">
+        <Navbar />
         {children}
       </body>
     </html>
