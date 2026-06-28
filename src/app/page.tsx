@@ -148,7 +148,7 @@ export default function HomePage() {
             />
           </div>
 
-          <p className="text-brand-text leading-relaxed mb-8">
+          <p className="text-brand-text leading-relaxed mb-8 text-center">
             A podcast about marketing strategy, leadership, and what actually works in B2B — hosted
             by someone who&apos;s been in the room for most of it. Season 1 is live: 21 episodes,
             real conversations, no filler.
