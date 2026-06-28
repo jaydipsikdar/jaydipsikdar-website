@@ -29,15 +29,6 @@ export default function ContactPage() {
         </a>
       </div>
 
-      {/* ============================================================
-          CONTACT FORM (optional)
-          TODO: Decide whether to add a simple contact form for non-booking
-          enquiries. If yes, a serverless function (Vercel) or a third-party
-          form service (e.g., Formspree) can handle the submission.
-          ============================================================ */}
-      <div className="border-t border-gray-100 pt-10 text-gray-400 text-sm text-center">
-        [ Optional contact form — placeholder ]
-      </div>
     </main>
   )
 }
