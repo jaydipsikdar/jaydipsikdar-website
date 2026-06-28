@@ -18,12 +18,18 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: 'Jaydip Sikdar — Fractional CMO & B2B Marketing Consultant',
+  title: 'Jaydip Sikdar: CMO & B2B Marketing Strategist',
   description:
     'Jaydip Sikdar is a Fractional CMO and B2B marketing consultant with 20+ years of experience at IBM, Adobe, and MoEngage. He helps early-stage startup founders build their marketing engine.',
   metadataBase: new URL('https://jaydipsikdar.com'),
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/favicon.png', type: 'image/png' },
+    ],
+  },
   openGraph: {
-    title: 'Jaydip Sikdar — Fractional CMO & B2B Marketing Consultant',
+    title: 'Jaydip Sikdar: CMO & B2B Marketing Strategist',
     description:
       'Jaydip Sikdar helps early-stage startup founders build their marketing engine — from positioning and go-to-market to demand generation and customer advocacy.',
     url: 'https://jaydipsikdar.com',
@@ -33,7 +39,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Jaydip Sikdar — Fractional CMO & B2B Marketing Consultant',
+    title: 'Jaydip Sikdar: CMO & B2B Marketing Strategist',
     description:
       'Fractional CMO. 20+ years at IBM, Adobe, MoEngage. Helping startup founders build their marketing engine.',
   },
