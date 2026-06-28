@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
+import Script from 'next/script'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import './globals.css'
@@ -46,30 +47,19 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <head>
-        {/*
-         * GA4 — Google Analytics 4
-         * Add the two <Script> tags here once you have the Measurement ID.
-         * Steps:
-         *   1. Go to analytics.google.com (use unstoppable.club Workspace login)
-         *   2. Create account → property (jaydipsikdar.com) → web data stream
-         *   3. Copy the Measurement ID (format: G-XXXXXXXXXX)
-         *   4. Replace GA_MEASUREMENT_ID below and uncomment both Script tags
-         *
-         * import Script from 'next/script'
-         *
-         * <Script
-         *   src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"
-         *   strategy="afterInteractive"
-         * />
-         * <Script id="ga4-init" strategy="afterInteractive">
-         *   {`
-         *     window.dataLayer = window.dataLayer || [];
-         *     function gtag(){dataLayer.push(arguments);}
-         *     gtag('js', new Date());
-         *     gtag('config', 'GA_MEASUREMENT_ID');
-         *   `}
-         * </Script>
-         */}
+        {/* GA4 — Google Analytics 4 — Measurement ID: G-P9T14EF2G5 */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-P9T14EF2G5"
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-P9T14EF2G5');
+          `}
+        </Script>
       </head>
       <body className="bg-brand-bg text-brand-text font-sans antialiased flex flex-col min-h-screen">
         <Navbar />
