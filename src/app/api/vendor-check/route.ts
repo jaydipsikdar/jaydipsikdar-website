@@ -110,40 +110,42 @@ When scoring, check whether the sum of your five parameter scores actually equal
 - The vendor type selected by the user. Only "Lead generation / demand generation agency" contracts are fully tuned for this framework. If the vendor type is anything else, still apply the same five-parameter framework as your best approximation, but your response must include a "vendorTypeDisclaimer" field noting the assessment is directional only, since the framework is built specifically for lead generation engagements.
 - What's most at stake for the user, and what stage of the process they're in. Use these only to lightly calibrate tone/emphasis in your reasoning (e.g., someone "already signed" needs renegotiation framing, not "before you sign" framing) — do not change the scoring methodology based on these.
 
-CRITICAL: Your response must be valid JSON. Escape all special characters inside string values — especially double quotes (\"), backslashes (\\), newlines (\n), and tabs (\t). Do not use unescaped line breaks inside string values.
-
-## Output format
-Respond with ONLY valid JSON, no markdown fences, no commentary, matching this exact shape:
-
-{
-  "overallScore": <integer 0-100, sum of the five parameter scores>,
-  "riskLevel": "Strong" | "Moderate" | "Weak" | "High Risk",
-  "verdict": "<one sentence, direct, e.g. 'This contract materially favours the vendor; multiple critical protections are missing or too weak to enforce.'>",
-  "vendorTypeDisclaimer": "<string, or null if vendor type is lead generation>",
-  "parameters": [
-    {
-      "name": "Deliverable Clarity",
-      "score": <integer 0-20>,
-      "whatItSays": "<2-4 sentence factual summary of what THIS contract actually says on this parameter>",
-      "whyItMatters": "<2-4 sentence explanation of the practical risk to the buyer>",
-      "whatToPropose": "<2-4 sentence specific renegotiation language/clause the buyer should propose instead>",
-      "redFlags": "<comma-separated list of specific concerning phrases or absences found in the contract for this parameter, e.g. 'sole discretion of vendor', 'no definition of qualified lead', 'auto-renewal at 45 days notice'>"
-    },
-    { "name": "Performance Accountability", ... same shape ... },
-    { "name": "Data Ownership", ... same shape ... },
-    { "name": "Exit Terms", ... same shape ... },
-    { "name": "Payment vs. Delivery Alignment", ... same shape ... }
-  ],
-  "topPriorities": [
-    "<highest-impact fix, 1-2 sentences, tied to the lowest-scoring parameter(s)>",
-    "<second priority>",
-    "<third priority>"
-  ]
-}
+Use the submit_evaluation tool to return your assessment.
 
 Ground every "whatItSays" in the actual contract text provided — do not invent clauses that aren't there. If a clause is simply absent, say so explicitly (e.g., "The contract does not mention data ownership at all").
 
 When a parameter's clause is completely absent from the contract, score it 0-5 and state clearly that the contract is silent on this area. Do not award mid-range scores for absent protections — silence is not neutrality, it defaults to the vendor's advantage. A score of 10+ on any parameter requires an explicit, written clause that at least partially addresses the criteria.`
+
+const vendorCheckTool = {
+  name: 'submit_evaluation',
+  description: 'Submit the completed vendor contract evaluation with scores and analysis',
+  input_schema: {
+    type: 'object' as const,
+    required: ['overallScore', 'riskLevel', 'verdict', 'parameters', 'topPriorities'],
+    properties: {
+      overallScore: { type: 'integer', description: 'Total score 0-100, sum of all five parameter scores' },
+      riskLevel: { type: 'string', enum: ['Strong', 'Moderate', 'Weak', 'High Risk'] },
+      verdict: { type: 'string', description: 'One sentence summary of the contract fairness' },
+      vendorTypeDisclaimer: { type: 'string', description: 'Disclaimer for non-lead-gen contracts, or null', nullable: true },
+      parameters: {
+        type: 'array',
+        items: {
+          type: 'object',
+          required: ['name', 'score', 'whatItSays', 'whyItMatters', 'whatToPropose', 'redFlags'],
+          properties: {
+            name: { type: 'string' },
+            score: { type: 'integer' },
+            whatItSays: { type: 'string' },
+            whyItMatters: { type: 'string' },
+            whatToPropose: { type: 'string' },
+            redFlags: { type: 'string' },
+          },
+        },
+      },
+      topPriorities: { type: 'array', items: { type: 'string' } },
+    },
+  },
+}
 
 function buildUserMessage(body: VendorCheckRequestBody): string {
   return `VENDOR TYPE: ${body.vendorType}
@@ -189,57 +191,28 @@ export async function POST(request: Request) {
 
   const anthropic = new Anthropic({ apiKey })
 
-  let raw: string
+  let parsed: unknown
   try {
     const message = await anthropic.messages.create({
       model: 'claude-sonnet-4-6',
       max_tokens: 16384,
       system: SYSTEM_PROMPT,
       messages: [{ role: 'user', content: buildUserMessage(body) }],
+      tools: [vendorCheckTool],
+      tool_choice: { type: 'tool', name: 'submit_evaluation' },
     })
 
     console.log('[vendor-check] Response content types:', message.content.map((b) => b.type))
 
-    // Use the LAST text block, not the first. Sonnet 5's adaptive thinking can
-    // emit thinking/other blocks before the final text block, and .find() would
-    // otherwise grab an early (possibly non-final) block instead of the actual
-    // JSON response.
-    const textBlocks = message.content.filter((block) => block.type === 'text')
-    const textBlock = textBlocks[textBlocks.length - 1]
-    if (!textBlock) {
-      throw new Error('No text content in Claude response')
+    const toolBlock = message.content.find((block) => block.type === 'tool_use')
+    if (!toolBlock || toolBlock.type !== 'tool_use') {
+      console.error('[vendor-check] No tool_use block in response:', message.content.map((b) => b.type))
+      return NextResponse.json({ error: 'Evaluation failed. Please try again.' }, { status: 502 })
     }
-    raw = textBlock.text
+    parsed = toolBlock.input
   } catch (err) {
     console.error('[vendor-check] Anthropic API error:', err)
     return NextResponse.json({ error: 'Evaluation failed. Please try again.' }, { status: 502 })
-  }
-
-  // Strip markdown fences
-  const cleaned = raw.trim()
-    .replace(/^```json\s*/i, '')
-    .replace(/^```\s*/i, '')
-    .replace(/```\s*$/i, '')
-
-  // Attempt to parse, with multiple repair strategies
-  let parsed: unknown
-  const parseAttempts = [
-    () => JSON.parse(cleaned),
-    () => JSON.parse(cleaned.replace(/[\n\r]/g, ' ')),
-    () => JSON.parse(cleaned.replace(/[\n\r\t]/g, ' ').replace(/\s{2,}/g, ' ')),
-  ]
-  let lastErr: unknown
-  for (const attempt of parseAttempts) {
-    try {
-      parsed = attempt()
-      break
-    } catch (err) {
-      lastErr = err
-    }
-  }
-  if (!parsed) {
-    console.error('[vendor-check] Failed to parse Claude response after all repair attempts:', lastErr, cleaned.slice(0, 1000))
-    return NextResponse.json({ error: 'Evaluation returned an unreadable result. Please try again.' }, { status: 502 })
   }
 
   const result = parsed as {
