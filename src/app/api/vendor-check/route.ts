@@ -110,6 +110,8 @@ When scoring, check whether the sum of your five parameter scores actually equal
 - The vendor type selected by the user. Only "Lead generation / demand generation agency" contracts are fully tuned for this framework. If the vendor type is anything else, still apply the same five-parameter framework as your best approximation, but your response must include a "vendorTypeDisclaimer" field noting the assessment is directional only, since the framework is built specifically for lead generation engagements.
 - What's most at stake for the user, and what stage of the process they're in. Use these only to lightly calibrate tone/emphasis in your reasoning (e.g., someone "already signed" needs renegotiation framing, not "before you sign" framing) — do not change the scoring methodology based on these.
 
+CRITICAL: Your response must be valid JSON. Escape all special characters inside string values — especially double quotes (\"), backslashes (\\), newlines (\n), and tabs (\t). Do not use unescaped line breaks inside string values.
+
 ## Output format
 Respond with ONLY valid JSON, no markdown fences, no commentary, matching this exact shape:
 
@@ -211,14 +213,21 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Evaluation failed. Please try again.' }, { status: 502 })
   }
 
+  // Claude is instructed to return raw JSON, but strip markdown fences defensively.
+  const cleaned = raw.trim().replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '')
+
   let parsed: unknown
   try {
-    // Claude is instructed to return raw JSON, but strip markdown fences defensively.
-    const cleaned = raw.trim().replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '')
     parsed = JSON.parse(cleaned)
-  } catch (err) {
-    console.error('[vendor-check] Failed to parse Claude response as JSON:', err, raw)
-    return NextResponse.json({ error: 'Evaluation returned an unreadable result. Please try again.' }, { status: 502 })
+  } catch (firstErr) {
+    // Attempt to repair: replace literal newlines inside strings with \n
+    const repaired = cleaned.replace(/(?<=":[ ]*"[^"]*)\n/g, '\\n')
+    try {
+      parsed = JSON.parse(repaired)
+    } catch (secondErr) {
+      console.error('[vendor-check] Failed to parse even after repair:', secondErr, cleaned.slice(0, 500))
+      return NextResponse.json({ error: 'Evaluation returned an unreadable result. Please try again.' }, { status: 502 })
+    }
   }
 
   const result = parsed as {
