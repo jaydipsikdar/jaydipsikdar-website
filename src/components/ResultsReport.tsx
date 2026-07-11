@@ -40,9 +40,11 @@ function priorityHeading(processStage?: string): string {
 export default function ResultsReport({
   result,
   processStage,
+  emailAlreadyCaptured,
 }: {
   result: VendorCheckResult
   processStage?: string
+  emailAlreadyCaptured?: boolean
 }) {
   const colorClass = scoreColorClass(result.overallScore)
 
@@ -125,9 +127,11 @@ export default function ResultsReport({
         </a>
       </div>
 
-      <div className="border-t border-gray-200 pt-8">
-        <VendorCheckDeliveryForm />
-      </div>
+      {!emailAlreadyCaptured && (
+        <div className="border-t border-gray-200 pt-8">
+          <VendorCheckDeliveryForm />
+        </div>
+      )}
     </div>
   )
 }
