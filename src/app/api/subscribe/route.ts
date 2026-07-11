@@ -71,3 +71,4 @@ export async function POST(request: Request) {
   console.log('[subscribe] Success:', res.status, responseBody)
   return NextResponse.json({ success: true })
 }
+
