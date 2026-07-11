@@ -198,6 +198,8 @@ export async function POST(request: Request) {
       messages: [{ role: 'user', content: buildUserMessage(body) }],
     })
 
+    console.log('[vendor-check] Response content types:', message.content.map((b) => b.type))
+
     // Use the LAST text block, not the first. Sonnet 5's adaptive thinking can
     // emit thinking/other blocks before the final text block, and .find() would
     // otherwise grab an early (possibly non-final) block instead of the actual
