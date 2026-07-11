@@ -192,7 +192,7 @@ export async function POST(request: Request) {
   let raw: string
   try {
     const message = await anthropic.messages.create({
-      model: 'claude-sonnet-5',
+      model: 'claude-sonnet-4-6',
       max_tokens: 16384,
       system: SYSTEM_PROMPT,
       messages: [{ role: 'user', content: buildUserMessage(body) }],
@@ -215,21 +215,31 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Evaluation failed. Please try again.' }, { status: 502 })
   }
 
-  // Claude is instructed to return raw JSON, but strip markdown fences defensively.
-  const cleaned = raw.trim().replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '')
+  // Strip markdown fences
+  const cleaned = raw.trim()
+    .replace(/^```json\s*/i, '')
+    .replace(/^```\s*/i, '')
+    .replace(/```\s*$/i, '')
 
+  // Attempt to parse, with multiple repair strategies
   let parsed: unknown
-  try {
-    parsed = JSON.parse(cleaned)
-  } catch (firstErr) {
-    // Attempt to repair: replace literal newlines inside strings with \n
-    const repaired = cleaned.replace(/(?<=":[ ]*"[^"]*)\n/g, '\\n')
+  const parseAttempts = [
+    () => JSON.parse(cleaned),
+    () => JSON.parse(cleaned.replace(/[\n\r]/g, ' ')),
+    () => JSON.parse(cleaned.replace(/[\n\r\t]/g, ' ').replace(/\s{2,}/g, ' ')),
+  ]
+  let lastErr: unknown
+  for (const attempt of parseAttempts) {
     try {
-      parsed = JSON.parse(repaired)
-    } catch (secondErr) {
-      console.error('[vendor-check] Failed to parse even after repair:', secondErr, cleaned.slice(0, 500))
-      return NextResponse.json({ error: 'Evaluation returned an unreadable result. Please try again.' }, { status: 502 })
+      parsed = attempt()
+      break
+    } catch (err) {
+      lastErr = err
     }
+  }
+  if (!parsed) {
+    console.error('[vendor-check] Failed to parse Claude response after all repair attempts:', lastErr, cleaned.slice(0, 1000))
+    return NextResponse.json({ error: 'Evaluation returned an unreadable result. Please try again.' }, { status: 502 })
   }
 
   const result = parsed as {
