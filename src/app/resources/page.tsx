@@ -63,10 +63,6 @@ export default function ResourcesPage() {
 
       </div>
 
-      <p className="text-center text-sm text-brand-text italic">
-        New tools dropping in July 2026 — get on the list above to hear first.
-      </p>
-
     </main>
   )
 }
