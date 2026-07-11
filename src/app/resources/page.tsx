@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function ResourcesPage() {
   return (
-    <main className="px-6 py-20 max-w-3xl mx-auto">
+    <main className="px-6 py-20 max-w-5xl mx-auto">
 
       <h1 className="text-3xl font-bold text-center mb-4">Resources</h1>
       <p className="text-center text-brand-text mb-12 max-w-lg mx-auto">
@@ -17,12 +17,12 @@ export default function ResourcesPage() {
         think like one.
       </p>
 
-      {/* Card grid — built to scale to 3 columns. Single card for v1. */}
-      <div className="flex justify-center mb-8">
-        <div className="border border-gray-200 rounded-lg p-8 w-full max-w-2xl">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+      {/* Card grid — two columns, proportional sizing, same visual treatment as before. */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 items-stretch">
 
-            {/* Left — title, description, value prop */}
+        {/* CMO Boardroom Kit */}
+        <div className="border border-gray-200 rounded-lg p-8 flex flex-col">
+          <div className="grid grid-cols-1 gap-6 flex-1">
             <div>
               <h2 className="text-lg font-semibold mb-3">CMO Boardroom Kit</h2>
               <p className="text-brand-text text-sm leading-relaxed mb-4">
@@ -33,14 +33,34 @@ export default function ResourcesPage() {
                 21 CMO conversations distilled into one decision framework. Free.
               </p>
             </div>
-
-            {/* Right — custom signup form */}
-            <div className="flex flex-col justify-center">
+            <div className="flex flex-col justify-end">
               <KitSignupForm />
             </div>
-
           </div>
         </div>
+
+        {/* Vendor Contract Check */}
+        <div className="border border-gray-200 rounded-lg p-8 flex flex-col">
+          <div className="grid grid-cols-1 gap-6 flex-1">
+            <div>
+              <h2 className="text-lg font-semibold mb-3">Vendor Contract Check</h2>
+              <p className="text-brand-text text-sm leading-relaxed mb-4">
+                I paid three months of retainer to a lead gen agency that delivered nothing —
+                because I didn&apos;t catch what their contract let them get away with. This tool
+                reads your vendor contract the way I wish I&apos;d read mine.
+              </p>
+            </div>
+            <div className="flex flex-col justify-end">
+              <a
+                href="/resources/vendor-check"
+                className="w-full text-center px-4 py-2.5 bg-brand-accent text-white text-sm font-medium rounded hover:opacity-90 transition-opacity"
+              >
+                Check your contract →
+              </a>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <p className="text-center text-sm text-brand-text italic">
