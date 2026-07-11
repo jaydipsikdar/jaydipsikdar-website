@@ -7,7 +7,7 @@ const KIT_GROUP_ID = '191412705135953404'
 // Vendor Contract Check — new group, created manually in MailerLite.
 // TODO: replace with the real group ID once it exists, then update
 // VendorCheckDeliveryForm.tsx to stop passing an explicit id (optional).
-const VENDOR_CHECK_GROUP_ID = 'REPLACE_WITH_VENDOR_CHECK_GROUP_ID'
+const VENDOR_CHECK_GROUP_ID = '192702998964602139'
 
 export async function POST(request: Request) {
   let email: string
