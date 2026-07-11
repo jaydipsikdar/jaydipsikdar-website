@@ -191,13 +191,18 @@ export async function POST(request: Request) {
   try {
     const message = await anthropic.messages.create({
       model: 'claude-sonnet-5',
-      max_tokens: 4096,
+      max_tokens: 16384,
       system: SYSTEM_PROMPT,
       messages: [{ role: 'user', content: buildUserMessage(body) }],
     })
 
-    const textBlock = message.content.find((block) => block.type === 'text')
-    if (!textBlock || textBlock.type !== 'text') {
+    // Use the LAST text block, not the first. Sonnet 5's adaptive thinking can
+    // emit thinking/other blocks before the final text block, and .find() would
+    // otherwise grab an early (possibly non-final) block instead of the actual
+    // JSON response.
+    const textBlocks = message.content.filter((block) => block.type === 'text')
+    const textBlock = textBlocks[textBlocks.length - 1]
+    if (!textBlock) {
       throw new Error('No text content in Claude response')
     }
     raw = textBlock.text
