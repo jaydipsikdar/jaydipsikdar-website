@@ -16,6 +16,7 @@ const SAMPLE_PARAMETERS = [
       'Without a precise, mutually agreed definition of a qualified lead, you have no contractual basis to dispute delivery. A range instead of a fixed number gives the vendor a built-in cushion to underdeliver by up to 25% while remaining technically compliant.',
     whatToPropose:
       'Add a Qualified Lead Definition clause specifying ICP fit, a relevant use case, and demonstrated purchase intent. Name your designated Sales Lead as the sign-off authority. Replace the range with a fixed quarterly target.',
+    redFlags: ['No definition of "qualified lead"'],
   },
   {
     name: 'Performance Accountability',
@@ -26,6 +27,7 @@ const SAMPLE_PARAMETERS = [
       'Fifteen days of additional service is not a meaningful consequence — you keep paying full retainer with no leverage tied to actual delivery.',
     whatToPropose:
       'Hold the final month’s payment until the quarterly target is achieved. Introduce a 30-day remediation period (15+15) at no additional cost, with pro-rata release if the target remains unmet.',
+    redFlags: ['15-day remedy — not real accountability'],
   },
   {
     name: 'Data Ownership',
@@ -36,6 +38,7 @@ const SAMPLE_PARAMETERS = [
       'If the engagement ends, you risk losing every contact researched and every response logged — all of which you paid for.',
     whatToPropose:
       'Add an explicit Campaign Data Ownership clause listing everything the client retains, in CRM-ready export format, plus an Exit Deliverables clause with a defined handover timeline.',
+    redFlags: ['No CRM-exportable data guaranteed'],
   },
   {
     name: 'Exit Terms',
@@ -46,6 +49,7 @@ const SAMPLE_PARAMETERS = [
       'The "sole discretion" clause gives the vendor an unchecked exit option — they can walk away without consequence while you’ve paid for a full quarter with partial delivery.',
     whatToPropose:
       'Replace "sole discretion" with "mutual agreement" supported by data. Add a performance-linked exit option with pro-rata refund if targets are missed by more than 30%.',
+    redFlags: ['Vendor "sole discretion" exit clause'],
     // This is the highest-scoring parameter in the sample (still below the real
     // 16+ threshold for a green flag), included here only to demonstrate the
     // green-flag pattern on the landing page preview.
@@ -60,6 +64,7 @@ const SAMPLE_PARAMETERS = [
       'You’re fully paid up before the vendor has delivered anything each month — there’s no financial incentive for them to perform.',
     whatToPropose:
       'Restructure payment as 70% in advance / 30% held back until quarterly verification. Reduce auto-renewal notice to 30 days, or shift to opt-in renewal.',
+    redFlags: ['Full retainer paid before delivery'],
   },
 ]
 
@@ -89,6 +94,19 @@ export default function SampleReportPreview() {
               <h4 className="text-sm font-semibold">{param.name}</h4>
               <span className="text-sm font-medium text-brand-accent">{param.score} / 20</span>
             </div>
+
+            {'redFlags' in param && param.redFlags && param.redFlags.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-2">
+                {param.redFlags.map((flag, i) => (
+                  <span
+                    key={i}
+                    className="px-3 py-1 bg-red-50 text-red-700 text-sm rounded-full"
+                  >
+                    {flag}
+                  </span>
+                ))}
+              </div>
+            )}
 
             {'greenFlags' in param && param.greenFlags && param.greenFlags.length > 0 && (
               <div className="flex flex-wrap gap-2 mb-3">
