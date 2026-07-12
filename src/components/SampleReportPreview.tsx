@@ -46,6 +46,10 @@ const SAMPLE_PARAMETERS = [
       'The "sole discretion" clause gives the vendor an unchecked exit option — they can walk away without consequence while you’ve paid for a full quarter with partial delivery.',
     whatToPropose:
       'Replace "sole discretion" with "mutual agreement" supported by data. Add a performance-linked exit option with pro-rata refund if targets are missed by more than 30%.',
+    // This is the highest-scoring parameter in the sample (still below the real
+    // 16+ threshold for a green flag), included here only to demonstrate the
+    // green-flag pattern on the landing page preview.
+    greenFlags: ['30-day notice period — standard and fair'],
   },
   {
     name: 'Payment vs. Delivery Alignment',
@@ -85,6 +89,20 @@ export default function SampleReportPreview() {
               <h4 className="text-sm font-semibold">{param.name}</h4>
               <span className="text-sm font-medium text-brand-accent">{param.score} / 20</span>
             </div>
+
+            {'greenFlags' in param && param.greenFlags && param.greenFlags.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-3">
+                {param.greenFlags.map((flag, i) => (
+                  <span
+                    key={i}
+                    className="px-3 py-1 bg-green-50 text-green-700 text-sm rounded-full"
+                  >
+                    {flag}
+                  </span>
+                ))}
+              </div>
+            )}
+
             <div className="space-y-2 text-xs text-brand-text leading-relaxed">
               <p><span className="font-medium">What it says: </span>{param.whatItSays}</p>
               <p><span className="font-medium">Why it matters: </span>{param.whyItMatters}</p>

@@ -106,6 +106,19 @@ Recommended fix language: restructure to e.g. 70% retainer in advance / 30% held
 
 When scoring, check whether the sum of your five parameter scores actually equals your overallScore. If they don't match, recalculate before returning the response.
 
+## Red Flag and Green Flag Rules
+
+Red flag rules:
+- Every parameter MUST include at least one red flag. If the clause is genuinely clean, use a constructive flag like "No explicit clause found — request written confirmation" or "Standard language — verify enforceability in your jurisdiction."
+- If the parameter scores below 15, include a minimum of two red flags.
+- Red flags must be short phrases (3-8 words), NOT full sentences. Examples: "No performance SLA defined", "Agency owns lead data", "90-day lock-in, no exit clause."
+
+Green flag rules:
+- If a parameter scores 16 or above, include at least one green flag.
+- If a parameter scores 20, all flags should be green (no red flags needed — this is the one exception to the "at least one red flag" rule).
+- Green flags must name the specific strength, not just say "looks good." Examples: "SLA with defined penalties — strong", "You retain full data ownership", "30-day exit clause — fair terms."
+- Green flags must also be short phrases, 3-8 words.
+
 ## Context you'll be given
 - The vendor type selected by the user. Only "Lead generation / demand generation agency" contracts are fully tuned for this framework. If the vendor type is anything else, still apply the same five-parameter framework as your best approximation, but your response must include a "vendorTypeDisclaimer" field noting the assessment is directional only, since the framework is built specifically for lead generation engagements.
 - What's most at stake for the user, and what stage of the process they're in. Use these only to lightly calibrate tone/emphasis in your reasoning (e.g., someone "already signed" needs renegotiation framing, not "before you sign" framing) — do not change the scoring methodology based on these.
@@ -138,7 +151,16 @@ const vendorCheckTool = {
             whatItSays: { type: 'string' },
             whyItMatters: { type: 'string' },
             whatToPropose: { type: 'string' },
-            redFlags: { type: 'string' },
+            redFlags: {
+              type: 'array',
+              items: { type: 'string' },
+              description: 'Concerns found in this parameter. Short phrases, 3-8 words. At least one required (use a constructive flag if the clause is clean); minimum two if score is below 15.',
+            },
+            greenFlags: {
+              type: 'array',
+              items: { type: 'string' },
+              description: 'Strengths found in this parameter. Short phrases, 3-8 words. Required if score >= 16.',
+            },
           },
         },
       },
@@ -157,7 +179,7 @@ CONTRACT TEXT:
 ${body.contractText}
 """
 
-Evaluate this contract per your instructions and return the JSON object only.`
+Use the submit_evaluation tool to return your evaluation.`
 }
 
 export async function POST(request: Request) {
@@ -220,13 +242,18 @@ export async function POST(request: Request) {
     riskLevel?: string
     verdict?: string
     vendorTypeDisclaimer?: string | null
-    parameters?: Array<{ name?: string; score?: number; redFlags?: unknown }>
+    parameters?: Array<{ name?: string; score?: number; redFlags?: unknown; greenFlags?: unknown }>
     topPriorities?: string[]
   }
 
   const paramNames = (result.parameters ?? []).map((p) => p.name)
   const hasAllParams = PARAMETER_ORDER.every((name) => paramNames.includes(name))
-  const hasRedFlagsOnEach = (result.parameters ?? []).every((p) => typeof p.redFlags === 'string')
+  const hasRedFlagsOnEach = (result.parameters ?? []).every((p) => Array.isArray(p.redFlags))
+  // greenFlags is optional in the schema (only expected when score >= 16), so we
+  // only check that if present, it's an array — not that every parameter has one.
+  const greenFlagsWellFormed = (result.parameters ?? []).every(
+    (p) => p.greenFlags === undefined || Array.isArray(p.greenFlags)
+  )
 
   if (
     typeof result.overallScore !== 'number' ||
@@ -235,6 +262,7 @@ export async function POST(request: Request) {
     result.parameters.length !== 5 ||
     !hasAllParams ||
     !hasRedFlagsOnEach ||
+    !greenFlagsWellFormed ||
     !Array.isArray(result.topPriorities)
   ) {
     console.error('[vendor-check] Claude response failed shape validation:', result)

@@ -8,7 +8,8 @@ export interface VendorCheckParameter {
   whatItSays: string
   whyItMatters: string
   whatToPropose: string
-  redFlags: string
+  redFlags: string[]
+  greenFlags?: string[]
 }
 
 export interface VendorCheckResult {
@@ -72,20 +73,29 @@ export default function ResultsReport({
               <span className="text-sm font-medium text-brand-accent">{param.score} / 20</span>
             </div>
 
-            {param.redFlags && (
-              <div className="flex flex-wrap gap-2 mb-4">
-                {param.redFlags
-                  .split(',')
-                  .map((flag) => flag.trim())
-                  .filter(Boolean)
-                  .map((flag, i) => (
-                    <span
-                      key={i}
-                      className="inline-block bg-red-50 text-red-700 text-sm px-2 py-1 rounded"
-                    >
-                      {flag}
-                    </span>
-                  ))}
+            {(param.redFlags?.filter((flag) => flag.trim()).length ?? 0) > 0 && (
+              <div className="flex flex-wrap gap-2 mb-2">
+                {param.redFlags.filter((flag) => flag.trim()).map((flag, i) => (
+                  <span
+                    key={i}
+                    className="px-3 py-1 bg-red-50 text-red-700 text-sm rounded-full"
+                  >
+                    {flag}
+                  </span>
+                ))}
+              </div>
+            )}
+
+            {(param.greenFlags?.filter((flag) => flag.trim()).length ?? 0) > 0 && (
+              <div className="flex flex-wrap gap-2 mt-2 mb-4">
+                {(param.greenFlags ?? []).filter((flag) => flag.trim()).map((flag, i) => (
+                  <span
+                    key={i}
+                    className="px-3 py-1 bg-green-50 text-green-700 text-sm rounded-full"
+                  >
+                    {flag}
+                  </span>
+                ))}
               </div>
             )}
 
