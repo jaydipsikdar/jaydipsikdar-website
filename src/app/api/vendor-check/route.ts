@@ -119,6 +119,14 @@ Green flag rules:
 - Green flags must name the specific strength, not just say "looks good." Examples: "SLA with defined penalties — strong", "You retain full data ownership", "30-day exit clause — fair terms."
 - Green flags must also be short phrases, 3-8 words.
 
+Flag placement clarity:
+- "redFlags" and "greenFlags" arrays are the ONLY place flag content should go. Do not embed flag-like phrases, warnings, or strengths inside "whatItSays", "whyItMatters", or "whatToPropose" — those fields are for explaining the score in prose. The flag arrays are for short, scannable pills that summarize the key issues and strengths.
+- Each flag must be a standalone short phrase (3-8 words). Not a sentence. Not a clause reference. Just the issue or strength itself.
+
+## Character Restrictions
+- Never use the section symbol (§) in any output. Write "Section" or "Clause" instead. Example: "Section 14" not "§14".
+- Avoid special characters like §, †, ‡, ¶ throughout. Use plain English equivalents.
+
 ## Context you'll be given
 - The vendor type selected by the user. Only "Lead generation / demand generation agency" contracts are fully tuned for this framework. If the vendor type is anything else, still apply the same five-parameter framework as your best approximation, but your response must include a "vendorTypeDisclaimer" field noting the assessment is directional only, since the framework is built specifically for lead generation engagements.
 - What's most at stake for the user, and what stage of the process they're in. Use these only to lightly calibrate tone/emphasis in your reasoning (e.g., someone "already signed" needs renegotiation framing, not "before you sign" framing) — do not change the scoring methodology based on these.
@@ -154,12 +162,13 @@ const vendorCheckTool = {
             redFlags: {
               type: 'array',
               items: { type: 'string' },
-              description: 'Concerns found in this parameter. Short phrases, 3-8 words. At least one required (use a constructive flag if the clause is clean); minimum two if score is below 15.',
+              minItems: 1,
+              description: 'Concerns found in this parameter. Short phrases, 3-8 words, no clause references or section symbols. At least one required (use a constructive flag if the clause is clean); minimum two if score is below 15.',
             },
             greenFlags: {
               type: 'array',
               items: { type: 'string' },
-              description: 'Strengths found in this parameter. Short phrases, 3-8 words. Required if score >= 16.',
+              description: 'Strengths found in this parameter. Short phrases, 3-8 words, no clause references or section symbols. Required if score >= 16.',
             },
           },
         },
@@ -232,6 +241,24 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Evaluation failed. Please try again.' }, { status: 502 })
     }
     parsed = toolBlock.input
+
+    // TEMPORARY DIAGNOSTIC — remove after confirming flags render.
+    // Note: our schema has no single "breakdown" field (it's split into
+    // whatItSays / whyItMatters / whatToPropose), so this logs a preview of
+    // whatItSays in that field's place.
+    const diagnosticParams = (parsed as { parameters?: unknown }).parameters
+    if (Array.isArray(diagnosticParams)) {
+      diagnosticParams.forEach((param: any, i: number) => {
+        console.log(`[VendorCheck] Param ${i + 1} (${param?.name}):`, {
+          score: param?.score,
+          redFlags: param?.redFlags,
+          greenFlags: param?.greenFlags,
+          whatItSaysPreview: typeof param?.whatItSays === 'string' ? param.whatItSays.substring(0, 100) : param?.whatItSays,
+        })
+      })
+    } else {
+      console.error('[VendorCheck] DIAGNOSTIC: parameters is not an array:', diagnosticParams)
+    }
   } catch (err) {
     console.error('[vendor-check] Anthropic API error:', err)
     return NextResponse.json({ error: 'Evaluation failed. Please try again.' }, { status: 502 })
