@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 // ── Styles ────────────────────────────────────────────────────────────────────
 // Injected verbatim from the MailerLite embed. Not modified.
 
-const FONT_STYLES = `@import url("https://assets.mlcdn.com/fonts.css?version=1782479");`
+const FONT_STYLES = `@import url("https://assets.mlcdn.com/fonts.css?version=1783523");`
 
 const EMBED_STYLES = `
 /* LOADER */
@@ -65,7 +65,7 @@ animation: ml-form-embedSubmitLoad 1.2s linear infinite;
     letter-spacing: normal !important;
   }
   #mlb2-43111263.ml-form-embedContainer .ml-form-embedWrapper {
-    background-color: #f6f6f6;
+    background-color: #E8450A;
 
     border-width: 0px;
     border-color: transparent;
@@ -106,7 +106,7 @@ animation: ml-form-embedSubmitLoad 1.2s linear infinite;
   }
   #mlb2-43111263.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedContent h4,
   #mlb2-43111263.ml-form-embedContainer .ml-form-embedWrapper .ml-form-successBody .ml-form-successContent h4 {
-    color: #000000;
+    color: #ffffff;
     font-family: 'Open Sans', Arial, Helvetica, sans-serif;
     font-size: 30px;
     font-weight: 400;
@@ -116,7 +116,7 @@ animation: ml-form-embedSubmitLoad 1.2s linear infinite;
   }
   #mlb2-43111263.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedContent p,
   #mlb2-43111263.ml-form-embedContainer .ml-form-embedWrapper .ml-form-successBody .ml-form-successContent p {
-    color: #000000;
+    color: #ffffff;
     font-family: 'Open Sans', Arial, Helvetica, sans-serif;
     font-size: 14px;
     font-weight: 400;
@@ -128,7 +128,7 @@ animation: ml-form-embedSubmitLoad 1.2s linear infinite;
   #mlb2-43111263.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedContent ol,
   #mlb2-43111263.ml-form-embedContainer .ml-form-embedWrapper .ml-form-successBody .ml-form-successContent ul,
   #mlb2-43111263.ml-form-embedContainer .ml-form-embedWrapper .ml-form-successBody .ml-form-successContent ol {
-    color: #000000;
+    color: #ffffff;
     font-family: 'Open Sans', Arial, Helvetica, sans-serif;
     font-size: 14px;
   }
@@ -591,7 +591,7 @@ const FORM_HTML = `
       <div class="ml-form-successBody row-success" style="display: none">
         <div class="ml-form-successContent">
           <h4>Thank you!</h4>
-          <p>Check your inbox. The Kit is on its way.</p>
+          <p>Check your inbox.&nbsp;</p>
         </div>
       </div>
     </div>

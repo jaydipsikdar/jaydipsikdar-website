@@ -20,13 +20,6 @@ export default function HomePage() {
         </p>
 
         <MailerLiteForm />
-
-        <p className="text-sm text-gray-500 text-center">
-          Just want the insight in your inbox?{' '}
-          <a href="#" className="underline hover:text-brand-accent">
-            Join the list →
-          </a>
-        </p>
       </section>
 
       {/* ============================================================
