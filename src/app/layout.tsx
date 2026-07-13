@@ -43,6 +43,9 @@ export const metadata: Metadata = {
     description:
       'Fractional CMO. 20+ years at IBM, Adobe, MoEngage. Helping startup founders build their marketing engine.',
   },
+  verification: {
+    google: 'fSn7ta_cQWI0HUqg6ocgHDjAapiL9X-6YZ4RNp_FCm0',
+  },
 }
 
 export default function RootLayout({
