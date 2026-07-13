@@ -241,24 +241,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Evaluation failed. Please try again.' }, { status: 502 })
     }
     parsed = toolBlock.input
-
-    // TEMPORARY DIAGNOSTIC — remove after confirming flags render.
-    // Note: our schema has no single "breakdown" field (it's split into
-    // whatItSays / whyItMatters / whatToPropose), so this logs a preview of
-    // whatItSays in that field's place.
-    const diagnosticParams = (parsed as { parameters?: unknown }).parameters
-    if (Array.isArray(diagnosticParams)) {
-      diagnosticParams.forEach((param: any, i: number) => {
-        console.log(`[VendorCheck] Param ${i + 1} (${param?.name}):`, {
-          score: param?.score,
-          redFlags: param?.redFlags,
-          greenFlags: param?.greenFlags,
-          whatItSaysPreview: typeof param?.whatItSays === 'string' ? param.whatItSays.substring(0, 100) : param?.whatItSays,
-        })
-      })
-    } else {
-      console.error('[VendorCheck] DIAGNOSTIC: parameters is not an array:', diagnosticParams)
-    }
   } catch (err) {
     console.error('[vendor-check] Anthropic API error:', err)
     return NextResponse.json({ error: 'Evaluation failed. Please try again.' }, { status: 502 })

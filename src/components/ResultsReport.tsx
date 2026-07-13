@@ -128,7 +128,7 @@ export default function ResultsReport({
 
       <div className="text-center mb-10">
         <a
-          href="https://calendar.app.google/8YgUfWjgYcJu9af99"
+          href="https://rzp.io/rzp/1a0vs49"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block px-6 py-3 bg-brand-accent text-white rounded hover:opacity-90 transition-opacity"

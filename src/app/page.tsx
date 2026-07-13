@@ -52,10 +52,12 @@ export default function HomePage() {
               </p>
               <div className="text-center mt-auto">
                 <a
-                  href="/contact"
+                  href="https://rzp.io/rzp/1a0vs49"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-block px-6 py-3 bg-brand-accent text-white rounded hover:opacity-90 transition-opacity"
                 >
-                  Book a session →
+                  Pay ₹999 and Book Now →
                 </a>
               </div>
             </div>
