@@ -89,43 +89,56 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================
-          RESOURCES
-          Copy: FINAL — locked 2026-06-27
-          Card CTA anchors to #hero (MailerLite form, same page)
+          RESOURCES — hub teaser
+          Grid scales to 3 columns automatically as more resources are added.
           ============================================================ */}
       <section id="resources" className="px-6 py-16 border-t border-gray-200">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-2xl font-semibold text-center mb-4">Resources</h2>
-          <p className="text-center text-brand-text mb-10">
-            Most marketing tools are built for marketers. These are built for anyone who needs to
-            think like one.
-          </p>
+          <h2 className="text-2xl font-semibold text-center mb-10">
+            Free Tools for Founders & Marketing Leaders
+          </h2>
 
-          {/* Card grid — built to scale to 3 columns. flex justify-center for single card. */}
-          <div className="flex justify-center">
-            <div className="border border-gray-200 rounded-lg p-6 w-full max-w-sm">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="border border-gray-200 rounded-lg p-6 flex flex-col">
               <h3 className="text-base font-semibold mb-3">CMO Boardroom Kit</h3>
-              <p className="text-brand-text text-sm leading-relaxed mb-6">
-                A practical kit for founders who need to evaluate marketing strategy, challenge
-                assumptions, and make better decisions — without a full-time CMO on payroll.
+              <p className="text-brand-text text-sm leading-relaxed mb-6 flex-1">
+                The frameworks, templates, and checklists I use with my consulting clients.
+                Packaged for founders and marketing leads.
               </p>
               <div className="text-center">
                 <a
-                  href="#hero"
+                  href="/resources"
                   className="inline-block px-5 py-2.5 bg-brand-accent text-white text-sm rounded hover:opacity-90 transition-opacity"
                 >
-                  Download free →
+                  Get the Kit →
+                </a>
+              </div>
+            </div>
+
+            <div className="border border-gray-200 rounded-lg p-6 flex flex-col">
+              <h3 className="text-base font-semibold mb-3">Vendor Contract Check</h3>
+              <p className="text-brand-text text-sm leading-relaxed mb-6 flex-1">
+                Paste your vendor contract. Get a clause-by-clause risk score with renegotiation
+                language you can use before you sign.
+              </p>
+              <div className="text-center">
+                <a
+                  href="/resources/vendor-check"
+                  className="inline-block px-5 py-2.5 bg-brand-accent text-white text-sm rounded hover:opacity-90 transition-opacity"
+                >
+                  Check your contract →
                 </a>
               </div>
             </div>
           </div>
 
-          <p className="text-center text-sm text-brand-text italic mt-8">
-            New tools dropping in July 2026 —{' '}
-            <a href="#hero" className="underline hover:text-brand-accent">
-              get on the list
-            </a>{' '}
-            to hear first.
+          <p className="text-center mt-10">
+            <a
+              href="/resources"
+              className="text-sm text-brand-accent underline hover:opacity-80 transition-opacity"
+            >
+              See all resources →
+            </a>
           </p>
         </div>
       </section>

@@ -44,10 +44,15 @@ export default function ResourcesPage() {
           <div className="grid grid-cols-1 gap-6 flex-1">
             <div>
               <h2 className="text-lg font-semibold mb-3">Vendor Contract Check</h2>
-              <p className="text-brand-text text-sm leading-relaxed mb-4">
-                I paid three months of retainer to a lead gen agency that delivered nothing —
-                because I didn&apos;t catch what their contract let them get away with. This tool
-                reads your vendor contract the way I wish I&apos;d read mine.
+              <p className="text-brand-text text-sm leading-relaxed mb-3">
+                Before you sign a vendor contract, find out what it actually lets them get away
+                with. This tool evaluates your contract across scope, targets, data rights, exit
+                terms, and payment structure — then flags the risks and gives you the language to
+                renegotiate. Free. Takes 2 minutes.
+              </p>
+              <p className="text-xs text-gray-500 italic mb-4">
+                Built by Jaydip Sikdar, based on a real contract that cost three months of
+                retainer and delivered nothing.
               </p>
             </div>
             <div className="flex flex-col justify-end">
