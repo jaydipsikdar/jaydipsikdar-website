@@ -1,6 +1,7 @@
 'use client'
 
 import VendorCheckDeliveryForm from './VendorCheckDeliveryForm'
+import RazorpayBookButton from './RazorpayBookButton'
 
 export interface VendorCheckParameter {
   name: string
@@ -127,14 +128,9 @@ export default function ResultsReport({
       </div>
 
       <div className="text-center mb-10">
-        <a
-          href="https://rzp.io/rzp/mTV7M9y"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block px-6 py-3 bg-brand-accent text-white rounded hover:opacity-90 transition-opacity"
-        >
+        <RazorpayBookButton className="inline-block px-6 py-3 bg-brand-accent text-white rounded hover:opacity-90 transition-opacity">
           Want help actually negotiating this? Book a session →
-        </a>
+        </RazorpayBookButton>
       </div>
 
       {!emailAlreadyCaptured && (

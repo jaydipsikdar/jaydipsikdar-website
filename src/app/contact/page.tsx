@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import RazorpayBookButton from '@/components/RazorpayBookButton'
 
 export const metadata: Metadata = {
   title: 'Contact — Jaydip Sikdar',
@@ -19,14 +20,9 @@ export default function ContactPage() {
         <p className="text-brand-text mb-4">
           One problem, one clear call. We&apos;ll diagnose and prioritise your most pressing marketing decision.
         </p>
-        <a
-          href="https://rzp.io/rzp/mTV7M9y"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block px-6 py-3 bg-brand-accent text-white rounded hover:opacity-90 transition-opacity"
-        >
+        <RazorpayBookButton className="inline-block px-6 py-3 bg-brand-accent text-white rounded hover:opacity-90 transition-opacity">
           Pay ₹999 and Book Now →
-        </a>
+        </RazorpayBookButton>
       </div>
 
     </main>
