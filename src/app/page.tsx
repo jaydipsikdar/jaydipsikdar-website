@@ -113,7 +113,7 @@ export default function HomePage() {
               <div className="text-center">
                 <a
                   href="/resources/vendor-check"
-                  className="inline-block px-5 py-2.5 bg-brand-accent text-white text-sm rounded hover:opacity-90 transition-opacity"
+                  className="inline-block px-5 py-2.5 bg-brand-accent text-white text-sm rounded hover:opacity-90 transition-opacity whitespace-nowrap"
                 >
                   Check your contract →
                 </a>
