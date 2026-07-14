@@ -33,6 +33,7 @@ export default function RazorpayBookButton({
   className?: string
 }) {
   const [loading, setLoading] = useState(false)
+  const [paid, setPaid] = useState(false)
 
   async function handleClick() {
     setLoading(true)
@@ -51,10 +52,23 @@ export default function RazorpayBookButton({
       name: 'Jaydip Sikdar',
       description: '1:1 Consulting Session (30 mins)',
       handler: function () {
-        window.location.href = CALENDLY_URL
+        window.open(CALENDLY_URL, '_blank', 'noopener,noreferrer')
+        setPaid(true)
       },
     })
     razorpay.open()
+  }
+
+  if (paid) {
+    return (
+      <p className="text-sm text-brand-text">
+        Payment received! Your booking page opened in a new tab —{' '}
+        <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="underline">
+          click here
+        </a>{' '}
+        if it didn&apos;t.
+      </p>
+    )
   }
 
   return (
