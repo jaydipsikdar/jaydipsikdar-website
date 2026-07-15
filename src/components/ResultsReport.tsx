@@ -1,6 +1,6 @@
 'use client'
 
-import VendorCheckDeliveryForm from './VendorCheckDeliveryForm'
+import PdfExportSection from './PdfExportSection'
 import RazorpayBookButton from './RazorpayBookButton'
 
 export interface VendorCheckParameter {
@@ -133,11 +133,13 @@ export default function ResultsReport({
         </RazorpayBookButton>
       </div>
 
-      {!emailAlreadyCaptured && (
-        <div className="border-t border-gray-200 pt-8">
-          <VendorCheckDeliveryForm />
-        </div>
-      )}
+      <div className="border-t border-gray-200 pt-8">
+        <PdfExportSection
+          result={result}
+          processStage={processStage}
+          emailAlreadyCaptured={emailAlreadyCaptured}
+        />
+      </div>
     </div>
   )
 }
