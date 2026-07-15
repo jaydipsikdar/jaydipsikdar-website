@@ -43,10 +43,12 @@ export default function ResultsReport({
   result,
   processStage,
   emailAlreadyCaptured,
+  capturedEmail,
 }: {
   result: VendorCheckResult
   processStage?: string
   emailAlreadyCaptured?: boolean
+  capturedEmail?: string
 }) {
   const colorClass = scoreColorClass(result.overallScore)
 
@@ -138,6 +140,7 @@ export default function ResultsReport({
           result={result}
           processStage={processStage}
           emailAlreadyCaptured={emailAlreadyCaptured}
+          capturedEmail={capturedEmail}
         />
       </div>
     </div>

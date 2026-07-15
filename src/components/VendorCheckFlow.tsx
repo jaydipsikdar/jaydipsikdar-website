@@ -134,6 +134,7 @@ export default function VendorCheckFlow() {
         result={result}
         processStage={processStage}
         emailAlreadyCaptured={Boolean(intakeEmail)}
+        capturedEmail={intakeEmail || undefined}
       />
     )
   }

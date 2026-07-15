@@ -73,6 +73,78 @@ function priorityHeading(processStage?: string): string {
   return 'Your top 3 priorities before signing'
 }
 
+// ── Text sanitization ──
+// jsPDF's standard "helvetica" font only maps glyphs for WinAnsi (cp1252)
+// encoding. Any character outside that set — most notably ₹ — has no defined
+// glyph width, which corrupts jsPDF's cumulative width calculation inside
+// splitTextToSize and produces lines that overrun the page edge instead of
+// wrapping (visually indistinguishable from mid-sentence truncation). Every
+// string that reaches jsPDF, including AI-generated content, is routed
+// through here first.
+
+const CP1252_EXTRA: Record<number, string> = {
+  0x80: '€', 0x82: '‚', 0x83: 'ƒ', 0x84: '„', 0x85: '…',
+  0x86: '†', 0x87: '‡', 0x88: 'ˆ', 0x89: '‰', 0x8A: 'Š',
+  0x8B: '‹', 0x8C: 'Œ', 0x8E: 'Ž', 0x91: '‘', 0x92: '’',
+  0x93: '“', 0x94: '”', 0x95: '•', 0x96: '–', 0x97: '—',
+  0x98: '˜', 0x99: '™', 0x9A: 'š', 0x9B: '›', 0x9C: 'œ',
+  0x9E: 'ž', 0x9F: 'Ÿ',
+}
+
+const WINANSI_CODEPOINTS = new Set<number>([
+  ...Array.from({ length: 0x80 }, (_, i) => i), // 0x00–0x7F ASCII
+  ...Object.values(CP1252_EXTRA).map((c) => c.codePointAt(0)!),
+  ...Array.from({ length: 0x60 }, (_, i) => 0xa0 + i), // 0xA0–0xFF Latin-1 supplement
+])
+
+// Explicit replacements for characters commonly produced by AI-generated
+// contract analysis that fall outside WinAnsi.
+const CHAR_REPLACEMENTS: Record<string, string> = {
+  '₹': 'Rs. ', // ₹ Indian Rupee sign
+  '→': '->', // →
+  '←': '<-', // ←
+  '‑': '-', // non-breaking hyphen
+}
+
+function sanitizeText(text: string): string {
+  if (!text) return text
+  let out = ''
+  for (const ch of text) {
+    const code = ch.codePointAt(0)!
+    if (WINANSI_CODEPOINTS.has(code)) {
+      out += ch
+    } else if (CHAR_REPLACEMENTS[ch]) {
+      out += CHAR_REPLACEMENTS[ch]
+    } else {
+      out += '?'
+    }
+  }
+  return out
+}
+
+function sanitizeParameter(param: VendorCheckParameter): VendorCheckParameter {
+  return {
+    name: sanitizeText(param.name),
+    score: param.score,
+    whatItSays: sanitizeText(param.whatItSays),
+    whyItMatters: sanitizeText(param.whyItMatters),
+    whatToPropose: sanitizeText(param.whatToPropose),
+    redFlags: (param.redFlags ?? []).map(sanitizeText),
+    greenFlags: param.greenFlags ? param.greenFlags.map(sanitizeText) : param.greenFlags,
+  }
+}
+
+function sanitizeResult(result: VendorCheckResult): VendorCheckResult {
+  return {
+    overallScore: result.overallScore,
+    riskLevel: sanitizeText(result.riskLevel),
+    verdict: sanitizeText(result.verdict),
+    vendorTypeDisclaimer: result.vendorTypeDisclaimer ? sanitizeText(result.vendorTypeDisclaimer) : result.vendorTypeDisclaimer,
+    parameters: result.parameters.map(sanitizeParameter),
+    topPriorities: result.topPriorities.map(sanitizeText),
+  }
+}
+
 // ── Layout ──
 
 const PT = 0.3528 // mm per point — used to convert reportlab-style leading values to mm
@@ -700,8 +772,13 @@ function drawFooters(doc: jsPDF) {
 }
 
 // ── Entry point ──
+// Server-side only: builds the PDF and returns its bytes. Callers (the
+// /api/export-pdf route) are responsible for storage/delivery — this
+// function has no browser dependency.
 
-export function generateVendorCheckPDF(result: VendorCheckResult, processStage?: string): void {
+export function generateVendorCheckPDF(rawResult: VendorCheckResult, processStage?: string): Uint8Array {
+  const result = sanitizeResult(rawResult)
+
   const doc = new jsPDF({ unit: 'mm', format: 'a4' })
   const cur = new Cursor(doc)
 
@@ -714,5 +791,5 @@ export function generateVendorCheckPDF(result: VendorCheckResult, processStage?:
   buildCTA(doc, cur)
   drawFooters(doc)
 
-  doc.save('vendor-contract-check.pdf')
+  return new Uint8Array(doc.output('arraybuffer'))
 }
