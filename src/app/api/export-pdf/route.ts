@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server'
-import { put } from '@vercel/blob'
+import { createClient } from '@supabase/supabase-js'
 import { generateVendorCheckPDF } from '@/lib/generateVendorCheckPDF'
 import { subscribeToMailerLite } from '@/lib/mailerlite'
 import type { VendorCheckResult } from '@/components/ResultsReport'
+
+const PDF_BUCKET = 'vendor-check-reports'
 
 export const runtime = 'nodejs'
 
@@ -40,8 +42,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Valid email required' }, { status: 400 })
   }
 
-  if (!process.env.BLOB_READ_WRITE_TOKEN) {
-    console.error('[export-pdf] BLOB_READ_WRITE_TOKEN is not set')
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+  if (!supabaseUrl || !serviceRoleKey) {
+    console.error('[export-pdf] Supabase env vars are not set')
     return NextResponse.json({ error: 'Server misconfigured' }, { status: 500 })
   }
 
@@ -55,15 +59,23 @@ export async function POST(request: Request) {
 
   const filename = `vendor-check-${Date.now()}-${Math.random().toString(36).slice(2, 8)}.pdf`
 
+  // Service role key — server-side only, bypasses RLS. Never expose to the client.
+  const supabase = createClient(supabaseUrl, serviceRoleKey)
+
   let url: string
   try {
-    const blob = await put(filename, Buffer.from(pdfBytes), {
-      access: 'public',
-      contentType: 'application/pdf',
-    })
-    url = blob.url
+    const { error: uploadError } = await supabase.storage
+      .from(PDF_BUCKET)
+      .upload(filename, Buffer.from(pdfBytes), {
+        contentType: 'application/pdf',
+        upsert: false,
+      })
+    if (uploadError) throw uploadError
+
+    const { data } = supabase.storage.from(PDF_BUCKET).getPublicUrl(filename)
+    url = data.publicUrl
   } catch (err) {
-    console.error('[export-pdf] Blob upload failed:', err)
+    console.error('[export-pdf] Supabase upload failed:', err)
     return NextResponse.json({ error: 'Could not store PDF' }, { status: 502 })
   }
 
