@@ -1,7 +1,6 @@
 'use client'
 
 import PdfExportSection from './PdfExportSection'
-import RazorpayBookButton from './RazorpayBookButton'
 
 export interface VendorCheckParameter {
   name: string
@@ -130,9 +129,12 @@ export default function ResultsReport({
       </div>
 
       <div className="text-center">
-        <RazorpayBookButton className="inline-block px-6 py-3 bg-brand-accent text-white rounded hover:opacity-90 transition-opacity">
+        <a
+          href="https://www.jaydipsikdar.com/contact"
+          className="inline-block px-6 py-3 bg-brand-accent text-white rounded hover:opacity-90 transition-opacity"
+        >
           Want to discuss the risks with me? Book a session →
-        </RazorpayBookButton>
+        </a>
       </div>
     </div>
   )
