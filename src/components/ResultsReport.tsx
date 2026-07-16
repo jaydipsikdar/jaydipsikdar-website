@@ -42,13 +42,9 @@ function priorityHeading(processStage?: string): string {
 export default function ResultsReport({
   result,
   processStage,
-  emailAlreadyCaptured,
-  capturedEmail,
 }: {
   result: VendorCheckResult
   processStage?: string
-  emailAlreadyCaptured?: boolean
-  capturedEmail?: string
 }) {
   const colorClass = scoreColorClass(result.overallScore)
 
@@ -129,19 +125,14 @@ export default function ResultsReport({
         </ol>
       </div>
 
-      <div className="text-center mb-10">
-        <RazorpayBookButton className="inline-block px-6 py-3 bg-brand-accent text-white rounded hover:opacity-90 transition-opacity">
-          Want help actually negotiating this? Book a session →
-        </RazorpayBookButton>
+      <div className="border-t border-gray-200 pt-8 mb-10">
+        <PdfExportSection result={result} processStage={processStage} />
       </div>
 
-      <div className="border-t border-gray-200 pt-8">
-        <PdfExportSection
-          result={result}
-          processStage={processStage}
-          emailAlreadyCaptured={emailAlreadyCaptured}
-          capturedEmail={capturedEmail}
-        />
+      <div className="text-center">
+        <RazorpayBookButton className="inline-block px-6 py-3 bg-brand-accent text-white rounded hover:opacity-90 transition-opacity">
+          Want to discuss the risks with me? Book a session →
+        </RazorpayBookButton>
       </div>
     </div>
   )

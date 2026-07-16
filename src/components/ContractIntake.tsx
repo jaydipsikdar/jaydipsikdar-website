@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react'
 
 interface ContractIntakeProps {
-  onContinue: (contractText: string, email: string) => void
+  onContinue: (contractText: string) => void
 }
 
 type Mode = 'paste' | 'upload'
@@ -13,7 +13,6 @@ const MIN_LENGTH = 200
 export default function ContractIntake({ onContinue }: ContractIntakeProps) {
   const [mode, setMode] = useState<Mode>('paste')
   const [text, setText] = useState('')
-  const [email, setEmail] = useState('')
   const [fileName, setFileName] = useState<string | null>(null)
   const [extracting, setExtracting] = useState(false)
   const [extractionError, setExtractionError] = useState<string | null>(null)
@@ -64,21 +63,6 @@ export default function ContractIntake({ onContinue }: ContractIntakeProps) {
 
   return (
     <div>
-      <div className="mb-6 max-w-sm mx-auto">
-        <label htmlFor="intake-email" className="block text-sm font-medium text-brand-text mb-1">
-          Your email (optional)
-        </label>
-        <input
-          id="intake-email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="you@company.com"
-          className="w-full px-4 py-2.5 border border-gray-300 rounded text-sm text-brand-text bg-white placeholder-gray-400 focus:outline-none focus:border-brand-accent transition-colors"
-        />
-        <p className="text-xs text-gray-500 mt-1">We&apos;ll send you a copy of your results.</p>
-      </div>
-
       <div className="flex gap-2 mb-4 justify-center">
         <button
           type="button"
@@ -154,7 +138,7 @@ export default function ContractIntake({ onContinue }: ContractIntakeProps) {
         <button
           type="button"
           disabled={!canContinue}
-          onClick={() => onContinue(text.trim(), email.trim())}
+          onClick={() => onContinue(text.trim())}
           className="px-6 py-3 bg-brand-accent text-white rounded hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
         >
           Continue →

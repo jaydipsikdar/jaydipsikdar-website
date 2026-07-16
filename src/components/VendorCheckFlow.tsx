@@ -11,28 +11,13 @@ type Step = 'landing' | 'context' | 'processing' | 'results' | 'error'
 export default function VendorCheckFlow() {
   const [step, setStep] = useState<Step>('landing')
   const [contractText, setContractText] = useState('')
-  const [intakeEmail, setIntakeEmail] = useState('')
   const [result, setResult] = useState<VendorCheckResult | null>(null)
   const [processStage, setProcessStage] = useState<string | undefined>(undefined)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
-  function handleIntakeContinue(text: string, email: string) {
+  function handleIntakeContinue(text: string) {
     setContractText(text)
-    setIntakeEmail(email)
     setStep('context')
-  }
-
-  function submitIntakeEmailInBackground(email: string) {
-    // Fire-and-forget: the user already consented by entering their email at
-    // intake, so there's no second confirmation prompt. Failures here are
-    // logged but don't interrupt the results screen.
-    fetch('/api/subscribe', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, group: 'vendor-check' }),
-    }).catch((err) => {
-      console.error('[VendorCheckFlow] background email capture failed:', err)
-    })
   }
 
   async function handleContextSubmit(answers: ContextAnswers) {
@@ -60,10 +45,6 @@ export default function VendorCheckFlow() {
       const data: VendorCheckResult = await res.json()
       setResult(data)
       setStep('results')
-
-      if (intakeEmail) {
-        submitIntakeEmailInBackground(intakeEmail)
-      }
     } catch (err) {
       console.error('[VendorCheckFlow] evaluation error:', err)
       setErrorMessage(
@@ -130,12 +111,7 @@ export default function VendorCheckFlow() {
 
   if (step === 'results' && result) {
     return (
-      <ResultsReport
-        result={result}
-        processStage={processStage}
-        emailAlreadyCaptured={Boolean(intakeEmail)}
-        capturedEmail={intakeEmail || undefined}
-      />
+      <ResultsReport result={result} processStage={processStage} />
     )
   }
 

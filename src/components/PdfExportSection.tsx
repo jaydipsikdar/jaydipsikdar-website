@@ -6,13 +6,9 @@ import type { VendorCheckResult } from './ResultsReport'
 export default function PdfExportSection({
   result,
   processStage,
-  emailAlreadyCaptured,
-  capturedEmail,
 }: {
   result: VendorCheckResult
   processStage?: string
-  emailAlreadyCaptured?: boolean
-  capturedEmail?: string
 }) {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
@@ -37,34 +33,10 @@ export default function PdfExportSection({
     sendReport(email)
   }
 
-  // emailAlreadyCaptured is a plain boolean flag from the parent flow; the
-  // actual address only travels through capturedEmail. If one is missing,
-  // fall back to asking for the email rather than calling the API with ''.
-  const hasCapturedEmail = Boolean(emailAlreadyCaptured && capturedEmail)
-
   if (status === 'success') {
     return (
       <div className="text-center py-4">
         <p className="text-brand-text text-sm font-medium">Report sent! Check your inbox.</p>
-      </div>
-    )
-  }
-
-  if (hasCapturedEmail) {
-    return (
-      <div className="text-center">
-        <h3 className="text-lg font-semibold mb-4">Get your report as PDF</h3>
-        <button
-          type="button"
-          onClick={() => sendReport(capturedEmail as string)}
-          disabled={status === 'loading'}
-          className="px-6 py-3 bg-brand-accent text-white rounded hover:opacity-90 transition-opacity disabled:opacity-60"
-        >
-          {status === 'loading' ? 'Sending…' : 'Get my report'}
-        </button>
-        {status === 'error' && (
-          <p className="text-red-600 text-xs mt-3">Something went wrong. Please try again.</p>
-        )}
       </div>
     )
   }
