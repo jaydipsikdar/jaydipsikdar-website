@@ -18,9 +18,9 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: 'Jaydip Sikdar: CMO & B2B Marketing Strategist',
+  title: 'Jaydip Sikdar — CMO & Marketing Strategist | Free Tools & Frameworks',
   description:
-    'Jaydip Sikdar is a Fractional CMO and B2B marketing consultant with 20+ years of experience at IBM, Adobe, and MoEngage. He helps early-stage startup founders build their marketing engine.',
+    '20-year CMO (IBM, Adobe, MoEngage) who also builds free marketing tools for marketers, solopreneurs, and consultants. Strategy, frameworks, and practical resources.',
   metadataBase: new URL('https://jaydipsikdar.com'),
   icons: {
     icon: [
@@ -29,9 +29,9 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: 'Jaydip Sikdar: CMO & B2B Marketing Strategist',
+    title: 'Jaydip Sikdar — CMO & Marketing Strategist | Free Tools & Frameworks',
     description:
-      'Jaydip Sikdar helps early-stage startup founders build their marketing engine — from positioning and go-to-market to demand generation and customer advocacy.',
+      '20-year CMO (IBM, Adobe, MoEngage) who also builds free marketing tools for marketers, solopreneurs, and consultants. Strategy, frameworks, and practical resources.',
     url: 'https://jaydipsikdar.com',
     siteName: 'Jaydip Sikdar',
     locale: 'en_IN',
@@ -39,9 +39,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Jaydip Sikdar: CMO & B2B Marketing Strategist',
+    title: 'Jaydip Sikdar — CMO & Marketing Strategist | Free Tools & Frameworks',
     description:
-      'Fractional CMO. 20+ years at IBM, Adobe, MoEngage. Helping startup founders build their marketing engine.',
+      '20-year CMO (IBM, Adobe, MoEngage) who also builds free marketing tools for marketers, solopreneurs, and consultants. Strategy, frameworks, and practical resources.',
   },
   verification: {
     google: 'fSn7ta_cQWI0HUqg6ocgHDjAapiL9X-6YZ4RNp_FCm0',

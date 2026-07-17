@@ -6,70 +6,74 @@ export default function HomePage() {
     <main>
 
       {/* ============================================================
-          HERO — unchanged
-          Copy: FINAL — locked 2026-06-19
+          HERO
           ============================================================ */}
       <section id="hero" className="px-6 py-20 max-w-3xl mx-auto">
         <h1 className="text-4xl font-bold leading-tight mb-6">
           Bad marketing doesn&apos;t just waste money. It hands your market to someone else.
         </h1>
-        <p className="text-xl text-brand-text mb-6">
-          Every month without a working marketing engine is a month of runway you&apos;re not getting back — and a month your competitor is using to pull ahead.
-        </p>
         <p className="text-lg text-brand-text mb-8">
-          I help early-stage startup founders build that engine — from positioning and go-to-market to demand generation and customer advocacy. I&apos;ve worked closely with 200+ CMOs to solve exactly these problems. I know what breaks and I know what works.
+          I&apos;ve spent 20 years as a CMO at IBM, Adobe, MoEngage, and two AI startups — solving
+          this problem from the inside. Now I&apos;m taking what I&apos;ve learned and making it
+          accessible: free tools, decision frameworks, and practical resources for marketers,
+          solopreneurs, and consultants who don&apos;t have a marketing team behind them.
+        </p>
+
+        <p className="mb-8">
+          <a
+            href="/resources"
+            className="inline-block px-6 py-3 bg-brand-accent text-white rounded hover:opacity-90 transition-opacity"
+          >
+            Explore the tools →
+          </a>
         </p>
 
         <MailerLiteForm />
       </section>
 
       {/* ============================================================
-          HOW I WORK — two columns
-          Copy: FINAL — locked 2026-06-27
+          WHAT YOU'LL FIND HERE — two columns
           ============================================================ */}
       <section id="how-i-work" className="px-6 py-16 border-t border-gray-200">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-2xl font-semibold text-center mb-12">How I Work</h2>
+          <h2 className="text-2xl font-semibold text-center mb-12">What You&apos;ll Find Here</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
 
-            {/* Left — Founders & CEOs */}
+            {/* Left — Tools & frameworks */}
             <div className="flex flex-col">
               <h3 className="text-lg font-semibold text-center mb-4">
-                If you&apos;re a Founder or CEO
+                Tools and frameworks from 20 years of CMO work
               </h3>
               <p className="text-brand-text leading-relaxed mb-8">
-                Most early-stage startups don&apos;t have a marketing problem. They have a clarity
-                problem — unclear positioning, premature campaigns, and a team executing in the wrong
-                direction. I come in as a Fractional CMO to fix the foundation before scaling
-                anything. Retainers, consulting sprints, and 1:1 sessions — structured around where
-                you actually are.
-              </p>
-              <div className="text-center mt-auto">
-                <RazorpayBookButton className="inline-block px-6 py-3 bg-brand-accent text-white rounded hover:opacity-90 transition-opacity">
-                  Pay ₹999 and Book Now →
-                </RazorpayBookButton>
-              </div>
-            </div>
-
-            {/* Right — Marketers, Consultants & Students */}
-            <div className="flex flex-col">
-              <h3 className="text-lg font-semibold text-center mb-4">
-                If you&apos;re a Marketer, Consultant or Student
-              </h3>
-              <p className="text-brand-text leading-relaxed mb-8">
-                Most marketing education teaches you what worked for someone else, somewhere else, at
-                a different stage. I share what I&apos;ve learned from being inside the room — two
-                decades of B2B, 200+ CMO conversations, and the pattern recognition that comes from
-                seeing the same mistakes made at scale. It&apos;s practical, specific, and free to
-                start.
+                Every resource on this site comes from a real marketing problem I&apos;ve faced —
+                and solved — across IBM, Adobe, MoEngage, and two AI startups. Vendor contract
+                risk-scoring, decision frameworks for marketing leaders, budget allocation models,
+                and more on the way. Free, practical, and built to be used this week.
               </p>
               <div className="text-center mt-auto">
                 <a
                   href="/resources"
                   className="inline-block px-6 py-3 bg-brand-accent text-white rounded hover:opacity-90 transition-opacity"
                 >
-                  Explore Resources →
+                  Browse resources →
                 </a>
+              </div>
+            </div>
+
+            {/* Right — Consulting CMO */}
+            <div className="flex flex-col">
+              <h3 className="text-lg font-semibold text-center mb-4">
+                Consulting CMO for early-stage startups
+              </h3>
+              <p className="text-brand-text leading-relaxed mb-8">
+                I also work hands-on with founders and CEOs who need strategic marketing leadership
+                without a full-time hire. Retainers, sprints, and advisory — structured around where
+                your company actually is.
+              </p>
+              <div className="text-center mt-auto">
+                <RazorpayBookButton className="inline-block px-6 py-3 bg-brand-accent text-white rounded hover:opacity-90 transition-opacity">
+                  Book a session →
+                </RazorpayBookButton>
               </div>
             </div>
 
@@ -84,7 +88,7 @@ export default function HomePage() {
       <section id="resources" className="px-6 py-16 border-t border-gray-200">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-2xl font-semibold text-center mb-10">
-            Free Tools for Founders & Marketing Leaders
+            Free Tools & Frameworks — From Two Decades in the CMO Seat
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -134,7 +138,6 @@ export default function HomePage() {
 
       {/* ============================================================
           THE MARKETING COUCH — podcast
-          Copy: FINAL — locked 2026-06-27
           No embedded player — links only
           ============================================================ */}
       <section id="podcast" className="px-6 py-16 border-t border-gray-200">
@@ -153,9 +156,8 @@ export default function HomePage() {
           </div>
 
           <p className="text-brand-text leading-relaxed mb-8 text-center">
-            A podcast about marketing strategy, leadership, and what actually works in B2B — hosted
-            by someone who&apos;s been in the room for most of it. Season 1 is live: 21 episodes,
-            real conversations.
+            21 episodes on marketing strategy, leadership, and what actually works — from someone
+            who&apos;s been in the room for two decades. Season 1 is complete.
           </p>
           <div className="flex justify-center gap-8 text-sm">
             <a
