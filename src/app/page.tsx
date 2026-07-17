@@ -8,7 +8,7 @@ export default function HomePage() {
       {/* ============================================================
           HERO
           ============================================================ */}
-      <section id="hero" className="px-6 py-20 max-w-3xl mx-auto">
+      <section id="hero" className="px-6 py-20 max-w-3xl mx-auto text-center">
         <h1 className="text-4xl font-bold leading-tight mb-6">
           Bad marketing doesn&apos;t just waste money. It hands your market to someone else.
         </h1>
@@ -36,12 +36,12 @@ export default function HomePage() {
           ============================================================ */}
       <section id="how-i-work" className="px-6 py-16 border-t border-gray-200">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-2xl font-semibold text-center mb-12">What You&apos;ll Find Here</h2>
+          <h2 className="text-2xl font-semibold text-left mb-12">What You&apos;ll Find Here</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
 
             {/* Left — Tools & frameworks */}
             <div className="flex flex-col">
-              <h3 className="text-lg font-semibold text-center mb-4">
+              <h3 className="text-lg font-semibold text-left mb-4">
                 Tools and frameworks from 20 years of CMO work
               </h3>
               <p className="text-brand-text leading-relaxed mb-8">
@@ -50,7 +50,7 @@ export default function HomePage() {
                 risk-scoring, decision frameworks for marketing leaders, budget allocation models,
                 and more on the way. Free, practical, and built to be used this week.
               </p>
-              <div className="text-center mt-auto">
+              <div className="text-left mt-auto">
                 <a
                   href="/resources"
                   className="inline-block px-6 py-3 bg-brand-accent text-white rounded hover:opacity-90 transition-opacity"
@@ -62,7 +62,7 @@ export default function HomePage() {
 
             {/* Right — Consulting CMO */}
             <div className="flex flex-col">
-              <h3 className="text-lg font-semibold text-center mb-4">
+              <h3 className="text-lg font-semibold text-left mb-4">
                 Consulting CMO for early-stage startups
               </h3>
               <p className="text-brand-text leading-relaxed mb-8">
@@ -70,7 +70,7 @@ export default function HomePage() {
                 without a full-time hire. Retainers, sprints, and advisory — structured around where
                 your company actually is.
               </p>
-              <div className="text-center mt-auto">
+              <div className="text-left mt-auto">
                 <RazorpayBookButton className="inline-block px-6 py-3 bg-brand-accent text-white rounded hover:opacity-90 transition-opacity">
                   Book a session →
                 </RazorpayBookButton>
@@ -91,8 +91,8 @@ export default function HomePage() {
             Free Tools & Frameworks — From Two Decades in the CMO Seat
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="border border-gray-200 rounded-lg p-6 flex flex-col">
+          <div className="flex flex-wrap justify-center gap-6">
+            <div className="border border-gray-200 rounded-lg p-6 flex flex-col w-full md:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]">
               <h3 className="text-base font-semibold mb-3">CMO Boardroom Kit</h3>
               <p className="text-brand-text text-sm leading-relaxed mb-6 flex-1">
                 The frameworks, templates, and checklists I use with my consulting clients.
@@ -108,7 +108,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="border border-gray-200 rounded-lg p-6 flex flex-col">
+            <div className="border border-gray-200 rounded-lg p-6 flex flex-col w-full md:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]">
               <h3 className="text-base font-semibold mb-3">Vendor Contract Check</h3>
               <p className="text-brand-text text-sm leading-relaxed mb-6 flex-1">
                 Paste your vendor contract. Get a clause-by-clause risk score with renegotiation
