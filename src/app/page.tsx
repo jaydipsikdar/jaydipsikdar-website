@@ -13,10 +13,10 @@ export default function HomePage() {
           Bad marketing doesn&apos;t just waste money. It hands your market to someone else.
         </h1>
         <p className="text-lg text-brand-text mb-8">
-          I&apos;ve spent 20 years as a CMO at IBM, Adobe, MoEngage, and two AI startups — solving
-          this problem from the inside. Now I&apos;m taking what I&apos;ve learned and making it
-          accessible: free tools, decision frameworks, and practical resources for marketers,
-          solopreneurs, and consultants who don&apos;t have a marketing team behind them.
+          I&apos;ve spent 20 years in marketing — at IBM, Adobe, MoEngage, and now as CMO for two
+          AI startups. I&apos;m taking what I&apos;ve learned and making it accessible: free tools,
+          decision frameworks, and practical resources for marketers, solopreneurs, and consultants
+          who don&apos;t have a marketing team behind them.
         </p>
 
         <p className="mb-8">
@@ -36,7 +36,7 @@ export default function HomePage() {
           ============================================================ */}
       <section id="how-i-work" className="px-6 py-16 border-t border-gray-200">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-2xl font-semibold text-left mb-12">What You&apos;ll Find Here</h2>
+          <h2 className="text-2xl font-semibold text-center mb-12">What You&apos;ll Find Here</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
 
             {/* Left — Tools & frameworks */}
@@ -157,7 +157,7 @@ export default function HomePage() {
 
           <p className="text-brand-text leading-relaxed mb-8 text-center">
             21 episodes on marketing strategy, leadership, and what actually works — from someone
-            who&apos;s been in the room for two decades. Season 1 is complete.
+            who&apos;s been in the room for two decades. Season 1 is live.
           </p>
           <div className="flex justify-center gap-8 text-sm">
             <a
