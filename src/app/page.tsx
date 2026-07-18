@@ -13,7 +13,7 @@ export default function HomePage() {
           Bad marketing doesn&apos;t just waste money. It hands your market to someone else.
         </h1>
         <p className="text-lg text-brand-text mb-8">
-          I&apos;ve spent 20 years in marketing — at IBM, Adobe, MoEngage, and now as CMO for two
+          I&apos;ve spent 20 years in marketing at IBM, Adobe, MoEngage, and now as CMO for two
           AI startups. I&apos;m taking what I&apos;ve learned and making it accessible: free tools,
           decision frameworks, and practical resources for marketers, solopreneurs, and consultants
           who don&apos;t have a marketing team behind them.
