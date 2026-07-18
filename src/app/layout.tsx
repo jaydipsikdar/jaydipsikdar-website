@@ -56,9 +56,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <head>
-        {/* GA4 — Google Analytics 4 — Measurement ID: G-P9T14EF2G5 */}
+        {/* GA4 — Google Analytics 4 — Measurement ID: G-V5X6DHSLD7 */}
         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-P9T14EF2G5"
+          src="https://www.googletagmanager.com/gtag/js?id=G-V5X6DHSLD7"
           strategy="afterInteractive"
         />
         <Script id="ga4-init" strategy="afterInteractive">
@@ -66,7 +66,7 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-P9T14EF2G5');
+            gtag('config', 'G-V5X6DHSLD7');
           `}
         </Script>
       </head>
