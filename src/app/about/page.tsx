@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 
 export const metadata: Metadata = {
   title: 'About — Jaydip Sikdar',
   description:
-    'Fractional CMO and B2B marketing leader with 20+ years at IBM, Adobe, and MoEngage. Creator of The Marketing Couch podcast.',
+    '20 years inside IBM, Adobe, Cisco, and MoEngage. Now building free marketing tools and advising AI startups as CMO.',
 }
 
 export default function AboutPage() {
@@ -12,31 +11,67 @@ export default function AboutPage() {
     <main className="px-6 py-20 max-w-2xl mx-auto">
       <h1 className="text-3xl font-bold mb-10">About</h1>
 
-      <Image
-        src="/images/jaydip-sikdar.png"
-        alt="Jaydip Sikdar"
-        width={200}
-        height={200}
-        className="rounded-lg mb-10"
-        priority
-      />
-
-      {/* Long bio — FINAL, locked 2026-06-19, Variation A ~155 words */}
-      <div className="prose prose-gray max-w-none space-y-5 text-brand-text text-lg leading-relaxed">
+      <div className="space-y-5 text-brand-text text-lg leading-relaxed">
         <p>
-          Jaydip Sikdar is a Fractional CMO and B2B marketing leader with over 20 years of experience at companies including IBM and Adobe, and five years in Customer Success at Adobe and MoEngage, where he worked closely with 200+ CMOs to solve their growth, engagement, and retention problems.
+          Here&apos;s what 20 years inside IBM, Adobe, Cisco, and MoEngage taught me: the gap
+          between how large companies do marketing and how everyone else does it isn&apos;t about
+          talent or budget. It&apos;s about infrastructure.
         </p>
         <p>
-          He helps early-stage startup founders build and run their marketing function from the ground up — from brand positioning and go-to-market strategy to demand generation, marketing operations, and the technology infrastructure that makes it all work. He also hires and grooms marketing talent, giving founders a scalable team alongside a scalable strategy.
+          Enterprise marketing teams have decision frameworks for every recurring problem. Vendor
+          evaluation models. Launch playbooks. Positioning diagnostics they run quarterly. None of
+          this is revolutionary — it&apos;s just accumulated operational knowledge. And almost none
+          of it is accessible to the people outside those walls.
         </p>
         <p>
-          He is the creator and host of The Marketing Couch podcast and a frequent guest lecturer at leading business schools in India.
+          I know because I&apos;ve sat on both sides. I ran portfolio marketing and consulting
+          growth programs at IBM across five countries. At Adobe, I spent over six years leading
+          growth marketing for their consulting business across Americas, EMEA, and APAC, then moved
+          into customer success leadership for the region. At MoEngage, I led customer success for
+          India. At Cisco, I was among the first to market their mobile data services platform to
+          leading telecom operators globally. Across these roles — especially customer success — I
+          worked directly with 200+ CMOs, and the pattern became impossible to ignore: the most
+          common problems weren&apos;t unique. The same positioning mistakes, the same vendor traps,
+          the same launch blind spots showed up whether the company had 10 people or 10,000. The
+          difference was that larger companies had systems to catch them earlier.
+        </p>
+        <p>That&apos;s the problem I keep working on.</p>
+        <p>
+          <strong>The tools</strong> — I&apos;m building a set of free, interactive tools at
+          jaydipsikdar.com that package the frameworks I&apos;ve used and seen work. The Vendor
+          Contract Checker scores your agency contract clause-by-clause and flags what to
+          renegotiate. The Marketing Decision Advisor gives you a structured diagnosis and action
+          plan grounded in lessons from those 200+ CMO conversations. Each tool solves one specific
+          problem in minutes. More are in progress.
         </p>
         <p>
-          His focus areas include B2B marketing, SaaS growth, positioning, messaging, and AI-enabled marketing. Outside of work, he reads, plays squash, practices yoga, and rides motorcycles.
+          <strong>The consulting</strong> — I work as a fractional CMO for AI and B2B SaaS
+          startups, typically $1M–$10M ARR. I build the full marketing function — positioning, GTM,
+          demand gen, ops, tech stack — and hire the team to run it after I leave. Two current
+          clients, both AI companies in India.
+        </p>
+        <p>
+          <strong>The podcast</strong> — The Marketing Couch is 21 conversations with B2B
+          marketing, product, sales, and CS leaders about how they actually make decisions. Season 1
+          is complete. Available on Spotify, Apple Podcasts, and YouTube.
+        </p>
+        <p>
+          I also guest-lecture on marketing strategy at Christ University, PES University, Amity
+          University, and FORE School of Management.
+        </p>
+        <p className="text-sm text-gray-500">
+          Education: PGDM in Marketing, IMT Ghaziabad. BA in Media &amp; Communication, Manipal.
+          Advanced certification in Internet Marketing Strategies, Harvard Extension School.
+        </p>
+        <p>
+          <a
+            href="/resources"
+            className="text-brand-accent underline hover:opacity-80 transition-opacity"
+          >
+            Explore the tools →
+          </a>
         </p>
       </div>
-
     </main>
   )
 }
