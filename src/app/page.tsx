@@ -99,7 +99,7 @@ export default function HomePage() {
                 answer a few questions, and get a tailored advisory report grounded in 213 lessons
                 from senior marketing operators. Takes 2 minutes. Free.
               </p>
-              <div className="text-center">
+              <div className="text-left">
                 <a
                   href="/resources/marketing-advisor"
                   className="inline-block px-5 py-2.5 bg-brand-accent text-white text-sm rounded hover:opacity-90 transition-opacity"
@@ -115,7 +115,7 @@ export default function HomePage() {
                 Paste your vendor contract. Get a clause-by-clause risk score with renegotiation
                 language you can use before you sign.
               </p>
-              <div className="text-center">
+              <div className="text-left">
                 <a
                   href="/resources/vendor-check"
                   className="inline-block px-5 py-2.5 bg-brand-accent text-white text-sm rounded hover:opacity-90 transition-opacity whitespace-nowrap"
@@ -133,7 +133,7 @@ export default function HomePage() {
                 prompts you can run in ChatGPT, Claude, or Gemini to pressure-test your thinking.
                 Free PDF.
               </p>
-              <div className="text-center">
+              <div className="text-left">
                 <a
                   href="/resources"
                   className="inline-block px-5 py-2.5 bg-brand-accent text-white text-sm rounded hover:opacity-90 transition-opacity"
