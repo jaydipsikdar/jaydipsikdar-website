@@ -96,15 +96,14 @@ export default function ResourcesPage() {
           <div className="flex-1">
             <h2 className="text-lg font-semibold mb-3">CMO Boardroom Kit</h2>
             <p className="text-brand-text text-sm leading-relaxed mb-3">
-              Eight AI-powered marketing advisors you can run in ChatGPT, Claude, or Gemini — each
-              with a distinct perspective on positioning, demand gen, brand, customer growth,
-              revenue, org design, and AI strategy. Built from 21 long-form interviews with senior
-              marketing operators.
+              Making a big marketing call and want a second opinion? This kit gives you 213
+              distilled lessons from 21 senior marketing leaders — plus eight AI-powered advisor
+              prompts you can run in ChatGPT, Claude, or Gemini to pressure-test your thinking.
             </p>
             <p className="text-brand-text text-sm leading-relaxed mb-3">
-              Includes the full boardroom prompt (bring a decision, they debate it), eight
-              single-advisor prompts for quick opinions, and the complete lessons playbook — 213
-              distilled principles in plain language.
+              Includes the full boardroom prompt (bring a decision, they debate it), individual
+              advisor prompts for quick opinions, and the complete lessons playbook in plain
+              language.
             </p>
             <p className="text-brand-text text-sm font-medium">
               Free PDF. Works in any AI chat tool.

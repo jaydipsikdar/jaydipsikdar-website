@@ -93,17 +93,18 @@ export default function HomePage() {
 
           <div className="flex flex-wrap justify-center gap-6">
             <div className="border border-gray-200 rounded-lg p-6 flex flex-col w-full md:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]">
-              <h3 className="text-base font-semibold mb-3">CMO Boardroom Kit</h3>
+              <h3 className="text-base font-semibold mb-3">Marketing Decision Advisor</h3>
               <p className="text-brand-text text-sm leading-relaxed mb-6 flex-1">
-                The frameworks, templates, and checklists I use with my consulting clients.
-                Packaged for founders and marketing leads.
+                Pick a marketing challenge — positioning, brand, growth, AI strategy, or launch —
+                answer a few questions, and get a tailored advisory report grounded in 213 lessons
+                from senior marketing operators. Takes 2 minutes. Free.
               </p>
               <div className="text-center">
                 <a
-                  href="/resources"
+                  href="/resources/marketing-advisor"
                   className="inline-block px-5 py-2.5 bg-brand-accent text-white text-sm rounded hover:opacity-90 transition-opacity"
                 >
-                  Get the Kit →
+                  Get your advice →
                 </a>
               </div>
             </div>
@@ -120,6 +121,24 @@ export default function HomePage() {
                   className="inline-block px-5 py-2.5 bg-brand-accent text-white text-sm rounded hover:opacity-90 transition-opacity whitespace-nowrap"
                 >
                   Check your contract →
+                </a>
+              </div>
+            </div>
+
+            <div className="border border-gray-200 rounded-lg p-6 flex flex-col w-full md:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]">
+              <h3 className="text-base font-semibold mb-3">CMO Boardroom Kit</h3>
+              <p className="text-brand-text text-sm leading-relaxed mb-6 flex-1">
+                Making a big marketing call and want a second opinion? This kit gives you 213
+                distilled lessons from 21 senior marketing leaders — plus eight AI-powered advisor
+                prompts you can run in ChatGPT, Claude, or Gemini to pressure-test your thinking.
+                Free PDF.
+              </p>
+              <div className="text-center">
+                <a
+                  href="/resources"
+                  className="inline-block px-5 py-2.5 bg-brand-accent text-white text-sm rounded hover:opacity-90 transition-opacity"
+                >
+                  Get the Kit →
                 </a>
               </div>
             </div>
@@ -157,7 +176,7 @@ export default function HomePage() {
 
           <p className="text-brand-text leading-relaxed mb-8 text-center">
             21 episodes on marketing strategy, leadership, and what actually works — from someone
-            who&apos;s been in the room for two decades. Season 1 is live.
+            who&apos;s been in the room for two decades. Season 1 is complete.
           </p>
           <div className="flex justify-center gap-8 text-sm">
             <a
