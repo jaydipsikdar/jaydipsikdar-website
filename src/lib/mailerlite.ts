@@ -5,8 +5,12 @@ const KIT_GROUP_ID = '191412705135953404'
 // Vendor Contract Check — group created manually in MailerLite.
 const VENDOR_CHECK_GROUP_ID = '192702998964602139'
 
+// Marketing Decision Advisor — group created manually in MailerLite.
+const MARKETING_ADVISOR_GROUP_ID = '193314253973751516'
+
 function resolveGroupId(group?: string): string {
   if (group === 'vendor-check') return VENDOR_CHECK_GROUP_ID
+  if (group === 'marketing-advisor') return MARKETING_ADVISOR_GROUP_ID
   if (group === 'kit' || !group) return KIT_GROUP_ID
   return group
 }
