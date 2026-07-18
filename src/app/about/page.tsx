@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 
 export const metadata: Metadata = {
   title: 'About — Jaydip Sikdar',
@@ -11,11 +12,20 @@ export default function AboutPage() {
     <main className="px-6 py-20 max-w-2xl mx-auto">
       <h1 className="text-3xl font-bold mb-10">About</h1>
 
+      <Image
+        src="/images/jaydip-sikdar.png"
+        alt="Jaydip Sikdar"
+        width={150}
+        height={150}
+        className="rounded-full mb-10 object-cover"
+        priority
+      />
+
       <div className="space-y-5 text-brand-text text-lg leading-relaxed">
         <p>
-          Here&apos;s what 20 years inside IBM, Adobe, Cisco, and MoEngage taught me: the gap
-          between how large companies do marketing and how everyone else does it isn&apos;t about
-          talent or budget. It&apos;s about infrastructure.
+          I&apos;m Jaydip Sikdar. Here&apos;s what 20 years inside IBM, Adobe, Cisco, and MoEngage
+          taught me: the gap between how large companies do marketing and how everyone else does
+          it isn&apos;t about talent or budget. It&apos;s about infrastructure.
         </p>
         <p>
           Enterprise marketing teams have decision frameworks for every recurring problem. Vendor
@@ -56,12 +66,8 @@ export default function AboutPage() {
           is complete. Available on Spotify, Apple Podcasts, and YouTube.
         </p>
         <p>
-          I also guest-lecture on marketing strategy at Christ University, PES University, Amity
-          University, and FORE School of Management.
-        </p>
-        <p className="text-sm text-gray-500">
-          Education: PGDM in Marketing, IMT Ghaziabad. BA in Media &amp; Communication, Manipal.
-          Advanced certification in Internet Marketing Strategies, Harvard Extension School.
+          I&apos;ve guest-lectured on marketing strategy at Christ University, PES University,
+          Amity University, and FORE School of Management.
         </p>
         <p>
           <a
