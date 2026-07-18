@@ -740,6 +740,17 @@ const LESSON_CATEGORIES: { title: string; items: string[] }[] = [
 
 // ── Page builders ──
 
+const CHAPTER_TITLES = [
+  'Positioning and Fundamentals',
+  'Brand and Persuasion',
+  'Demand, ABM, and Pipeline',
+  'Launch and Product Marketing',
+  'Customer-Led Growth, Retention, and Community',
+  'The AI Era',
+  'Team and Org',
+  'Measurement and Alignment',
+]
+
 function buildCoverPage(doc: jsPDF, cur: Cursor) {
   const barHeight = 26
   setFillColor(doc, ACCENT)
@@ -751,78 +762,56 @@ function buildCoverPage(doc: jsPDF, cur: Cursor) {
   setFont(doc, 9.5, 'normal')
   doc.text('jaydipsikdar.com', cur.pageWidth / 2, 20, { align: 'center' })
 
-  cur.y = barHeight + 14
+  cur.y = barHeight + 11
 
   drawParagraph(doc, cur, 'The CMO Boardroom Kit', {
-    fontSize: 23,
+    fontSize: 21,
     style: 'bold',
     color: DARK,
-    lineHeight: mmPt(26),
+    lineHeight: mmPt(24),
     align: 'center',
   })
-  cur.addSpace(4)
+  cur.addSpace(3)
 
   drawParagraph(
     doc,
     cur,
     'A board of marketing operators in your pocket. Built from 21 long-form interviews on The Marketing Couch and 213 distilled lessons.',
-    { fontSize: 11, color: BODY_TEXT, lineHeight: mmPt(15.5), align: 'center', maxWidth: cur.contentWidth - 20 }
+    { fontSize: 10, color: BODY_TEXT, lineHeight: mmPt(13.5), align: 'center', maxWidth: cur.contentWidth - 15 }
   )
-  cur.addSpace(10)
+  cur.addSpace(7)
 
-  const items: CardItem[] = [
-    { kind: 'text', text: 'Inside:', fontSize: 9.5, style: 'bold', color: MUTED, lineHeight: mmPt(12) },
-    {
-      kind: 'mixed',
-      boldPrefix: '1. Part 1: The Full Boardroom — ',
-      text: 'multi-perspective debate on your decision',
-      fontSize: 10,
-      color: BODY_TEXT,
-      lineHeight: mmPt(14),
-      spaceBefore: 2.5,
-    },
-    {
-      kind: 'mixed',
-      boldPrefix: '2. Part 2: Eight Single Advisors — ',
-      text: "one sharp opinion when that's all you need",
-      fontSize: 10,
-      color: BODY_TEXT,
-      lineHeight: mmPt(14),
-      spaceBefore: 2,
-    },
-    {
-      kind: 'mixed',
-      boldPrefix: '3. Part 3: The Lessons Playbook — ',
-      text: '213 principles in plain language',
-      fontSize: 10,
-      color: BODY_TEXT,
-      lineHeight: mmPt(14),
-      spaceBefore: 2,
-    },
-  ]
-  drawCard(doc, cur, items, { bg: CREAM, border: BORDER, paddingH: 6, paddingV: 5 })
-  cur.addSpace(9)
-
-  drawParagraph(doc, cur, 'How to use it:', { fontSize: 10.5, style: 'bold', color: DARK, lineHeight: mmPt(14) })
-  cur.addSpace(1)
+  drawParagraph(doc, cur, 'How to use this Kit:', { fontSize: 10.5, style: 'bold', color: DARK, lineHeight: mmPt(13) })
+  cur.addSpace(0.8)
   drawParagraph(
     doc,
     cur,
-    'Copy any prompt below, paste it as your first message into ChatGPT, Claude, or Gemini, and go. Nothing to install.',
-    { fontSize: 10, color: BODY_TEXT, lineHeight: mmPt(14) }
+    "Open to the problem you're working on. Each chapter gives you the operator principles — what experienced marketing leaders have learned about that domain — followed by an AI advisor prompt you can paste into ChatGPT, Claude, or Gemini for specific advice on your situation. For decisions that cut across multiple domains, start with The Full Boardroom on the next page.",
+    { fontSize: 8.8, color: BODY_TEXT, lineHeight: mmPt(12) }
   )
+  cur.addSpace(6)
+
+  drawParagraph(doc, cur, 'Contents', { fontSize: 10.5, style: 'bold', color: DARK, lineHeight: mmPt(13) })
+  cur.addSpace(1)
+
+  const contentsFS = 9.3
+  const contentsLH = mmPt(11.5)
+  drawParagraph(doc, cur, 'The Full Boardroom', { fontSize: contentsFS, color: BODY_TEXT, lineHeight: contentsLH })
+  CHAPTER_TITLES.forEach((title, i) => {
+    drawParagraph(doc, cur, `Chapter ${i + 1}: ${title}`, { fontSize: contentsFS, color: BODY_TEXT, lineHeight: contentsLH })
+  })
 }
 
-function buildPart1(doc: jsPDF, cur: Cursor) {
+function buildFullBoardroom(doc: jsPDF, cur: Cursor) {
   doc.addPage()
   cur.y = cur.margin
 
-  drawParagraph(doc, cur, 'Part 1: The Full Boardroom', { fontSize: 18, style: 'bold', color: DARK, lineHeight: mmPt(22) })
+  drawParagraph(doc, cur, 'The Full Boardroom', { fontSize: 18, style: 'bold', color: DARK, lineHeight: mmPt(22) })
   cur.addSpace(2)
   drawParagraph(
     doc,
     cur,
-    'Use this when you have a real decision and want it argued from several angles before you commit. Paste the whole block, then answer the four questions it asks. In a hurry, start your message with QUICK MODE: and it skips straight to the answer.',
+    'Use this when you have a real decision and want it argued from several angles before you commit. This prompt convenes up to eight marketing leaders, each with a distinct perspective, to debate your specific situation and hand you a clear call. Paste the entire block below as your first message, then answer the four questions it asks. In a hurry, start your message with QUICK MODE: and it skips straight to the answer.',
     { fontSize: 9.5, color: BODY_TEXT, lineHeight: mmPt(13.5) }
   )
   cur.addSpace(5)
@@ -975,68 +964,66 @@ function buildAdvisorLines(doc: jsPDF, advisor: Advisor, innerWidth: number): PL
   return acc
 }
 
-function buildPart2(doc: jsPDF, cur: Cursor) {
+// Chapter N (by LESSON_CATEGORIES index) is paired with ADVISORS[CHAPTER_ADVISOR_INDEX[N]],
+// per the chapter-to-advisor mapping in the brief — the two arrays are ordered differently.
+const CHAPTER_ADVISOR_INDEX = [0, 3, 2, 4, 1, 5, 6, 7]
+
+const CHAPTER_ONE_LINERS = [
+  "Use this when you're working on positioning, messaging, or answering \"what do we actually do.\"",
+  "Use this when you're working on brand, story, creative, or standing out in a crowded feed.",
+  "Use this when you're working on pipeline, targeting accounts, or finding an edge.",
+  "Use this when you're working on launches, messaging readiness, or feature-to-value translation.",
+  "Use this when you're working on retention, expansion, community, or customer-marketing problems.",
+  "Use this when you're working on AI search, content strategy, or using AI without getting generic.",
+  "Use this when you're working on hiring, first marketing hires, team structure, or ownership.",
+  "Use this when you're working on budget, channel mix, sales alignment, or proving marketing's value.",
+]
+
+const ADVISOR_PROMPT_INTRO = 'Paste this prompt to get one sharp, opinionated take on your specific situation.'
+
+function buildChapter(doc: jsPDF, cur: Cursor, chapterNum: number) {
+  const category = LESSON_CATEGORIES[chapterNum - 1]
+  const advisor = ADVISORS[CHAPTER_ADVISOR_INDEX[chapterNum - 1]]
+  const oneLiner = CHAPTER_ONE_LINERS[chapterNum - 1]
+
   doc.addPage()
   cur.y = cur.margin
 
-  drawParagraph(doc, cur, 'Part 2: The Eight Single Advisors', { fontSize: 18, style: 'bold', color: DARK, lineHeight: mmPt(22) })
-  cur.addSpace(2)
-  drawParagraph(doc, cur, 'Use these when you want one strong opinion fast. Each is a standalone prompt. Copy the one you need.', {
-    fontSize: 9.5,
-    color: BODY_TEXT,
-    lineHeight: mmPt(13.5),
-  })
+  drawParagraph(doc, cur, `Chapter ${chapterNum}: ${category.title}`, { fontSize: 18, style: 'bold', color: DARK, lineHeight: mmPt(22) })
+  cur.addSpace(1.5)
+  drawParagraph(doc, cur, oneLiner, { fontSize: 9.5, style: 'italic', color: MUTED, lineHeight: mmPt(13) })
   cur.addSpace(5)
 
-  const innerWidth = cur.contentWidth - PROMPT_PAD_H * 2
-  const headingLH = mmPt(14)
-  const onelinerLH = mmPt(12.5)
-
-  ADVISORS.forEach((advisor, i) => {
-    const lines = buildAdvisorLines(doc, advisor, innerWidth)
-    const boxHeight = promptBoxTotalHeight(lines)
-
-    setFont(doc, 9, 'italic')
-    const onelinerWrapped: string[] = doc.splitTextToSize(sanitizeText(advisor.forLine), cur.contentWidth)
-    const headingBlockHeight = headingLH + 1.2 + onelinerWrapped.length * onelinerLH + 3
-
-    ensureBlockTogether(doc, cur, headingBlockHeight + boxHeight)
-
-    drawParagraph(doc, cur, `${i + 1}. ${advisor.name}`, { fontSize: 12.5, style: 'bold', color: DARK, lineHeight: headingLH })
-    cur.addSpace(1.2)
-    drawParagraph(doc, cur, advisor.forLine, { fontSize: 9, style: 'italic', color: MUTED, lineHeight: onelinerLH })
-    cur.addSpace(3)
-
-    renderPromptBox(doc, cur, lines)
-    cur.addSpace(3)
-  })
-}
-
-function buildPart3(doc: jsPDF, cur: Cursor) {
-  doc.addPage()
-  cur.y = cur.margin
-
-  drawParagraph(doc, cur, 'Part 3: The Lessons Playbook', { fontSize: 18, style: 'bold', color: DARK, lineHeight: mmPt(22) })
+  drawParagraph(doc, cur, 'What Operators Know', { fontSize: 11.5, style: 'bold', color: DARK, lineHeight: mmPt(15) })
   cur.addSpace(2)
-  drawParagraph(
-    doc,
-    cur,
-    'The operator wisdom behind the board, pulled from 21 episodes of The Marketing Couch and condensed to the lines worth keeping. Use it as a checklist when you make a call.',
-    { fontSize: 9.5, color: BODY_TEXT, lineHeight: mmPt(13.5) }
-  )
-  cur.addSpace(6)
 
   const lessonFS = 10
   const lessonLH = mmPt(14.5)
-  const headingLH = mmPt(17)
+  category.items.forEach((item, i) => drawLessonItem(doc, cur, i + 1, item, lessonFS, BODY_TEXT, lessonLH))
+  cur.addSpace(6)
 
-  LESSON_CATEGORIES.forEach((cat, ci) => {
-    cur.ensureSpace(headingLH + lessonLH)
-    drawParagraph(doc, cur, cat.title, { fontSize: 13, style: 'bold', color: DARK, lineHeight: headingLH })
-    cur.addSpace(1.5)
-    cat.items.forEach((item, i) => drawLessonItem(doc, cur, i + 1, item, lessonFS, BODY_TEXT, lessonLH))
-    if (ci < LESSON_CATEGORIES.length - 1) cur.addSpace(4)
-  })
+  const innerWidth = cur.contentWidth - PROMPT_PAD_H * 2
+  const lines = buildAdvisorLines(doc, advisor, innerWidth)
+  const boxHeight = promptBoxTotalHeight(lines)
+
+  const headingLH = mmPt(15)
+  const onelinerLH = mmPt(12.5)
+  setFont(doc, 9, 'italic')
+  const onelinerWrapped: string[] = doc.splitTextToSize(sanitizeText(ADVISOR_PROMPT_INTRO), cur.contentWidth)
+  const headingBlockHeight = headingLH + 1.2 + onelinerWrapped.length * onelinerLH + 3
+
+  ensureBlockTogether(doc, cur, headingBlockHeight + boxHeight)
+
+  drawParagraph(doc, cur, `Your Advisor: ${advisor.name}`, { fontSize: 12.5, style: 'bold', color: DARK, lineHeight: headingLH })
+  cur.addSpace(1.2)
+  drawParagraph(doc, cur, ADVISOR_PROMPT_INTRO, { fontSize: 9, style: 'italic', color: MUTED, lineHeight: onelinerLH })
+  cur.addSpace(3)
+
+  renderPromptBox(doc, cur, lines)
+}
+
+function buildChapters(doc: jsPDF, cur: Cursor) {
+  for (let n = 1; n <= 8; n++) buildChapter(doc, cur, n)
 }
 
 function buildClosing(doc: jsPDF, cur: Cursor) {
@@ -1106,9 +1093,8 @@ function generateKitPDF(): { bytes: Uint8Array; pageCount: number } {
   const cur = new Cursor(doc)
 
   buildCoverPage(doc, cur)
-  buildPart1(doc, cur)
-  buildPart2(doc, cur)
-  buildPart3(doc, cur)
+  buildFullBoardroom(doc, cur)
+  buildChapters(doc, cur)
   buildClosing(doc, cur)
   drawFooters(doc)
 
