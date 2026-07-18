@@ -23,6 +23,9 @@ const ACCENT_BG = hex('#fdeee8')
 const AMBER_TEXT = hex('#b45309')
 const AMBER_BG = hex('#fffbeb')
 const AMBER_BORDER = hex('#fde68a')
+const AMBER_BADGE = hex('#fbbf24')
+const GRAY_BADGE = hex('#f3f4f6')
+const WHITE: RGB = [255, 255, 255]
 
 const CATEGORY_LABELS: Record<MarketingCategory, string> = {
   positioning: 'Positioning & Messaging',
@@ -162,6 +165,70 @@ function setDrawColor(doc: jsPDF, c: RGB) {
   doc.setDrawColor(c[0], c[1], c[2])
 }
 
+// ── Icon badges ──
+// Small hand-drawn vector icons (jsPDF primitives only — no icon fonts or
+// unicode glyphs, so they render identically everywhere). Mirrors the
+// icon set used on-screen in AdvisorIcons.tsx, simplified for print.
+
+type IconKind = 'search' | 'target' | 'checklist' | 'alert' | 'question'
+
+const BADGE_D = 6.5
+
+function drawIconGlyph(doc: jsPDF, kind: IconKind, cx: number, cy: number, r: number, color: RGB) {
+  setDrawColor(doc, color)
+  doc.setLineWidth(0.5)
+  if (kind === 'search') {
+    const lensR = r * 0.5
+    const lensCx = cx - r * 0.18
+    const lensCy = cy - r * 0.18
+    doc.circle(lensCx, lensCy, lensR, 'S')
+    doc.line(lensCx + lensR * 0.75, lensCy + lensR * 0.75, cx + r * 0.55, cy + r * 0.55)
+  } else if (kind === 'target') {
+    doc.circle(cx, cy, r * 0.75, 'S')
+    doc.circle(cx, cy, r * 0.4, 'S')
+    setFillColor(doc, color)
+    doc.circle(cx, cy, r * 0.14, 'F')
+  } else if (kind === 'checklist') {
+    const w = r * 1.15
+    const startX = cx - w / 2
+    for (const dy of [-r * 0.4, 0, r * 0.4]) {
+      doc.line(startX, cy + dy, startX + w, cy + dy)
+    }
+  } else if (kind === 'alert') {
+    const size = r * 1.25
+    doc.triangle(cx, cy - size * 0.62, cx - size * 0.56, cy + size * 0.46, cx + size * 0.56, cy + size * 0.46, 'S')
+    doc.line(cx, cy - size * 0.12, cx, cy + size * 0.12)
+    setFillColor(doc, color)
+    doc.circle(cx, cy + size * 0.32, 0.45, 'F')
+  } else if (kind === 'question') {
+    setFont(doc, r * 3, 'bold')
+    setTextColor(doc, color)
+    doc.text('?', cx, cy + r * 0.45, { align: 'center' })
+  }
+}
+
+function drawIconHeading(
+  doc: jsPDF,
+  cur: Cursor,
+  opts: { icon: IconKind; badgeBg: RGB; iconColor: RGB; text: string; fontSize: number; textColor: RGB; lineHeight: number }
+) {
+  const rowHeight = Math.max(BADGE_D, opts.lineHeight)
+  cur.ensureSpace(rowHeight)
+  const topY = cur.y
+  const cx = cur.margin + BADGE_D / 2
+  const cy = topY + BADGE_D / 2
+
+  setFillColor(doc, opts.badgeBg)
+  doc.circle(cx, cy, BADGE_D / 2, 'F')
+  drawIconGlyph(doc, opts.icon, cx, cy, BADGE_D / 2 * 0.62, opts.iconColor)
+
+  setFont(doc, opts.fontSize, 'bold')
+  setTextColor(doc, opts.textColor)
+  doc.text(opts.text, cur.margin + BADGE_D + 3, cy + opts.fontSize * 0.14)
+
+  cur.y = topY + rowHeight
+}
+
 function drawParagraph(
   doc: jsPDF,
   cur: Cursor,
@@ -208,6 +275,27 @@ type CardItem =
       lineHeight: number
       spaceBefore?: number
     }
+  | {
+      kind: 'iconHeading'
+      icon: IconKind
+      badgeBg: RGB
+      iconColor: RGB
+      text: string
+      fontSize: number
+      textColor: RGB
+      lineHeight: number
+      spaceBefore?: number
+    }
+  | {
+      kind: 'pill'
+      text: string
+      fontSize: number
+      textColor: RGB
+      bgColor: RGB
+      lineHeight: number
+      paddingH: number
+      spaceBefore?: number
+    }
   | { kind: 'space'; height: number }
 
 function measureCardHeight(doc: jsPDF, items: CardItem[], innerWidth: number, paddingV: number): number {
@@ -236,6 +324,10 @@ function measureCardHeight(doc: jsPDF, items: CardItem[], innerWidth: number, pa
         const wrapped = doc.splitTextToSize(item.text, innerWidth)
         h += wrapped.length * item.lineHeight
       }
+    } else if (item.kind === 'iconHeading') {
+      h += Math.max(BADGE_D, item.lineHeight)
+    } else if (item.kind === 'pill') {
+      h += item.lineHeight
     }
   }
   return h
@@ -289,6 +381,27 @@ function drawCardItems(doc: jsPDF, items: CardItem[], x: number, startY: number,
           y += item.lineHeight
         }
       }
+    } else if (item.kind === 'iconHeading') {
+      const rowHeight = Math.max(BADGE_D, item.lineHeight)
+      const cx = x + BADGE_D / 2
+      const cy = y + BADGE_D / 2
+      setFillColor(doc, item.badgeBg)
+      doc.circle(cx, cy, BADGE_D / 2, 'F')
+      drawIconGlyph(doc, item.icon, cx, cy, (BADGE_D / 2) * 0.62, item.iconColor)
+      setFont(doc, item.fontSize, 'bold')
+      setTextColor(doc, item.textColor)
+      doc.text(item.text, x + BADGE_D + 3, cy + item.fontSize * 0.14)
+      y += rowHeight
+    } else if (item.kind === 'pill') {
+      const textWidth = doc.getTextWidth(item.text)
+      const pillWidth = Math.min(textWidth + item.paddingH * 2, innerWidth)
+      const pillHeight = item.lineHeight - 1
+      setFillColor(doc, item.bgColor)
+      doc.roundedRect(x, y, pillWidth, pillHeight, pillHeight / 2, pillHeight / 2, 'F')
+      setFont(doc, item.fontSize, 'bold')
+      setTextColor(doc, item.textColor)
+      doc.text(item.text, x + item.paddingH, y + pillHeight * 0.68)
+      y += item.lineHeight
     }
   }
   return y
@@ -374,13 +487,16 @@ function buildContextSection(doc: jsPDF, cur: Cursor, result: MarketingAdvisorRe
 
 function buildDiagnosisSection(doc: jsPDF, cur: Cursor, result: MarketingAdvisorResult) {
   cur.addSpace(4)
-  drawParagraph(doc, cur, 'Diagnosis', {
+  drawIconHeading(doc, cur, {
+    icon: 'search',
+    badgeBg: GRAY_BADGE,
+    iconColor: MUTED,
+    text: 'Diagnosis',
     fontSize: 12,
-    style: 'bold',
-    color: DARK,
+    textColor: DARK,
     lineHeight: mmPt(16),
   })
-  cur.addSpace(1)
+  cur.addSpace(2)
   drawParagraph(doc, cur, result.diagnosis, {
     fontSize: 9.5,
     color: BODY_TEXT,
@@ -391,11 +507,13 @@ function buildDiagnosisSection(doc: jsPDF, cur: Cursor, result: MarketingAdvisor
 
   const items: CardItem[] = [
     {
-      kind: 'text',
+      kind: 'iconHeading',
+      icon: 'target',
+      badgeBg: ACCENT,
+      iconColor: WHITE,
       text: 'The First Thing to Fix',
       fontSize: 11,
-      style: 'bold',
-      color: DARK,
+      textColor: DARK,
       lineHeight: mmPt(14),
     },
     {
@@ -404,7 +522,7 @@ function buildDiagnosisSection(doc: jsPDF, cur: Cursor, result: MarketingAdvisor
       fontSize: 9.5,
       color: BODY_TEXT,
       lineHeight: mmPt(14),
-      spaceBefore: 1.4,
+      spaceBefore: 2,
     },
   ]
   drawCard(doc, cur, items, { bg: ACCENT_BG, border: ACCENT, paddingH: 4, paddingV: 3.5 })
@@ -417,6 +535,14 @@ function buildDiagnosisSection(doc: jsPDF, cur: Cursor, result: MarketingAdvisor
 
 function buildOneQuestion(doc: jsPDF, cur: Cursor, result: MarketingAdvisorResult) {
   cur.addSpace(5)
+
+  const iconR = 3.4
+  cur.ensureSpace(iconR * 2)
+  setFillColor(doc, ACCENT_BG)
+  doc.circle(cur.pageWidth / 2, cur.y + iconR, iconR, 'F')
+  drawIconGlyph(doc, 'question', cur.pageWidth / 2, cur.y + iconR, iconR * 0.62, ACCENT)
+  cur.addSpace(iconR * 2 + 2)
+
   drawParagraph(doc, cur, 'ONE QUESTION TO SIT WITH', {
     fontSize: 8,
     style: 'bold',
@@ -441,11 +567,16 @@ function buildMovesPages(doc: jsPDF, cur: Cursor, result: MarketingAdvisorResult
   cur.hr()
   cur.addSpace(6)
 
-  cur.ensureSpace(mmPt(18) + 2.8)
-  setFont(doc, 14, 'bold')
-  setTextColor(doc, DARK)
-  doc.text('Your Moves', cur.margin, cur.y + mmPt(18) * 0.75)
-  cur.y += mmPt(18) + 2.8
+  drawIconHeading(doc, cur, {
+    icon: 'checklist',
+    badgeBg: ACCENT,
+    iconColor: WHITE,
+    text: 'Your Moves',
+    fontSize: 14,
+    textColor: DARK,
+    lineHeight: mmPt(18),
+  })
+  cur.addSpace(2.8)
 
   for (const move of result.moves) {
     cur.addSpace(4)
@@ -458,11 +589,13 @@ function buildMovesPages(doc: jsPDF, cur: Cursor, result: MarketingAdvisorResult
 
   const items: CardItem[] = [
     {
-      kind: 'text',
+      kind: 'iconHeading',
+      icon: 'alert',
+      badgeBg: AMBER_BADGE,
+      iconColor: WHITE,
       text: 'What Would Break This',
       fontSize: 11,
-      style: 'bold',
-      color: DARK,
+      textColor: DARK,
       lineHeight: mmPt(14),
     },
     {
@@ -471,7 +604,7 @@ function buildMovesPages(doc: jsPDF, cur: Cursor, result: MarketingAdvisorResult
       fontSize: 9.5,
       color: BODY_TEXT,
       lineHeight: mmPt(14),
-      spaceBefore: 1.4,
+      spaceBefore: 2,
     },
   ]
   drawCard(doc, cur, items, { bg: AMBER_BG, border: AMBER_BORDER, paddingH: 4, paddingV: 3.5 })
@@ -495,13 +628,14 @@ function buildMoveCard(doc: jsPDF, cur: Cursor, move: AdvisorMove) {
       spaceBefore: 1,
     },
     {
-      kind: 'text',
+      kind: 'pill',
       text: move.lessonTag,
-      fontSize: 8,
-      style: 'bold',
-      color: ACCENT,
+      fontSize: 7.5,
+      textColor: ACCENT,
+      bgColor: ACCENT_BG,
       lineHeight: mmPt(11),
-      spaceBefore: 1.2,
+      paddingH: 2.2,
+      spaceBefore: 1.6,
     },
     {
       kind: 'mixed',
@@ -572,7 +706,7 @@ function drawFooters(doc: jsPDF) {
 
     setFont(doc, 7.5, 'normal')
     setTextColor(doc, LIGHT_MUTED)
-    doc.text('Jaydip Sikdar  ·  jaydipsikdar.com', margin, textY)
+    doc.text('jaydipsikdar.com', margin, textY)
     doc.text(
       'AI-assisted analysis built from 213 operator lessons, 21 CMO interviews. Not a substitute for professional advice.',
       pageWidth - margin,
