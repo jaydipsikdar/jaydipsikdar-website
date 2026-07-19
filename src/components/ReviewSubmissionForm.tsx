@@ -6,10 +6,25 @@ import type { ProductSlug } from '@/lib/reviews'
 
 const REVIEW_TEXT_MAX = 500
 
-function LinkedInShareButton({ productName }: { productName: string }) {
+// Canonical page for each product — used for the LinkedIn share link so it
+// always points at the tool's own page, not whatever URL the form happens
+// to be rendered on (e.g. with a stray ?review=true left in it).
+const TOOL_PATHS: Record<ProductSlug, string> = {
+  'marketing-advisor': '/resources/marketing-advisor',
+  'vendor-check': '/resources/vendor-check',
+  'cmo-boardroom-kit': '/resources',
+}
+
+function LinkedInShareButton({
+  productSlug,
+  productName,
+}: {
+  productSlug: ProductSlug
+  productName: string
+}) {
   function handleShare() {
-    const toolURL = window.location.href
-    const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(toolURL)}`
+    const toolUrl = `https://jaydipsikdar.com${TOOL_PATHS[productSlug]}`
+    const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(toolUrl)}`
     window.open(shareUrl, '_blank', 'noopener,noreferrer')
   }
 
@@ -81,7 +96,7 @@ export default function ReviewSubmissionForm({
         <p className="text-brand-text font-medium mb-4">
           Thank you! Your review will appear shortly.
         </p>
-        <LinkedInShareButton productName={productName} />
+        <LinkedInShareButton productSlug={productSlug} productName={productName} />
       </div>
     )
   }

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { PRODUCT_SLUGS, isProductSlug, type ApprovedReview } from '@/lib/reviews'
+import { sendReviewNotificationEmail } from '@/lib/notifications'
 
 export const runtime = 'nodejs'
 
@@ -82,6 +83,21 @@ export async function POST(request: Request) {
   if (error) {
     console.error('[reviews] insert failed:', error)
     return NextResponse.json({ error: 'Could not submit review' }, { status: 502 })
+  }
+
+  // Notify Jaydip a review is waiting for moderation. Must never fail or
+  // delay the submission response — the review is already saved.
+  try {
+    await sendReviewNotificationEmail({
+      productSlug: body.product_slug,
+      rating,
+      reviewerName,
+      reviewerTitle,
+      reviewerCompany,
+      reviewText,
+    })
+  } catch (err) {
+    console.error('[reviews] notification email failed:', err)
   }
 
   return NextResponse.json(
