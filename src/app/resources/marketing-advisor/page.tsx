@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import MarketingAdvisorFlow from '@/components/MarketingAdvisorFlow'
 
 export const metadata: Metadata = {
@@ -10,7 +11,9 @@ export const metadata: Metadata = {
 export default function MarketingAdvisorPage() {
   return (
     <main className="px-6 py-20 max-w-2xl mx-auto">
-      <MarketingAdvisorFlow />
+      <Suspense fallback={null}>
+        <MarketingAdvisorFlow />
+      </Suspense>
     </main>
   )
 }

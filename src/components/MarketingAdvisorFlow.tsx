@@ -1,11 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import CategorySelect, { type MarketingCategory } from './CategorySelect'
 import AdvisorQuestions, { type AdvisorAnswers } from './AdvisorQuestions'
 import AdvisorResults, { type MarketingAdvisorResult } from './AdvisorResults'
 import AdvisorSamplePreview from './AdvisorSamplePreview'
 import ReviewDisplay from './ReviewDisplay'
+import ReviewSubmissionForm from './ReviewSubmissionForm'
 
 type Step = 'landing' | 'questions' | 'processing' | 'results' | 'error'
 
@@ -14,6 +16,18 @@ export default function MarketingAdvisorFlow() {
   const [category, setCategory] = useState<MarketingCategory | null>(null)
   const [result, setResult] = useState<MarketingAdvisorResult | null>(null)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
+  const searchParams = useSearchParams()
+  const [showReviewForm, setShowReviewForm] = useState(false)
+  const reviewFormRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (searchParams.get('review') === 'true') setShowReviewForm(true)
+  }, [searchParams])
+
+  useEffect(() => {
+    if (showReviewForm) reviewFormRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }, [showReviewForm])
 
   function handleCategorySelect(selected: MarketingCategory) {
     setCategory(selected)
@@ -74,6 +88,34 @@ export default function MarketingAdvisorFlow() {
         <ReviewDisplay productSlug="marketing-advisor" />
 
         <CategorySelect onSelect={handleCategorySelect} />
+
+        {showReviewForm ? (
+          <div
+            ref={reviewFormRef}
+            id="review-form"
+            className="review-pulse mt-12 pt-8 border-t border-gray-200"
+          >
+            <ReviewSubmissionForm
+              productSlug="marketing-advisor"
+              productName="Marketing Decision Advisor"
+            />
+          </div>
+        ) : (
+          <p className="text-center text-sm mt-10" style={{ color: '#666666' }}>
+            Already used this tool?{' '}
+            <a
+              href="?review=true"
+              onClick={(e) => {
+                e.preventDefault()
+                setShowReviewForm(true)
+                window.history.replaceState(null, '', '?review=true')
+              }}
+              className="text-brand-accent hover:opacity-80 transition-opacity"
+            >
+              Rate your experience →
+            </a>
+          </p>
+        )}
       </div>
     )
   }

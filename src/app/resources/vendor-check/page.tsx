@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import VendorCheckFlow from '@/components/VendorCheckFlow'
 
 export const metadata: Metadata = {
@@ -10,7 +11,9 @@ export const metadata: Metadata = {
 export default function VendorCheckPage() {
   return (
     <main className="px-6 py-20 max-w-2xl mx-auto">
-      <VendorCheckFlow />
+      <Suspense fallback={null}>
+        <VendorCheckFlow />
+      </Suspense>
     </main>
   )
 }

@@ -1,11 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import ContractIntake from './ContractIntake'
 import ContextQuestions, { ContextAnswers } from './ContextQuestions'
 import ResultsReport, { VendorCheckResult } from './ResultsReport'
 import SampleReportPreview from './SampleReportPreview'
 import ReviewDisplay from './ReviewDisplay'
+import ReviewSubmissionForm from './ReviewSubmissionForm'
 
 type Step = 'landing' | 'context' | 'processing' | 'results' | 'error'
 
@@ -15,6 +17,18 @@ export default function VendorCheckFlow() {
   const [result, setResult] = useState<VendorCheckResult | null>(null)
   const [processStage, setProcessStage] = useState<string | undefined>(undefined)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
+  const searchParams = useSearchParams()
+  const [showReviewForm, setShowReviewForm] = useState(false)
+  const reviewFormRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (searchParams.get('review') === 'true') setShowReviewForm(true)
+  }, [searchParams])
+
+  useEffect(() => {
+    if (showReviewForm) reviewFormRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }, [showReviewForm])
 
   function handleIntakeContinue(text: string) {
     setContractText(text)
@@ -74,6 +88,31 @@ export default function VendorCheckFlow() {
         <ReviewDisplay productSlug="vendor-check" />
 
         <ContractIntake onContinue={handleIntakeContinue} />
+
+        {showReviewForm ? (
+          <div
+            ref={reviewFormRef}
+            id="review-form"
+            className="review-pulse mt-12 pt-8 border-t border-gray-200"
+          >
+            <ReviewSubmissionForm productSlug="vendor-check" productName="Vendor Contract Check" />
+          </div>
+        ) : (
+          <p className="text-center text-sm mt-10" style={{ color: '#666666' }}>
+            Already used this tool?{' '}
+            <a
+              href="?review=true"
+              onClick={(e) => {
+                e.preventDefault()
+                setShowReviewForm(true)
+                window.history.replaceState(null, '', '?review=true')
+              }}
+              className="text-brand-accent hover:opacity-80 transition-opacity"
+            >
+              Rate your experience →
+            </a>
+          </p>
+        )}
       </div>
     )
   }
