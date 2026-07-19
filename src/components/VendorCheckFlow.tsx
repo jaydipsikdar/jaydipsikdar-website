@@ -73,7 +73,7 @@ export default function VendorCheckFlow() {
     return (
       <div>
         <h1 className="text-3xl font-bold text-center mb-4">
-          Is your vendor contract protecting you — or them?
+          Is your vendor contract protecting you?
         </h1>
         <p className="text-center text-brand-text mb-10 max-w-xl mx-auto">
           Paste your lead generation agency contract below. We&apos;ll score it across five
