@@ -68,11 +68,17 @@ export default function HomePage() {
               <h3 className="text-lg font-semibold text-left mb-4">
                 Tools and frameworks from 20 years of CMO work
               </h3>
-              <p className="text-brand-text leading-relaxed mb-8">
+              <p className="text-brand-text leading-relaxed mb-4">
                 Every resource on this site comes from a real marketing problem I&apos;ve faced —
                 and solved — across IBM, Adobe, MoEngage, and two AI startups. Vendor contract
                 risk-scoring, decision frameworks for marketing leaders, budget allocation models,
                 and more on the way. Free, practical, and built to be used this week.
+              </p>
+              <p className="text-brand-text leading-relaxed mb-8">
+                About to sign an agency contract? Run it through the Vendor Contract Check before
+                you commit. Stuck on a positioning or launch decision? Bring it to the Marketing
+                Decision Advisor and get a structured second opinion. More tools are in progress —
+                each one solves a specific problem in minutes.
               </p>
               <div className="text-left mt-auto">
                 <a
