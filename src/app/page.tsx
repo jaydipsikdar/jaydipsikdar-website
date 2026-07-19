@@ -1,5 +1,5 @@
-import MailerLiteForm from '@/components/MailerLiteForm'
 import RazorpayBookButton from '@/components/RazorpayBookButton'
+import KitSignupForm from '@/components/KitSignupForm'
 
 export default function HomePage() {
   return (
@@ -27,8 +27,32 @@ export default function HomePage() {
             Explore the tools →
           </a>
         </p>
+      </section>
 
-        <MailerLiteForm />
+      {/* ============================================================
+          FEATURED TOOL — Marketing Decision Advisor
+          Prime slot below the hero. Ungated — links straight to the tool.
+          ============================================================ */}
+      <section id="featured-advisor" className="px-6 py-16 border-t border-gray-200">
+        <div className="max-w-2xl mx-auto">
+          <div className="border border-gray-200 rounded-xl bg-white p-8 md:p-10 text-center shadow-sm">
+            <h2 className="text-2xl font-semibold mb-4">Try the Marketing Decision Advisor</h2>
+            <p className="text-brand-text leading-relaxed mb-8">
+              Bring any marketing decision — positioning, launch timing, budget allocation,
+              campaign strategy. Pick your category, describe the situation, and get a structured
+              recommendation with reasoning you can act on or push back against. No signup needed.
+            </p>
+            <a
+              href="/resources/marketing-advisor"
+              className="inline-block px-6 py-3 bg-brand-accent text-white rounded hover:opacity-90 transition-opacity"
+            >
+              Get a second opinion →
+            </a>
+            <p className="text-xs text-gray-500 mt-4">
+              Grounded in 213 lessons from 21 senior marketing leaders. Free, no signup required.
+            </p>
+          </div>
+        </div>
       </section>
 
       {/* ============================================================
@@ -91,30 +115,25 @@ export default function HomePage() {
             Free Tools & Frameworks — From Two Decades in the CMO Seat
           </h2>
 
-          <div className="flex flex-wrap justify-center gap-6">
-            <div className="border border-gray-200 rounded-lg p-6 flex flex-col w-full md:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]">
-              <h3 className="text-base font-semibold mb-3">Marketing Decision Advisor</h3>
-              <p className="text-brand-text text-sm leading-relaxed mb-6 flex-1">
-                Pick a marketing challenge — positioning, brand, growth, AI strategy, or launch —
-                answer a few questions, and get a tailored advisory report grounded in 213 lessons
-                from senior marketing operators. Takes 2 minutes. Free.
-              </p>
-              <div className="text-left">
-                <a
-                  href="/resources/marketing-advisor"
-                  className="inline-block px-5 py-2.5 bg-brand-accent text-white text-sm rounded hover:opacity-90 transition-opacity"
-                >
-                  Get your advice →
-                </a>
-              </div>
-            </div>
-
-            <div className="border border-gray-200 rounded-lg p-6 flex flex-col w-full md:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+            <div className="border border-gray-200 rounded-lg p-6 flex flex-col">
               <h3 className="text-base font-semibold mb-3">Vendor Contract Check</h3>
-              <p className="text-brand-text text-sm leading-relaxed mb-6 flex-1">
-                Paste your vendor contract. Get a clause-by-clause risk score with renegotiation
-                language you can use before you sign.
-              </p>
+              <div className="flex-1">
+                <p className="text-brand-text text-sm leading-relaxed mb-3">
+                  Most vendor contracts are written to protect the vendor. This tool reads yours
+                  and tells you where.
+                </p>
+                <p className="text-brand-text text-sm leading-relaxed mb-3">
+                  Paste or upload your contract — it scores every clause across scope, targets,
+                  data rights, exit terms, and payment structure. You get a risk score, flagged
+                  clauses, and specific renegotiation language you can use before you sign. Takes
+                  2 minutes. Free.
+                </p>
+                <p className="text-brand-text text-sm leading-relaxed mb-6">
+                  Built after a real engagement where a three-month retainer delivered nothing —
+                  and the contract was designed to make that acceptable.
+                </p>
+              </div>
               <div className="text-left">
                 <a
                   href="/resources/vendor-check"
@@ -125,22 +144,25 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="border border-gray-200 rounded-lg p-6 flex flex-col w-full md:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]">
-              <h3 className="text-base font-semibold mb-3">CMO Boardroom Kit</h3>
-              <p className="text-brand-text text-sm leading-relaxed mb-6 flex-1">
-                Making a big marketing call and want a second opinion? This kit gives you 213
-                distilled lessons from 21 senior marketing leaders — plus eight AI-powered advisor
-                prompts you can run in ChatGPT, Claude, or Gemini to pressure-test your thinking.
-                Free PDF.
-              </p>
-              <div className="text-left">
-                <a
-                  href="/resources"
-                  className="inline-block px-5 py-2.5 bg-brand-accent text-white text-sm rounded hover:opacity-90 transition-opacity"
-                >
-                  Get the Kit →
-                </a>
+            <div className="border border-gray-200 rounded-lg p-6 flex flex-col">
+              <h3 className="text-base font-semibold mb-3">Get the CMO Boardroom Kit — Free</h3>
+              <div className="flex-1">
+                <p className="text-brand-text text-sm leading-relaxed mb-3">
+                  Making a big marketing call and want a second opinion? This kit gives you 213
+                  distilled lessons from 21 senior marketing leaders — plus eight AI-powered
+                  advisor prompts you can run in ChatGPT, Claude, or Gemini to pressure-test your
+                  thinking.
+                </p>
+                <p className="text-brand-text text-sm leading-relaxed mb-3">
+                  Includes the full boardroom prompt (bring a decision, they debate it),
+                  individual advisor prompts for quick opinions, and the complete lessons
+                  playbook in plain language.
+                </p>
+                <p className="text-brand-text text-sm font-medium mb-6">
+                  Free PDF. Works in any AI chat tool.
+                </p>
               </div>
+              <KitSignupForm />
             </div>
           </div>
 
