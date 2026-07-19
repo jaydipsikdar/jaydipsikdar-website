@@ -5,6 +5,7 @@ import ContractIntake from './ContractIntake'
 import ContextQuestions, { ContextAnswers } from './ContextQuestions'
 import ResultsReport, { VendorCheckResult } from './ResultsReport'
 import SampleReportPreview from './SampleReportPreview'
+import ReviewDisplay from './ReviewDisplay'
 
 type Step = 'landing' | 'context' | 'processing' | 'results' | 'error'
 
@@ -69,6 +70,8 @@ export default function VendorCheckFlow() {
         <div className="mb-10">
           <SampleReportPreview />
         </div>
+
+        <ReviewDisplay productSlug="vendor-check" />
 
         <ContractIntake onContinue={handleIntakeContinue} />
       </div>

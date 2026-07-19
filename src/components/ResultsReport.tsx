@@ -1,6 +1,7 @@
 'use client'
 
 import PdfExportSection from './PdfExportSection'
+import ReviewSubmissionForm from './ReviewSubmissionForm'
 
 export interface VendorCheckParameter {
   name: string
@@ -128,13 +129,17 @@ export default function ResultsReport({
         <PdfExportSection result={result} processStage={processStage} />
       </div>
 
-      <div className="text-center">
+      <div className="text-center mb-10">
         <a
           href="https://www.jaydipsikdar.com/contact"
           className="inline-block px-6 py-3 bg-brand-accent text-white rounded hover:opacity-90 transition-opacity"
         >
           Want to discuss the risks with me? Book a session →
         </a>
+      </div>
+
+      <div className="border-t border-gray-200 pt-8">
+        <ReviewSubmissionForm productSlug="vendor-check" productName="Vendor Contract Check" />
       </div>
     </div>
   )

@@ -5,6 +5,7 @@ import CategorySelect, { type MarketingCategory } from './CategorySelect'
 import AdvisorQuestions, { type AdvisorAnswers } from './AdvisorQuestions'
 import AdvisorResults, { type MarketingAdvisorResult } from './AdvisorResults'
 import AdvisorSamplePreview from './AdvisorSamplePreview'
+import ReviewDisplay from './ReviewDisplay'
 
 type Step = 'landing' | 'questions' | 'processing' | 'results' | 'error'
 
@@ -69,6 +70,8 @@ export default function MarketingAdvisorFlow() {
         <div className="mb-10">
           <AdvisorSamplePreview />
         </div>
+
+        <ReviewDisplay productSlug="marketing-advisor" />
 
         <CategorySelect onSelect={handleCategorySelect} />
       </div>

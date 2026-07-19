@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { CATEGORIES, type MarketingCategory } from './CategorySelect'
 import { IconSearch, IconTarget, IconChecklist, IconAlertTriangle, IconQuestion } from './AdvisorIcons'
+import ReviewSubmissionForm from './ReviewSubmissionForm'
 
 export interface AdvisorMove {
   order: number
@@ -176,13 +177,17 @@ export default function AdvisorResults({ result }: { result: MarketingAdvisorRes
         <AdvisorPdfExportSection result={result} />
       </div>
 
-      <div className="text-center">
+      <div className="text-center mb-10">
         <a
           href="/contact"
           className="inline-block px-6 py-3 bg-brand-accent text-white rounded hover:opacity-90 transition-opacity"
         >
           Want to discuss this with me? Book a session →
         </a>
+      </div>
+
+      <div className="border-t border-gray-200 pt-8">
+        <ReviewSubmissionForm productSlug="marketing-advisor" productName="Marketing Decision Advisor" />
       </div>
     </div>
   )
