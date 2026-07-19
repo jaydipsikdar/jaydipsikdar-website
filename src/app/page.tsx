@@ -87,16 +87,29 @@ export default function HomePage() {
             {/* Right — Consulting CMO */}
             <div className="flex flex-col">
               <h3 className="text-lg font-semibold text-left mb-4">
-                Consulting CMO for early-stage startups
+                Fractional CMO for early-stage startups
               </h3>
-              <p className="text-brand-text leading-relaxed mb-8">
-                I also work hands-on with founders and CEOs who need strategic marketing leadership
-                without a full-time hire. Retainers, sprints, and advisory — structured around where
-                your company actually is.
-              </p>
+              <div className="mb-8">
+                <p className="text-brand-text leading-relaxed mb-4">
+                  I build the marketing function for AI and B2B SaaS startups — positioning, GTM,
+                  demand gen, ops, hiring — typically at the $1M–$10M ARR stage. I&apos;ve helped
+                  several early-stage tech startups get their marketing right, backed by 20 years
+                  at IBM, Adobe, MoEngage, and Cisco.
+                </p>
+                <p className="text-brand-text leading-relaxed mb-4">
+                  Most founders either hire too junior too early or delay marketing until growth
+                  stalls. A fractional CMO gets you senior-level strategy and execution without a
+                  full-time cost.
+                </p>
+                <p className="text-brand-text leading-relaxed">
+                  Book a 60-minute consultation. Walk me through your current marketing setup —
+                  you&apos;ll leave with a clear picture of what&apos;s working, what&apos;s not,
+                  and what to prioritize.
+                </p>
+              </div>
               <div className="text-left mt-auto">
                 <RazorpayBookButton className="inline-block px-6 py-3 bg-brand-accent text-white rounded hover:opacity-90 transition-opacity">
-                  Book a session →
+                  Book a consultation — ₹999 →
                 </RazorpayBookButton>
               </div>
             </div>

@@ -50,7 +50,7 @@ export default function RazorpayBookButton({
       amount: 99900,
       currency: 'INR',
       name: 'Jaydip Sikdar',
-      description: '1:1 Consulting Session (30 mins)',
+      description: '1:1 Consulting Session (60 mins)',
       handler: function () {
         window.open(CALENDLY_URL, '_blank', 'noopener,noreferrer')
         setPaid(true)
