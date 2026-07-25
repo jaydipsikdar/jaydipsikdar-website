@@ -93,7 +93,7 @@ export default function HomePage() {
             {/* Right — Consulting CMO */}
             <div className="flex flex-col">
               <h3 className="text-lg font-semibold text-left mb-4">
-                Fractional CMO for early-stage startups
+                CMO for early-stage startups
               </h3>
               <div className="mb-8">
                 <p className="text-brand-text leading-relaxed mb-4">
@@ -104,8 +104,8 @@ export default function HomePage() {
                 </p>
                 <p className="text-brand-text leading-relaxed mb-4">
                   Most founders either hire too junior too early or delay marketing until growth
-                  stalls. A fractional CMO gets you senior-level strategy and execution without a
-                  full-time cost.
+                  stalls. Working with a CMO who has done this before gets you senior-level
+                  strategy and execution without a full-time cost.
                 </p>
                 <p className="text-brand-text leading-relaxed">
                   Book a 60-minute consultation. Walk me through your current marketing setup —
@@ -134,7 +134,30 @@ export default function HomePage() {
             Free Tools & Frameworks — From Two Decades in the CMO Seat
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+            <div className="border border-gray-200 rounded-lg p-6 flex flex-col">
+              <h3 className="text-base font-semibold mb-3">Marketing Maturity Score</h3>
+              <div className="flex-1">
+                <p className="text-brand-text text-sm leading-relaxed mb-3">
+                  Most marketing functions are running on instinct, not a system. This tool tells
+                  you which parts of yours need it most.
+                </p>
+                <p className="text-brand-text text-sm leading-relaxed mb-6">
+                  Answer 25 questions across positioning, demand generation, content, ops,
+                  measurement, and team. Get a maturity score, a radar chart, and your top priority
+                  gaps in minutes. Free.
+                </p>
+              </div>
+              <div className="text-left">
+                <a
+                  href="/resources/marketing-maturity-score"
+                  className="inline-block px-5 py-2.5 bg-brand-accent text-white text-sm rounded hover:opacity-90 transition-opacity whitespace-nowrap"
+                >
+                  Get your score →
+                </a>
+              </div>
+            </div>
+
             <div className="border border-gray-200 rounded-lg p-6 flex flex-col">
               <h3 className="text-base font-semibold mb-3">Vendor Contract Check</h3>
               <div className="flex-1">

@@ -13,6 +13,7 @@ const TOOL_PATHS: Record<ProductSlug, string> = {
   'marketing-advisor': '/resources/marketing-advisor',
   'vendor-check': '/resources/vendor-check',
   'cmo-boardroom-kit': '/resources',
+  'marketing-maturity-score': '/resources/marketing-maturity-score',
 }
 
 function LinkedInShareButton({

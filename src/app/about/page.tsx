@@ -55,7 +55,7 @@ export default function AboutPage() {
           problem in minutes. More are in progress.
         </p>
         <p>
-          <strong>The consulting</strong> — I work as a fractional CMO for AI and B2B SaaS
+          <strong>The consulting</strong> — I work as CMO for AI and B2B SaaS
           startups, typically $1M–$10M ARR. I build the full marketing function — positioning, GTM,
           demand gen, ops, tech stack — and hire the team to run it after I leave. Two current
           clients, both AI companies in India.

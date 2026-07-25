@@ -18,9 +18,9 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: 'Jaydip Sikdar — CMO & Marketing Strategist | Free Tools & Frameworks',
+  title: 'Jaydip Sikdar — CMO Turned Builder | Free Marketing Tools & Frameworks',
   description:
-    '20-year CMO (IBM, Adobe, MoEngage) who also builds free marketing tools for marketers, solopreneurs, and consultants. Strategy, frameworks, and practical resources.',
+    "20-year CMO turned builder, making practical marketing tools for people who don't have a marketing team. Free tools, frameworks, and resources for marketers, solopreneurs, and consultants.",
   metadataBase: new URL('https://jaydipsikdar.com'),
   icons: {
     icon: [
@@ -29,9 +29,9 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: 'Jaydip Sikdar — CMO & Marketing Strategist | Free Tools & Frameworks',
+    title: 'Jaydip Sikdar — CMO Turned Builder | Free Marketing Tools & Frameworks',
     description:
-      '20-year CMO (IBM, Adobe, MoEngage) who also builds free marketing tools for marketers, solopreneurs, and consultants. Strategy, frameworks, and practical resources.',
+      "20-year CMO turned builder, making practical marketing tools for people who don't have a marketing team. Free tools, frameworks, and resources for marketers, solopreneurs, and consultants.",
     url: 'https://jaydipsikdar.com',
     siteName: 'Jaydip Sikdar',
     locale: 'en_IN',
@@ -39,9 +39,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Jaydip Sikdar — CMO & Marketing Strategist | Free Tools & Frameworks',
+    title: 'Jaydip Sikdar — CMO Turned Builder | Free Marketing Tools & Frameworks',
     description:
-      '20-year CMO (IBM, Adobe, MoEngage) who also builds free marketing tools for marketers, solopreneurs, and consultants. Strategy, frameworks, and practical resources.',
+      "20-year CMO turned builder, making practical marketing tools for people who don't have a marketing team. Free tools, frameworks, and resources for marketers, solopreneurs, and consultants.",
   },
   verification: {
     google: 'fSn7ta_cQWI0HUqg6ocgHDjAapiL9X-6YZ4RNp_FCm0',

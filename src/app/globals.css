@@ -8,6 +8,61 @@
   }
 }
 
+/* Design system tokens (docs/brand/design.md) — used by newer tools such as
+   Marketing Maturity Score. Scoped to CSS variables rather than Tailwind
+   theme keys so they don't collide with the site-wide brand.* tokens above,
+   which stay in place until the rest of the site migrates. */
+:root {
+  --color-primary: #e84500;
+  --color-primary-hover: #cc3a07;
+  --color-primary-press: #9e2c04;
+  --color-primary-soft: #f97a3d;
+  --color-primary-subtle: #ffd8c4;
+
+  --surface-canvas: #ffffff;
+  --surface-soft: #f6f9fc;
+  --surface-cream: #f7eddc;
+  --surface-dark: #19233b;
+
+  --text-body: #13233d;
+  --text-secondary: #34465d;
+  --text-muted: #6d7d91;
+  --text-on-dark: #ffffff;
+
+  --border-hairline: #e0e7ef;
+  --border-input: #adc0d7;
+
+  --accent-rose: #df4770;
+  --accent-pink: #ef7bc2;
+  --accent-ochre: #b57738;
+
+  /* Marketing Maturity Score — dimension and tier colors from the approved
+     sample report (00-context/maturity-score-sample-report.html). This is
+     the source of truth for this tool's data-viz palette. */
+  --dim-positioning: #e84500;
+  --dim-demand: #b57738;
+  --dim-content: #df4770;
+  --dim-ops: #34465d;
+  --dim-measurement: #4a7b8c;
+  --dim-team: #6d7d91;
+
+  --tier-foundation: #c0392b;
+  --tier-emerging: #b57738;
+  --tier-scaling: #4a7b8c;
+  --tier-optimized: #27874a;
+
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-pill: 9999px;
+
+  --shadow-1: rgba(21, 59, 101, 0.08) 0 1px 3px;
+  --shadow-2: rgba(21, 59, 101, 0.08) 0 8px 24px, rgba(21, 59, 101, 0.04) 0 2px 6px;
+  --ring-primary: 0 0 0 3px rgba(232, 69, 0, 0.28);
+}
+
 @keyframes review-pulse {
   0% { box-shadow: 0 0 0 0 rgba(232, 69, 10, 0.45); }
   70% { box-shadow: 0 0 0 12px rgba(232, 69, 10, 0); }

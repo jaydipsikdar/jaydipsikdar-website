@@ -1,4 +1,9 @@
-export const PRODUCT_SLUGS = ['marketing-advisor', 'vendor-check', 'cmo-boardroom-kit'] as const
+export const PRODUCT_SLUGS = [
+  'marketing-advisor',
+  'vendor-check',
+  'cmo-boardroom-kit',
+  'marketing-maturity-score',
+] as const
 
 export type ProductSlug = (typeof PRODUCT_SLUGS)[number]
 

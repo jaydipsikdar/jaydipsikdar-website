@@ -28,8 +28,34 @@ export default function ResourcesPage() {
         MoEngage, and two AI startups.
       </p>
 
-      {/* Row 1 — Marketing Decision Advisor + Vendor Contract Check */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 items-stretch">
+      {/* Row 1 — Marketing Maturity Score + Marketing Decision Advisor + Vendor Contract Check */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 items-stretch">
+
+        {/* Marketing Maturity Score */}
+        <div className="border border-gray-200 rounded-lg p-8 flex flex-col">
+          <div className="grid grid-cols-1 gap-6 flex-1">
+            <div>
+              <h2 className="text-lg font-semibold mb-3">Marketing Maturity Score</h2>
+              <p className="text-brand-text text-sm leading-relaxed mb-4">
+                Answer 25 questions across 6 dimensions and see exactly where your marketing
+                function is strong, and where it is running on instinct instead of a system.
+              </p>
+              <p className="text-brand-text text-sm leading-relaxed">
+                Get a maturity score, a radar chart, and your top priority gaps immediately. The
+                full report adds tailored recommendations, stage benchmarks, and your next 90
+                days. Free.
+              </p>
+            </div>
+            <div className="flex flex-col justify-end">
+              <a
+                href="/resources/marketing-maturity-score"
+                className="w-full text-center px-4 py-2.5 bg-brand-accent text-white text-sm font-medium rounded hover:opacity-90 transition-opacity"
+              >
+                Get your score →
+              </a>
+            </div>
+          </div>
+        </div>
 
         {/* Marketing Decision Advisor */}
         <div className="border border-gray-200 rounded-lg p-8 flex flex-col">
