@@ -52,7 +52,7 @@ export default function MaturityScoreFlow() {
     }
   }
 
-  async function handleEmailSubmit(email: string): Promise<{ ok: boolean }> {
+  async function handleEmailSubmit(email: string): Promise<{ ok: boolean; url?: string }> {
     if (!submissionId || !qualifiers || !result) return { ok: false }
     try {
       const res = await fetch('/api/maturity-score-report', {
@@ -60,7 +60,9 @@ export default function MaturityScoreFlow() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ submissionId, email, qualifiers, result }),
       })
-      return { ok: res.ok }
+      if (!res.ok) return { ok: false }
+      const data = await res.json()
+      return { ok: true, url: data.url }
     } catch (err) {
       console.error('[MaturityScoreFlow] report request failed:', err)
       return { ok: false }

@@ -76,6 +76,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Could not store PDF' }, { status: 502 })
   }
 
+  // The PDF is already generated and stored at this point — that's the
+  // actual deliverable, and the download link works regardless of what
+  // happens below. Saving the email on the submission record and
+  // subscribing to MailerLite (for tags + future nurture sequences) are
+  // secondary, so neither should block or fail the response the visitor
+  // is waiting on.
+
   const { error: updateError } = await supabase
     .from('maturity_score_submissions')
     .update({ email: body.email, pdf_url: pdfUrl })
@@ -83,26 +90,28 @@ export async function POST(request: Request) {
 
   if (updateError) {
     console.error('[maturity-score-report] update failed:', updateError)
-    return NextResponse.json({ error: 'Could not save your email' }, { status: 502 })
   }
 
   const weakestDimension = body.result.weakest[0]?.dimensionId ?? ''
 
-  const subscribeResult = await subscribeToMailerLite({
-    email: body.email,
-    group: 'maturity-score',
-    fields: {
-      role: body.qualifiers.role,
-      stage: body.qualifiers.stage,
-      funding: body.qualifiers.funding,
-      maturity_tier: body.result.tier.id,
-      weakest_dimension: weakestDimension,
-      maturity_score_pdf_url: pdfUrl,
-    },
-  })
-
-  if (!subscribeResult.ok) {
-    return NextResponse.json({ error: subscribeResult.detail }, { status: subscribeResult.status })
+  try {
+    const subscribeResult = await subscribeToMailerLite({
+      email: body.email,
+      group: 'maturity-score',
+      fields: {
+        role: body.qualifiers.role,
+        stage: body.qualifiers.stage,
+        funding: body.qualifiers.funding,
+        maturity_tier: body.result.tier.id,
+        weakest_dimension: weakestDimension,
+        maturity_score_pdf_url: pdfUrl,
+      },
+    })
+    if (!subscribeResult.ok) {
+      console.error('[maturity-score-report] MailerLite subscribe failed:', subscribeResult.detail)
+    }
+  } catch (err) {
+    console.error('[maturity-score-report] MailerLite subscribe threw:', err)
   }
 
   return NextResponse.json({ success: true, url: pdfUrl })

@@ -3,26 +3,38 @@
 import { useState } from 'react'
 
 interface MaturityScoreEmailGateProps {
-  onSubmit: (email: string) => Promise<{ ok: boolean }>
+  onSubmit: (email: string) => Promise<{ ok: boolean; url?: string }>
 }
 
 export default function MaturityScoreEmailGate({ onSubmit }: MaturityScoreEmailGateProps) {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [reportUrl, setReportUrl] = useState<string | null>(null)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setStatus('loading')
     const result = await onSubmit(email)
+    setReportUrl(result.url ?? null)
     setStatus(result.ok ? 'success' : 'error')
   }
 
   if (status === 'success') {
     return (
       <div className="rounded-[var(--radius-lg)] border border-[color:var(--border-hairline)] bg-[color:var(--surface-cream)] p-8 text-center">
-        <p className="text-[15px] font-normal font-sans text-[color:var(--text-body)]">
-          Your full report is on its way. Check your inbox.
+        <p className="text-[15px] font-normal font-sans text-[color:var(--text-body)] mb-4">
+          Your full report is ready.
         </p>
+        {reportUrl && (
+          <a
+            href={reportUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block px-4 py-2 rounded-[var(--radius-pill)] bg-[color:var(--color-primary)] text-white text-[16px] font-normal font-sans hover:bg-[color:var(--color-primary-hover)] transition-colors"
+          >
+            Download your report (PDF)
+          </a>
+        )}
       </div>
     )
   }

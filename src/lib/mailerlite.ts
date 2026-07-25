@@ -8,10 +8,8 @@ const VENDOR_CHECK_GROUP_ID = '192702998964602139'
 // Marketing Decision Advisor — group created manually in MailerLite.
 const MARKETING_ADVISOR_GROUP_ID = '193314253973751516'
 
-// Marketing Maturity Score — PLACEHOLDER. Create this group manually in
-// MailerLite (same as the two above) and paste its ID in here before this
-// tool's email capture will actually subscribe anyone.
-const MATURITY_SCORE_GROUP_ID = 'REPLACE_WITH_MAILERLITE_GROUP_ID'
+// Marketing Maturity Score — group created manually in MailerLite.
+const MATURITY_SCORE_GROUP_ID = '193980625736173142'
 
 function resolveGroupId(group?: string): string {
   if (group === 'vendor-check') return VENDOR_CHECK_GROUP_ID
