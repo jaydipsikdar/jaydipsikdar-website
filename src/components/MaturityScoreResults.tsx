@@ -1,7 +1,7 @@
 'use client'
 
 import MaturityScoreLiveRadar from './MaturityScoreLiveRadar'
-import { dimensionById, DIMENSION_GAP_SUMMARY } from '@/lib/maturityScoreData'
+import { dimensionById, DIMENSION_GAP_SUMMARY, AI_READINESS_IMPLICATION } from '@/lib/maturityScoreData'
 import { hexToRgba } from '@/lib/colorUtils'
 import type { MaturityResult } from '@/lib/maturityScoring'
 
@@ -39,8 +39,18 @@ export default function MaturityScoreResults({ result }: { result: MaturityResul
         </div>
       </div>
 
-      <div className="mb-10 flex justify-center">
+      <div className="mb-6 flex justify-center">
         <MaturityScoreLiveRadar dimensionScores={result.dimensionScores} size={280} />
+      </div>
+
+      <div className="text-center mb-10">
+        <p className="text-[15px] font-normal font-sans text-[color:var(--text-body)] mb-1.5">
+          Your AI readiness:{' '}
+          <span style={{ color: 'var(--accent-pink)' }}>{result.aiReadinessStage.label}</span>
+        </p>
+        <p className="text-[13px] font-light font-sans leading-[1.4] text-[color:var(--text-secondary)] max-w-md mx-auto">
+          {AI_READINESS_IMPLICATION[result.aiReadinessStage.id]}
+        </p>
       </div>
 
       <h3 className="text-[18px] font-light font-sans leading-[1.4] text-[color:var(--text-body)] mb-4">
