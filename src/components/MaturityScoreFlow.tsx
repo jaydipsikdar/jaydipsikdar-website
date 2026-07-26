@@ -9,7 +9,7 @@ import MaturityScoreSamplePreview from './MaturityScoreSamplePreview'
 import ReviewDisplay from './ReviewDisplay'
 import ReviewSubmissionForm from './ReviewSubmissionForm'
 import type { Qualifiers } from '@/lib/maturityScoreData'
-import { computeResult, type Answers, type MaturityResult } from '@/lib/maturityScoring'
+import { computeResult, type Answers, type AIAnswers, type MaturityResult } from '@/lib/maturityScoring'
 
 type Step = 'landing' | 'questions' | 'results'
 
@@ -31,8 +31,8 @@ export default function MaturityScoreFlow() {
     if (showReviewForm) reviewFormRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
   }, [showReviewForm])
 
-  async function handleQuestionsComplete(finalQualifiers: Qualifiers, answers: Answers) {
-    const computed = computeResult(answers)
+  async function handleQuestionsComplete(finalQualifiers: Qualifiers, answers: Answers, aiAnswers: AIAnswers) {
+    const computed = computeResult(answers, aiAnswers)
     setQualifiers(finalQualifiers)
     setResult(computed)
     setStep('results')
@@ -41,7 +41,7 @@ export default function MaturityScoreFlow() {
       const res = await fetch('/api/maturity-score-submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ qualifiers: finalQualifiers, answers, result: computed }),
+        body: JSON.stringify({ qualifiers: finalQualifiers, answers, aiAnswers, result: computed }),
       })
       if (res.ok) {
         const data = await res.json()
@@ -79,9 +79,8 @@ export default function MaturityScoreFlow() {
           Your marketing might be running on instinct instead of a system.
         </h1>
         <p className="text-[16px] font-light font-sans leading-[1.4] text-[color:var(--text-secondary)] text-center mb-10 max-w-lg mx-auto">
-          Answer 25 questions across 6 dimensions, positioning, demand generation, content, ops,
-          measurement, and team, and see exactly where the gaps are. Takes about 8 minutes, and the
-          preview is free.
+          Answer 30 questions, 25 across 6 marketing dimensions plus a short AI readiness check,
+          and see exactly where the gaps are. Takes about 10 minutes, and the preview is free.
         </p>
 
         <div className="mb-10">

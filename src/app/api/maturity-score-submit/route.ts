@@ -2,13 +2,14 @@ import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { DIMENSIONS } from '@/lib/maturityScoreData'
 import type { Qualifiers } from '@/lib/maturityScoreData'
-import type { Answers, MaturityResult } from '@/lib/maturityScoring'
+import type { Answers, AIAnswers, MaturityResult } from '@/lib/maturityScoring'
 
 export const runtime = 'nodejs'
 
 interface SubmitRequestBody {
   qualifiers?: Qualifiers
   answers?: Answers
+  aiAnswers?: AIAnswers
   result?: MaturityResult
 }
 
@@ -60,6 +61,7 @@ export async function POST(request: Request) {
   const dimensionScoresMap = Object.fromEntries(
     body.result.dimensionScores.map((d) => [d.dimensionId, d.score])
   )
+  const aiAnswers = body.aiAnswers ?? {}
 
   const { data, error } = await supabase
     .from('maturity_score_submissions')
@@ -72,6 +74,13 @@ export async function POST(request: Request) {
       overall_score: body.result.overallScore,
       maturity_tier: body.result.tier.id,
       weakest_dimension: body.result.weakest[0]?.dimensionId ?? null,
+      ai_readiness_score: body.result.aiReadinessScore ?? null,
+      ai_readiness_stage: body.result.aiReadinessStage?.id ?? null,
+      aq1: aiAnswers.aq1 ?? null,
+      aq2: aiAnswers.aq2 ?? null,
+      aq3: aiAnswers.aq3 ?? null,
+      aq4: aiAnswers.aq4 ?? null,
+      aq5: aiAnswers.aq5 ?? null,
     })
     .select('id')
     .single()

@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { subscribeToMailerLite } from '@/lib/mailerlite'
 import { generateMaturityScorePDF } from '@/lib/generateMaturityScorePDF'
-import type { Qualifiers } from '@/lib/maturityScoreData'
+import { aiStageForScore, type Qualifiers } from '@/lib/maturityScoreData'
 import type { MaturityResult } from '@/lib/maturityScoring'
 
 export const runtime = 'nodejs'
@@ -52,6 +52,9 @@ export async function POST(request: Request) {
       dimensionScores: body.result.dimensionScores,
       overallScore: body.result.overallScore,
       weakest: body.result.weakest,
+      aiAnswers: body.result.aiAnswers ?? {},
+      aiReadinessScore: body.result.aiReadinessScore ?? 0,
+      aiReadinessStage: body.result.aiReadinessStage ?? aiStageForScore(body.result.aiReadinessScore ?? 0),
     })
   } catch (err) {
     console.error('[maturity-score-report] PDF generation failed:', err)
@@ -104,6 +107,7 @@ export async function POST(request: Request) {
         maturity_tier: body.result.tier.id,
         weakest_dimension: weakestDimension,
         maturity_score_pdf_url: pdfUrl,
+        ai_readiness_stage: body.result.aiReadinessStage?.id ?? '',
       },
     })
     if (!subscribeResult.ok) {

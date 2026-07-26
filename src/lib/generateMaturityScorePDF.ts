@@ -17,7 +17,8 @@ import {
   ninetyDayPriorities,
   overallAssessment,
 } from './maturityScoreReportContent'
-import type { DimensionScore } from './maturityScoring'
+import type { DimensionScore, AIAnswers } from './maturityScoring'
+import type { AIStage } from './maturityScoreData'
 
 type RGB = [number, number, number]
 type FontStyle = 'normal' | 'bold' | 'italic'
@@ -27,6 +28,9 @@ export interface MaturityScorePDFInput {
   dimensionScores: DimensionScore[]
   overallScore: number
   weakest: DimensionScore[]
+  aiAnswers: AIAnswers
+  aiReadinessScore: number
+  aiReadinessStage: AIStage
 }
 
 // ── Colors (source of truth: 00-context/maturity-score-sample-report.html) ──

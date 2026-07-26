@@ -470,6 +470,141 @@ export const DIMENSION_GAP_SUMMARY: Record<DimensionId, string> = {
     'Ownership, process, or budget allocation is unclear, which slows down every other dimension.',
 }
 
+// ── AI Readiness Overlay ──
+// Source of truth: 00-context/ai-marketing-maturity-framework.md
+
+export type AIWorkflowId =
+  | 'target-segmentation'
+  | 'campaign-strategy'
+  | 'campaign-execution'
+  | 'distribution'
+  | 'operations'
+  | 'analytics-optimization'
+
+export interface AIWorkflow {
+  id: AIWorkflowId
+  name: string
+}
+
+export const AI_WORKFLOWS: AIWorkflow[] = [
+  { id: 'target-segmentation', name: 'Target & Segmentation' },
+  { id: 'campaign-strategy', name: 'Campaign Strategy' },
+  { id: 'campaign-execution', name: 'Campaign Execution' },
+  { id: 'distribution', name: 'Distribution' },
+  { id: 'operations', name: 'Operations' },
+  { id: 'analytics-optimization', name: 'Analytics & Optimization' },
+]
+
+export type AIStageId = 'unaware' | 'experimenting' | 'functional' | 'integrated'
+
+export interface AIStage {
+  id: AIStageId
+  label: string
+  min: number
+  max: number
+}
+
+export const AI_STAGES: AIStage[] = [
+  { id: 'unaware', label: 'Unaware', min: 1.0, max: 1.9 },
+  { id: 'experimenting', label: 'Experimenting', min: 2.0, max: 2.9 },
+  { id: 'functional', label: 'Functional', min: 3.0, max: 3.9 },
+  { id: 'integrated', label: 'Integrated', min: 4.0, max: 5.0 },
+]
+
+export function aiStageForScore(score: number): AIStage {
+  const stage = AI_STAGES.find((s) => score >= s.min && score <= s.max)
+  return stage ?? AI_STAGES[0]
+}
+
+export type AIQuestionId = 'aq1' | 'aq2' | 'aq3' | 'aq4' | 'aq5'
+
+export interface AIQuestion {
+  id: AIQuestionId
+  question: string
+  options: QuestionOption[]
+}
+
+export const AI_TRANSITION_COPY =
+  'Last section. Five questions about how AI fits into your marketing workflows.'
+
+export const AI_QUESTIONS: AIQuestion[] = [
+  {
+    id: 'aq1',
+    question:
+      'Across your marketing workflows (research, content, design, distribution, operations, analytics), how broadly is AI being used?',
+    options: [
+      { text: "We're not using AI in any meaningful way. Maybe someone has a personal ChatGPT login.", score: 1 },
+      { text: "We use AI for one or two tasks (usually content drafting or image generation) but it's individual, not systematic.", score: 2 },
+      { text: 'AI is used across a few workflows but adoption is uneven. Some team members use it daily, others haven\'t started.', score: 3 },
+      { text: 'AI is embedded across multiple marketing workflows with defined use cases, shared prompts or templates, and team-wide adoption.', score: 5 },
+    ],
+  },
+  {
+    id: 'aq2',
+    question: 'How does your team use AI in content creation and creative production?',
+    options: [
+      { text: "We don't. All content is produced manually.", score: 1 },
+      { text: 'We use AI for first drafts or brainstorming, but a human rewrites most of the output.', score: 2 },
+      { text: 'AI handles specific content tasks end-to-end (social posts, email subject lines, ad variations) but strategic content is still fully manual.', score: 3 },
+      { text: 'AI is integrated into the content workflow with clear guidelines on where it adds value and where human judgment is required. Output quality is consistent and the team knows when to override.', score: 5 },
+    ],
+  },
+  {
+    id: 'aq3',
+    question: 'How does your team use AI for analytics, research, or customer insights?',
+    options: [
+      { text: "We don't use AI for data or insights. Reporting is manual or dashboard-based.", score: 1 },
+      { text: "We've experimented with AI for data summarization or competitor research, but it's not a regular workflow.", score: 2 },
+      { text: 'AI is used for specific analytical tasks (campaign analysis, audience research, trend spotting) but the insights still require significant manual interpretation.', score: 3 },
+      { text: 'AI is a core part of how we generate insights: surfacing patterns, analyzing performance data, and accelerating research, with human judgment applied to strategic interpretation.', score: 5 },
+    ],
+  },
+  {
+    id: 'aq4',
+    question: 'When your team uses AI, how is it integrated into day-to-day operations?',
+    options: [
+      { text: "It's not. AI is something people use on their own time for personal productivity.", score: 1 },
+      { text: 'A few people use AI tools but there are no shared workflows, prompts, or standards. Everyone figures it out individually.', score: 2 },
+      { text: 'We have some shared AI workflows (prompt libraries, approved tools, defined use cases) but adoption and quality are inconsistent.', score: 3 },
+      { text: 'AI tools are part of our documented workflows with clear ownership, quality standards, and regular evaluation of what\'s working. New use cases are tested deliberately.', score: 5 },
+    ],
+  },
+  {
+    id: 'aq5',
+    question: "How would you describe your marketing team's ability to use AI effectively?",
+    options: [
+      { text: "Most of the team hasn't used AI tools beyond basic curiosity. There's no training or shared knowledge.", score: 1 },
+      { text: "A few team members are proficient, but they're self-taught. The rest of the team is either skeptical or unsure where to start.", score: 2 },
+      { text: "The team generally understands AI's potential and uses it occasionally, but nobody would call it a core competency. Quality of AI usage varies widely.", score: 3 },
+      { text: 'The team treats AI as a skill, not a novelty. There\'s shared understanding of what AI does well and where it falls short, and the team actively evaluates new capabilities as they emerge.', score: 5 },
+    ],
+  },
+]
+
+// One-sentence implication per stage, shown below the radar chart in the
+// ungated results preview.
+export const AI_READINESS_IMPLICATION: Record<AIStageId, string> = {
+  unaware:
+    "AI isn't part of the conversation yet, which means competitors already using it are moving faster on the same budget.",
+  experimenting:
+    "Usage is personal and inconsistent, so the gains stay with individuals instead of compounding for the team.",
+  functional:
+    'AI is doing real work in defined workflows, but adoption is uneven and quality still depends on who ran the prompt.',
+  integrated:
+    'AI is a team capability with shared standards, not a novelty. The bottleneck is likely elsewhere in the function.',
+}
+
+// Cross-reference: which main dimension each AI workflow pairs with in the
+// full report (see ai-marketing-maturity-framework.md cross-reference table).
+export const AI_WORKFLOW_MAIN_DIMENSION: Record<AIWorkflowId, DimensionId> = {
+  'target-segmentation': 'positioning',
+  'campaign-strategy': 'positioning',
+  'campaign-execution': 'content',
+  distribution: 'demand-gen',
+  operations: 'ops',
+  'analytics-optimization': 'measurement',
+}
+
 // ── Bootstrapped company context notes (per dimension, full report only) ──
 
 export const BOOTSTRAPPED_NOTES: Record<DimensionId, string> = {

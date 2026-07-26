@@ -9,21 +9,23 @@ import {
   COMPLETION_FRAMING,
   DIMENSIONS,
   QUESTIONS,
+  AI_QUESTIONS,
+  AI_TRANSITION_COPY,
   questionsForDimension,
   type RoleId,
   type StageId,
   type FundingId,
   type Qualifiers,
 } from '@/lib/maturityScoreData'
-import { answeredCount, type Answers } from '@/lib/maturityScoring'
+import { answeredCount, aiAnsweredCount, type Answers, type AIAnswers } from '@/lib/maturityScoring'
 
-type QualifierPhase = 'role' | 'stage' | 'funding' | 'framing'
+type Phase = 'role' | 'stage' | 'funding' | 'framing' | 'questions' | 'ai-transition' | 'ai-questions'
 
 interface MaturityScoreQuestionsProps {
-  onComplete: (qualifiers: Qualifiers, answers: Answers) => void
+  onComplete: (qualifiers: Qualifiers, answers: Answers, aiAnswers: AIAnswers) => void
 }
 
-const TOTAL_QUESTIONS = QUESTIONS.length
+const TOTAL_QUESTIONS = QUESTIONS.length + AI_QUESTIONS.length
 
 function ProgressBar({ fraction, label }: { fraction: number; label: string }) {
   return (
@@ -91,13 +93,15 @@ function QualifierScreen({
 }
 
 export default function MaturityScoreQuestions({ onComplete }: MaturityScoreQuestionsProps) {
-  const [phase, setPhase] = useState<QualifierPhase | 'questions'>('role')
+  const [phase, setPhase] = useState<Phase>('role')
   const [role, setRole] = useState<RoleId | null>(null)
   const [stage, setStage] = useState<StageId | null>(null)
   const [funding, setFunding] = useState<FundingId | null>(null)
   const [dimensionIndex, setDimensionIndex] = useState(0)
   const [mobileQuestionIndex, setMobileQuestionIndex] = useState(0)
   const [answers, setAnswers] = useState<Answers>({})
+  const [aiQuestionIndex, setAiQuestionIndex] = useState(0)
+  const [aiAnswers, setAiAnswers] = useState<AIAnswers>({})
 
   const dimension = DIMENSIONS[dimensionIndex]
   const dimensionQuestions = questionsForDimension(dimension.id)
@@ -123,12 +127,35 @@ export default function MaturityScoreQuestions({ onComplete }: MaturityScoreQues
       setDimensionIndex((i) => i + 1)
       setMobileQuestionIndex(0)
     } else {
-      onComplete({ role: role!, stage: stage!, funding: funding! }, latestAnswers)
+      setAnswers(latestAnswers)
+      setPhase('ai-transition')
     }
   }
 
   function handleDesktopContinue() {
     advanceDimensionOrFinish(answers)
+  }
+
+  function selectAIAnswer(questionId: string, score: number, isLast: boolean) {
+    const next = { ...aiAnswers, [questionId]: score }
+    setAiAnswers(next)
+    if (isLast) {
+      onComplete({ role: role!, stage: stage!, funding: funding! }, answers, next)
+    } else {
+      setAiQuestionIndex((i) => i + 1)
+    }
+  }
+
+  function handleAIDesktopContinue() {
+    onComplete({ role: role!, stage: stage!, funding: funding! }, answers, aiAnswers)
+  }
+
+  function handleBackAIMobile() {
+    if (aiQuestionIndex > 0) {
+      setAiQuestionIndex((i) => i - 1)
+      return
+    }
+    setPhase('ai-transition')
   }
 
   function handleBackMobile() {
@@ -239,6 +266,131 @@ export default function MaturityScoreQuestions({ onComplete }: MaturityScoreQues
     )
   }
 
+  // ── AI readiness transition ──
+
+  if (phase === 'ai-transition') {
+    const progressFraction = 0.2 + 0.8 * (QUESTIONS.length / TOTAL_QUESTIONS)
+    return (
+      <div>
+        <BackButton onClick={() => setPhase('questions')} />
+        <ProgressBar fraction={progressFraction} label={`Question ${QUESTIONS.length} of ${TOTAL_QUESTIONS}`} />
+        <h2 className="text-[26px] font-light font-sans tracking-[-0.26px] leading-[1.12] text-[color:var(--text-body)] mb-8">
+          {AI_TRANSITION_COPY}
+        </h2>
+        <button
+          type="button"
+          onClick={() => setPhase('ai-questions')}
+          className="px-4 py-2 rounded-[var(--radius-pill)] bg-[color:var(--color-primary)] text-white text-[16px] font-normal font-sans hover:bg-[color:var(--color-primary-hover)] transition-colors"
+        >
+          Continue
+        </button>
+      </div>
+    )
+  }
+
+  // ── AI readiness questions ──
+
+  if (phase === 'ai-questions') {
+    const overallAnsweredAI = answeredCount(answers) + aiAnsweredCount(aiAnswers)
+    const progressFraction = 0.2 + 0.8 * (overallAnsweredAI / TOTAL_QUESTIONS)
+    const aiAllAnswered = AI_QUESTIONS.every((q) => typeof aiAnswers[q.id] === 'number')
+
+    return (
+      <div>
+        <div className="md:hidden">
+          <BackButton onClick={handleBackAIMobile} />
+        </div>
+        <div className="hidden md:block">
+          <BackButton onClick={() => setPhase('ai-transition')} />
+        </div>
+
+        <ProgressBar
+          fraction={progressFraction}
+          label={`Question ${QUESTIONS.length + 1} of ${TOTAL_QUESTIONS} — AI readiness`}
+        />
+
+        {/* Mobile: one AI question at a time */}
+        <div className="md:hidden">
+          {(() => {
+            const q = AI_QUESTIONS[aiQuestionIndex]
+            const isLast = aiQuestionIndex === AI_QUESTIONS.length - 1
+            return (
+              <div>
+                <p className="text-[10px] font-normal uppercase tracking-[0.1px] font-sans mb-3 text-[color:var(--accent-pink)]">
+                  AI readiness
+                </p>
+                <h2 className="text-[20px] font-light font-sans tracking-[-0.2px] leading-[1.4] text-[color:var(--text-body)] mb-6">
+                  {q.question}
+                </h2>
+                <div className="flex flex-col gap-2">
+                  {q.options.map((opt) => (
+                    <button
+                      key={opt.text}
+                      type="button"
+                      onClick={() => selectAIAnswer(q.id, opt.score, isLast)}
+                      className={`text-left px-4 py-3 rounded-[var(--radius-md)] border text-[15px] font-light font-sans leading-[1.4] transition-colors ${
+                        aiAnswers[q.id] === opt.score
+                          ? 'border-[color:var(--color-primary)] bg-[color:var(--color-primary-subtle)] text-[color:var(--text-body)]'
+                          : 'border-[color:var(--border-hairline)] bg-white text-[color:var(--text-body)] hover:border-[color:var(--color-primary)]'
+                      }`}
+                    >
+                      {opt.text}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )
+          })()}
+        </div>
+
+        {/* Desktop: all 5 AI questions stacked */}
+        <div className="hidden md:block">
+          <p className="text-[10px] font-normal uppercase tracking-[0.1px] font-sans mb-2 text-[color:var(--accent-pink)]">
+            AI readiness
+          </p>
+          <h2 className="text-[26px] font-light font-sans tracking-[-0.26px] leading-[1.12] text-[color:var(--text-body)] mb-8">
+            Now let&apos;s look at how AI fits into your workflows
+          </h2>
+          <div className="flex flex-col gap-10">
+            {AI_QUESTIONS.map((q) => (
+              <div key={q.id}>
+                <h3 className="text-[18px] font-light font-sans leading-[1.4] text-[color:var(--text-body)] mb-4">
+                  {q.question}
+                </h3>
+                <div className="flex flex-col gap-2">
+                  {q.options.map((opt) => (
+                    <button
+                      key={opt.text}
+                      type="button"
+                      onClick={() => setAiAnswers((prev) => ({ ...prev, [q.id]: opt.score }))}
+                      className={`text-left px-4 py-3 rounded-[var(--radius-md)] border text-[15px] font-light font-sans leading-[1.4] transition-colors ${
+                        aiAnswers[q.id] === opt.score
+                          ? 'border-[color:var(--color-primary)] bg-[color:var(--color-primary-subtle)] text-[color:var(--text-body)]'
+                          : 'border-[color:var(--border-hairline)] bg-white text-[color:var(--text-body)] hover:border-[color:var(--color-primary)]'
+                      }`}
+                    >
+                      {opt.text}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-10">
+            <button
+              type="button"
+              disabled={!aiAllAnswered}
+              onClick={handleAIDesktopContinue}
+              className="px-4 py-2 rounded-[var(--radius-pill)] bg-[color:var(--color-primary)] text-white text-[16px] font-normal font-sans hover:bg-[color:var(--color-primary-hover)] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              See your results
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   // ── Questions phase ──
 
   const overallAnswered = answeredCount(answers)
@@ -340,7 +492,7 @@ export default function MaturityScoreQuestions({ onComplete }: MaturityScoreQues
             onClick={handleDesktopContinue}
             className="px-4 py-2 rounded-[var(--radius-pill)] bg-[color:var(--color-primary)] text-white text-[16px] font-normal font-sans hover:bg-[color:var(--color-primary-hover)] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            {dimensionIndex < DIMENSIONS.length - 1 ? 'Continue' : 'See your results'}
+            Continue
           </button>
         </div>
       </div>
