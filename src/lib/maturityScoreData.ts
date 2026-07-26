@@ -516,6 +516,16 @@ export function aiStageForScore(score: number): AIStage {
   return stage ?? AI_STAGES[0]
 }
 
+export const AI_STAGE_DEFINITION: Record<AIStageId, string> = {
+  unaware: "AI isn't part of the conversation. The team works the way it worked three years ago.",
+  experimenting:
+    'Individuals are trying AI tools, but usage is personal, inconsistent, and disconnected from team workflows.',
+  functional:
+    'AI is used in defined workflows with some shared standards, but adoption is uneven and quality varies.',
+  integrated:
+    'AI is a team capability with documented use cases, quality standards, and deliberate evaluation of new applications.',
+}
+
 export type AIQuestionId = 'aq1' | 'aq2' | 'aq3' | 'aq4' | 'aq5'
 
 export interface AIQuestion {

@@ -4,9 +4,9 @@
 // "Recommendation" paragraphs are original, one per dimension per tier.
 // Source of truth for structure: 00-context/maturity-score-sample-report.html
 
-import type { DimensionId, StageId, FundingId, Tier } from './maturityScoreData'
-import { STAGE_OPTIONS, DIMENSIONS, dimensionById } from './maturityScoreData'
-import type { DimensionScore } from './maturityScoring'
+import type { DimensionId, StageId, FundingId, Tier, AIWorkflowId } from './maturityScoreData'
+import { STAGE_OPTIONS, DIMENSIONS, dimensionById, AI_WORKFLOWS, AI_WORKFLOW_MAIN_DIMENSION } from './maturityScoreData'
+import type { DimensionScore, AIAnswers } from './maturityScoring'
 
 type TierId = Tier['id']
 
@@ -249,5 +249,155 @@ export function overallAssessment(
   return `Your marketing function has moved beyond founder-only execution, but several systems are still fragile. You have real strength in ${strongest.name.toLowerCase()}, but gaps in ${weakestTwo.join(' and ')} mean decisions are being made with incomplete information. ${fundingClause}`
 }
 
+// ── AI Readiness Overlay: cross-reference insights ──
+// Pairs each AI workflow's estimated adoption stage with the relevant main
+// dimension score. Source of truth for the pairing text:
+// ai-marketing-maturity-framework.md, "Cross-Reference with Main Dimensions".
+
+const AI_WORKFLOW_CROSS_REFERENCE: Record<AIWorkflowId, (mainScore: number, stageLabel: string) => string> = {
+  'target-segmentation': (score, stage) =>
+    `Your positioning score is ${score.toFixed(1)} and your AI adoption in research and segmentation is ${stage}. AI could accelerate ICP refinement and competitive analysis, where your current gaps are largest.`,
+  'campaign-strategy': (score, stage) =>
+    `Your strategy-level AI adoption is ${stage}. At your maturity tier, AI is most valuable for messaging variant testing and channel-mix analysis, not for replacing the judgment calls.`,
+  'campaign-execution': (score, stage) =>
+    `Your content score is ${score.toFixed(1)} and your AI content usage is ${stage}. Here's where AI could close that gap fastest, and where it still needs a human hand.`,
+  distribution: (score) =>
+    `Your demand generation score is ${score.toFixed(1)}. AI-driven distribution, personalization, bid optimization, send-time optimization, could improve channel performance without increasing budget.`,
+  operations: (score) =>
+    `Your ops score is ${score.toFixed(1)}. AI integration in operations compounds over time, but only if the underlying processes are sound. Fix the process first, then automate it.`,
+  'analytics-optimization': (score) =>
+    `Your measurement score is ${score.toFixed(1)}. AI-assisted analytics and optimization is where most companies see the fastest ROI, but it requires clean data infrastructure first.`,
+}
+
+export function aiWorkflowCrossReferenceInsight(
+  workflowId: AIWorkflowId,
+  workflowStageLabel: string,
+  dimensionScores: DimensionScore[]
+): string {
+  const mainDimensionId = AI_WORKFLOW_MAIN_DIMENSION[workflowId]
+  const mainScore = dimensionScores.find((d) => d.dimensionId === mainDimensionId)?.score ?? 0
+  return AI_WORKFLOW_CROSS_REFERENCE[workflowId](mainScore, workflowStageLabel.toLowerCase())
+}
+
+// ── Team composition / resource gap pattern matching ──
+// Doubles as Consulting Bridge Section 1 ("Your Resource Gap") and the
+// team-composition contextual output: both are the same inference over the
+// same scoring pattern, so they're generated together rather than twice.
+
+const HIRE_TYPE: Record<DimensionId, string> = {
+  positioning: 'a senior positioning or product marketing lead',
+  'demand-gen': 'a growth marketer who can own pipeline and instrumentation together',
+  content: 'a senior content strategist',
+  ops: 'an ops-oriented hire, or a fractional marketing ops resource',
+  measurement: 'someone who can own reporting and attribution end to end',
+  team: 'a senior marketing leader who can own strategy and execution',
+}
+
+interface ResourceGapInsight {
+  recommendation: string
+  question: string
+}
+
+function inferResourceGap(dimensionScores: DimensionScore[]): ResourceGapInsight {
+  const byId = new Map(dimensionScores.map((d) => [d.dimensionId, d.score]))
+  const score = (id: DimensionId) => byId.get(id) ?? 0
+  const isLow = (id: DimensionId) => score(id) <= 2.4
+  const isHigh = (id: DimensionId) => score(id) >= 3.5
+
+  if (isLow('content') && isLow('ops') && isHigh('measurement')) {
+    return {
+      recommendation:
+        "Your gap pattern suggests you need a senior content strategist before you need a marketing ops hire. Your measurement infrastructure can already support content scaling. Your production can't keep up with it.",
+      question: 'Should that hire come in-house, fractional, or through an agency retainer?',
+    }
+  }
+
+  if (isLow('demand-gen') && isLow('measurement')) {
+    return {
+      recommendation:
+        "Your demand generation and measurement gaps are linked: you need someone who can build the pipeline and instrument it at the same time. That's typically a growth marketer, not a brand marketer.",
+      question: 'Should that hire land before or after you fix the underlying data infrastructure?',
+    }
+  }
+
+  const otherThanTeam = DIMENSIONS.filter((d) => d.id !== 'team')
+  const avgOthers = otherThanTeam.reduce((sum, d) => sum + score(d.id), 0) / otherThanTeam.length
+  if (isLow('team') && avgOthers >= 3.5) {
+    return {
+      recommendation:
+        "Your marketing is performing despite a structural leadership gap. That's fragile: the next hire should be a senior marketing leader who can protect and scale what's already working, not another individual contributor.",
+      question: 'What seniority and mandate does that leader need to actually hold the function together?',
+    }
+  }
+
+  if (isLow('ops') && isLow('measurement') && isHigh('content')) {
+    return {
+      recommendation:
+        "You're producing good content but can't measure its impact or operationalize it. An ops-oriented hire, or a fractional ops resource, would have more impact right now than another content person.",
+      question: 'Should that role be a full-time hire or a fractional engagement at your stage?',
+    }
+  }
+
+  const weakest = [...dimensionScores].sort((a, b) => a.score - b.score)[0]
+  const dim = dimensionById(weakest.dimensionId)
+  return {
+    recommendation: `Your gap pattern points most clearly to ${dim.name.toLowerCase()}. The highest-impact next move is ${HIRE_TYPE[weakest.dimensionId]}, not a generalist hire.`,
+    question: 'Should that role be a full-time hire, a fractional resource, or an agency engagement given your stage and budget?',
+  }
+}
+
+export function resourceGapBridge(dimensionScores: DimensionScore[]): { body: string; prompt: string } {
+  const insight = inferResourceGap(dimensionScores)
+  const caveat =
+    "This is directional. The right answer depends on your runway, your team's current bandwidth, and whether you're building in-house or going agency-first."
+  return {
+    body: `${insight.recommendation} ${caveat}`,
+    prompt: `The question your report raises: ${insight.question}`,
+  }
+}
+
+// ── Consulting Bridge Section 2: Strategic Sequencing ──
+
+const SEQUENCING_FACTOR: Record<FundingId, string> = {
+  'vc-backed': 'your next funding milestone and how investors expect to see traction change',
+  bootstrapped: 'your runway and which gap is currently capping revenue growth',
+  hybrid: 'your runway and your next funding milestone, whichever is the tighter constraint',
+}
+
+export function strategicSequencingBridge(
+  weakest: DimensionScore[],
+  funding: FundingId
+): { body: string; prompt: string } {
+  const names = weakest.slice(0, 3).map((w) => dimensionById(w.dimensionId).name)
+  const body = `Weakest first, your report ranks the priority order as: ${names.join(', ')}. The right sequence depends on your competitive timeline, your next funding milestone, and which of these gaps is actually blocking the others from closing.`
+  const prompt = `Your report can tell you what's weakest. It can't tell you what to fix first. That depends on ${SEQUENCING_FACTOR[funding]}.`
+  return { body, prompt }
+}
+
+// ── Consulting Bridge Section 3: AI Integration Map ──
+
+export function aiIntegrationMapBridge(
+  weakest: DimensionScore[],
+  aiAnswers: AIAnswers
+): { body: string; prompt: string } {
+  const topWeak = weakest.slice(0, 2).map((w) => dimensionById(w.dimensionId).name.toLowerCase())
+  const body = `Your weakest main dimensions are ${topWeak.join(' and ')}. Based on your AI readiness answers, this is also where AI has the most room to accelerate, but only once the underlying process is sound. AI speeds up execution. It doesn't fix a broken strategy underneath it.`
+
+  const aq1 = aiAnswers.aq1 ?? 0
+  const aq5 = aiAnswers.aq5 ?? 0
+  let question: string
+  if (aq1 - aq5 >= 2) {
+    question =
+      "your team is using AI more broadly than it's trained to use it well. What would a practical AI training plan look like at your size?"
+  } else if (aq5 - aq1 >= 2) {
+    question =
+      'your team has more AI capability than your current workflows are putting to use. What would it take to close that gap?'
+  } else {
+    question =
+      'this assessment reads AI readiness at a pattern level. A deeper, workflow-by-workflow audit would show exactly which tools and process changes carry the highest ROI for your team.'
+  }
+  return { body, prompt: `The question your AI readiness raises: ${question}` }
+}
+
 // Re-export for convenience where only dimension metadata is needed
-export { DIMENSIONS }
+export { DIMENSIONS, AI_WORKFLOWS }

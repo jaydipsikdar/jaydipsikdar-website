@@ -6,9 +6,12 @@ import {
   STAGE_OPTIONS,
   ROLE_OPTIONS,
   FUNDING_OPTIONS,
+  AI_WORKFLOWS,
+  AI_STAGE_DEFINITION,
   tierForScore,
   dimensionById,
   type Qualifiers,
+  type AIStageId,
 } from './maturityScoreData'
 import {
   WHAT_THIS_MEANS,
@@ -16,8 +19,12 @@ import {
   benchmarkParagraph,
   ninetyDayPriorities,
   overallAssessment,
+  aiWorkflowCrossReferenceInsight,
+  resourceGapBridge,
+  strategicSequencingBridge,
+  aiIntegrationMapBridge,
 } from './maturityScoreReportContent'
-import type { DimensionScore, AIAnswers } from './maturityScoring'
+import { estimateAIWorkflowAdoption, type DimensionScore, type AIAnswers } from './maturityScoring'
 import type { AIStage } from './maturityScoreData'
 
 type RGB = [number, number, number]
@@ -49,6 +56,18 @@ const SURFACE_CREAM = hex('#f7eddc')
 const PRIMARY = hex('#e84500')
 const PRIMARY_HOVER = hex('#cc3a07')
 const WHITE: RGB = [255, 255, 255]
+const ACCENT_OCHRE = hex('#b57738')
+const ACCENT_ROSE = hex('#df4770')
+const ACCENT_PINK = hex('#ef7bc2')
+
+// AI readiness heatmap bars use the data-viz accent colors, never ember
+// (ember is reserved for actions/emphasis per DESIGN.md).
+const AI_STAGE_COLOR: Record<AIStageId, RGB> = {
+  unaware: TEXT_MUTED,
+  experimenting: ACCENT_OCHRE,
+  functional: ACCENT_ROSE,
+  integrated: ACCENT_PINK,
+}
 
 // ── Text sanitization (mirrors generateAdvisorPDF.ts / generateVendorCheckPDF.ts) ──
 
@@ -522,6 +541,136 @@ function buildDimensionBreakdowns(doc: jsPDF, cur: Cursor, input: MaturityScoreP
   })
 }
 
+// ── AI readiness overlay: score, stage, per-workflow heatmap bars ──
+
+function drawWorkflowBar(doc: jsPDF, cur: Cursor, label: string, stageLabel: string, score: number, color: RGB) {
+  cur.ensureSpace(8)
+  setFont(doc, 9.5, 'normal')
+  setTextColor(doc, TEXT_BODY)
+  doc.text(label, cur.margin, cur.y + 3.5)
+  setFont(doc, 8.5, 'normal')
+  setTextColor(doc, color)
+  doc.text(stageLabel, cur.pageWidth - cur.margin, cur.y + 3.5, { align: 'right' })
+  cur.addSpace(6)
+
+  const barHeight = 3.2
+  setFillColor(doc, BORDER)
+  doc.rect(cur.margin, cur.y, cur.contentWidth, barHeight, 'F')
+  setFillColor(doc, color)
+  doc.rect(cur.margin, cur.y, cur.contentWidth * Math.min(1, Math.max(0, score / 5)), barHeight, 'F')
+  cur.addSpace(barHeight + 5)
+}
+
+function buildAIReadinessOverlay(doc: jsPDF, cur: Cursor, input: MaturityScorePDFInput) {
+  setFont(doc, 20, 'normal')
+  setTextColor(doc, TEXT_BODY)
+  doc.text('AI readiness overlay', cur.margin, cur.y + 6)
+  cur.addSpace(14)
+
+  const stage = input.aiReadinessStage
+  drawParagraph(
+    doc,
+    cur,
+    `AI readiness score: ${input.aiReadinessScore.toFixed(1)}, ${stage.label}. ${AI_STAGE_DEFINITION[stage.id]}`,
+    { fontSize: 10, color: TEXT_SECONDARY, lineHeight: mmPt(14.5) }
+  )
+  cur.addSpace(4)
+  drawParagraph(
+    doc,
+    cur,
+    "This overlay does not affect your 6-dimension maturity score. It's a separate, non-scored read on where AI is (and isn't) embedded in how your marketing work gets done.",
+    { fontSize: 9, color: TEXT_MUTED, lineHeight: mmPt(13) }
+  )
+  cur.addSpace(10)
+
+  setFont(doc, 12, 'normal')
+  setTextColor(doc, TEXT_BODY)
+  cur.ensureSpace(8)
+  doc.text('Estimated adoption stage by workflow', cur.margin, cur.y + 4)
+  cur.addSpace(10)
+
+  const estimates = estimateAIWorkflowAdoption(input.aiAnswers)
+  AI_WORKFLOWS.forEach((workflow, idx) => {
+    const estimate = estimates.find((e) => e.workflowId === workflow.id)
+    if (!estimate) return
+    const color = AI_STAGE_COLOR[estimate.stage.id]
+    drawWorkflowBar(doc, cur, workflow.name, estimate.stage.label, estimate.score, color)
+    drawParagraph(doc, cur, aiWorkflowCrossReferenceInsight(workflow.id, estimate.stage.label, input.dimensionScores), {
+      fontSize: 8.5,
+      color: TEXT_SECONDARY,
+      lineHeight: mmPt(12.5),
+    })
+    cur.addSpace(idx < AI_WORKFLOWS.length - 1 ? 8 : 0)
+  })
+}
+
+// ── Consulting bridge sections ──
+
+function buildConsultingBridge(
+  doc: jsPDF,
+  cur: Cursor,
+  eyebrow: string,
+  title: string,
+  body: string,
+  prompt: string
+) {
+  cur.ensureSpace(16)
+  setFont(doc, 8, 'normal')
+  setTextColor(doc, PRIMARY)
+  doc.text(eyebrow.toUpperCase(), cur.margin, cur.y + 3.5)
+  cur.addSpace(7)
+
+  setFont(doc, 14, 'normal')
+  setTextColor(doc, TEXT_BODY)
+  doc.text(title, cur.margin, cur.y + 4)
+  cur.addSpace(9)
+
+  drawParagraph(doc, cur, body, { fontSize: 9.5, color: TEXT_SECONDARY, lineHeight: mmPt(14) })
+  cur.addSpace(4)
+
+  setFont(doc, 9, 'italic')
+  const promptLines: string[] = doc.splitTextToSize(sanitizeText(prompt), cur.contentWidth - 10)
+  const promptHeight = 6 + promptLines.length * mmPt(13) + 5
+  cur.ensureSpace(promptHeight)
+  const top = cur.y
+  setFillColor(doc, SURFACE_SOFT)
+  doc.rect(cur.margin, top, cur.contentWidth, promptHeight, 'F')
+  setDrawColor(doc, PRIMARY)
+  doc.setLineWidth(1)
+  doc.line(cur.margin, top, cur.margin, top + promptHeight)
+
+  setFont(doc, 9, 'italic')
+  setTextColor(doc, TEXT_BODY)
+  let py = top + 6
+  for (const line of promptLines) {
+    doc.text(line, cur.margin + 5, py)
+    py += mmPt(13)
+  }
+  cur.y = top + promptHeight
+  cur.addSpace(10)
+}
+
+function buildConsultingBridges(doc: jsPDF, cur: Cursor, input: MaturityScorePDFInput) {
+  setFont(doc, 20, 'normal')
+  setTextColor(doc, TEXT_BODY)
+  cur.ensureSpace(12)
+  doc.text(sanitizeText("What this report can and can't tell you"), cur.margin, cur.y + 6)
+  cur.addSpace(16)
+
+  const gap = resourceGapBridge(input.dimensionScores)
+  buildConsultingBridge(doc, cur, 'Consulting bridge', 'Your resource gap', gap.body, gap.prompt)
+  cur.hr()
+  cur.addSpace(10)
+
+  const sequencing = strategicSequencingBridge(input.weakest, input.qualifiers.funding)
+  buildConsultingBridge(doc, cur, 'Consulting bridge', 'Strategic sequencing', sequencing.body, sequencing.prompt)
+  cur.hr()
+  cur.addSpace(10)
+
+  const aiMap = aiIntegrationMapBridge(input.weakest, input.aiAnswers)
+  buildConsultingBridge(doc, cur, 'Consulting bridge', 'AI integration map', aiMap.body, aiMap.prompt)
+}
+
 // ── Page 3: benchmarks, 90-day priorities, CTA, footer ──
 
 function buildBenchmarksAndPriorities(doc: jsPDF, cur: Cursor, input: MaturityScorePDFInput) {
@@ -707,6 +856,12 @@ export function generateMaturityScorePDF(input: MaturityScorePDFInput): Uint8Arr
 
   cur.newPage()
   buildDimensionBreakdowns(doc, cur, input)
+
+  cur.newPage()
+  buildAIReadinessOverlay(doc, cur, input)
+
+  cur.newPage()
+  buildConsultingBridges(doc, cur, input)
 
   cur.newPage()
   buildBenchmarksAndPriorities(doc, cur, input)
