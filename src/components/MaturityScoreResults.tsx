@@ -1,6 +1,6 @@
 'use client'
 
-import MaturityScoreRadar from './MaturityScoreRadar'
+import MaturityScoreLiveRadar from './MaturityScoreLiveRadar'
 import { dimensionById, DIMENSION_GAP_SUMMARY } from '@/lib/maturityScoreData'
 import { hexToRgba } from '@/lib/colorUtils'
 import type { MaturityResult } from '@/lib/maturityScoring'
@@ -39,8 +39,8 @@ export default function MaturityScoreResults({ result }: { result: MaturityResul
         </div>
       </div>
 
-      <div className="mb-10">
-        <MaturityScoreRadar dimensionScores={result.dimensionScores} />
+      <div className="mb-10 flex justify-center">
+        <MaturityScoreLiveRadar dimensionScores={result.dimensionScores} size={280} />
       </div>
 
       <h3 className="text-[18px] font-light font-sans leading-[1.4] text-[color:var(--text-body)] mb-4">

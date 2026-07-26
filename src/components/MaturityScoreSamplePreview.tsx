@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import MaturityScoreRadar from './MaturityScoreRadar'
+import MaturityScoreLiveRadar from './MaturityScoreLiveRadar'
 import { dimensionById, tierForScore, type DimensionId } from '@/lib/maturityScoreData'
 import { hexToRgba } from '@/lib/colorUtils'
 
@@ -57,8 +57,8 @@ export default function MaturityScoreSamplePreview() {
         </div>
       </div>
 
-      <div className="mb-4">
-        <MaturityScoreRadar dimensionScores={SAMPLE_SCORES} />
+      <div className="mb-4 flex justify-center">
+        <MaturityScoreLiveRadar dimensionScores={SAMPLE_SCORES} size={240} />
       </div>
 
       {expanded && (

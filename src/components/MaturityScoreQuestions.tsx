@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { ChevronLeft } from 'lucide-react'
+import MaturityScoreLiveRadar from './MaturityScoreLiveRadar'
 import {
   ROLE_OPTIONS,
   STAGE_OPTIONS,
@@ -16,8 +17,16 @@ import {
   type StageId,
   type FundingId,
   type Qualifiers,
+  type DimensionId,
 } from '@/lib/maturityScoreData'
-import { answeredCount, aiAnsweredCount, type Answers, type AIAnswers } from '@/lib/maturityScoring'
+import {
+  answeredCount,
+  aiAnsweredCount,
+  scoreAllDimensions,
+  type Answers,
+  type AIAnswers,
+  type DimensionScore,
+} from '@/lib/maturityScoring'
 
 type Phase = 'role' | 'stage' | 'funding' | 'framing' | 'questions' | 'ai-transition' | 'ai-questions'
 
@@ -39,6 +48,65 @@ function ProgressBar({ fraction, label }: { fraction: number; label: string }) {
           style={{ width: `${Math.min(100, Math.max(0, fraction * 100))}%` }}
         />
       </div>
+    </div>
+  )
+}
+
+// Secondary text reference once the live radar takes over as the primary
+// progress indicator (see LiveRadarBlock below).
+function CaptionIndicator({ label }: { label: string }) {
+  return (
+    <p className="text-[13px] font-normal font-sans tracking-[-0.39px] text-[color:var(--text-muted)] mb-6">
+      {label}
+    </p>
+  )
+}
+
+// Desktop: persistent chart in its own reserved column (see the md:flex
+// wrapper in each phase's return below) so position: sticky pins it within
+// that column's height instead of overlapping content that scrolls past it.
+function DesktopRadarSidebar({
+  dimensionScores,
+  revealed,
+}: {
+  dimensionScores: DimensionScore[]
+  revealed: DimensionId[]
+}) {
+  return (
+    <div className="hidden md:block md:w-[160px] md:flex-shrink-0">
+      <div className="md:sticky md:top-6">
+        <MaturityScoreLiveRadar dimensionScores={dimensionScores} revealed={revealed} size={160} />
+      </div>
+    </div>
+  )
+}
+
+// Mobile: collapsible mini chart, tap to expand. No sticky positioning
+// needed since it's a small inline toggle at the top of the content column.
+function MobileRadarToggle({
+  dimensionScores,
+  revealed,
+  expanded,
+  onToggleExpanded,
+}: {
+  dimensionScores: DimensionScore[]
+  revealed: DimensionId[]
+  expanded: boolean
+  onToggleExpanded: () => void
+}) {
+  return (
+    <div className="md:hidden flex justify-center mb-6">
+      <button type="button" onClick={onToggleExpanded} className="flex flex-col items-center gap-1">
+        <MaturityScoreLiveRadar
+          dimensionScores={dimensionScores}
+          revealed={revealed}
+          size={expanded ? 176 : 64}
+          className="transition-[width,height] duration-150 ease-out"
+        />
+        <span className="text-[13px] font-normal font-sans text-[color:var(--text-muted)]">
+          {expanded ? 'Tap to collapse' : 'Tap to expand'}
+        </span>
+      </button>
     </div>
   )
 }
@@ -102,6 +170,7 @@ export default function MaturityScoreQuestions({ onComplete }: MaturityScoreQues
   const [answers, setAnswers] = useState<Answers>({})
   const [aiQuestionIndex, setAiQuestionIndex] = useState(0)
   const [aiAnswers, setAiAnswers] = useState<AIAnswers>({})
+  const [radarExpanded, setRadarExpanded] = useState(false)
 
   const dimension = DIMENSIONS[dimensionIndex]
   const dimensionQuestions = questionsForDimension(dimension.id)
@@ -294,9 +363,12 @@ export default function MaturityScoreQuestions({ onComplete }: MaturityScoreQues
     const overallAnsweredAI = answeredCount(answers) + aiAnsweredCount(aiAnswers)
     const progressFraction = 0.2 + 0.8 * (overallAnsweredAI / TOTAL_QUESTIONS)
     const aiAllAnswered = AI_QUESTIONS.every((q) => typeof aiAnswers[q.id] === 'number')
+    const liveDimensionScores = scoreAllDimensions(answers)
+    const allDimensionIds = DIMENSIONS.map((d) => d.id)
 
     return (
-      <div>
+      <div className="md:flex md:gap-10 md:items-start">
+      <div className="md:flex-1 md:min-w-0">
         <div className="md:hidden">
           <BackButton onClick={handleBackAIMobile} />
         </div>
@@ -304,9 +376,15 @@ export default function MaturityScoreQuestions({ onComplete }: MaturityScoreQues
           <BackButton onClick={() => setPhase('ai-transition')} />
         </div>
 
-        <ProgressBar
-          fraction={progressFraction}
-          label={`Question ${QUESTIONS.length + 1} of ${TOTAL_QUESTIONS} — AI readiness`}
+        <MobileRadarToggle
+          dimensionScores={liveDimensionScores}
+          revealed={allDimensionIds}
+          expanded={radarExpanded}
+          onToggleExpanded={() => setRadarExpanded((v) => !v)}
+        />
+
+        <CaptionIndicator
+          label={`Question ${QUESTIONS.length + 1} of ${TOTAL_QUESTIONS} · AI readiness · ${Math.round(progressFraction * 100)}% complete`}
         />
 
         {/* Mobile: one AI question at a time */}
@@ -320,6 +398,9 @@ export default function MaturityScoreQuestions({ onComplete }: MaturityScoreQues
                   AI readiness
                 </p>
                 <h2 className="text-[20px] font-light font-sans tracking-[-0.2px] leading-[1.4] text-[color:var(--text-body)] mb-6">
+                  <span className="[font-feature-settings:'tnum'_1] text-[color:var(--text-muted)]">
+                    Q{QUESTIONS.length + aiQuestionIndex + 1}.{' '}
+                  </span>
                   {q.question}
                 </h2>
                 <div className="flex flex-col gap-2">
@@ -352,9 +433,12 @@ export default function MaturityScoreQuestions({ onComplete }: MaturityScoreQues
             Now let&apos;s look at how AI fits into your workflows
           </h2>
           <div className="flex flex-col gap-10">
-            {AI_QUESTIONS.map((q) => (
+            {AI_QUESTIONS.map((q, qi) => (
               <div key={q.id}>
                 <h3 className="text-[18px] font-light font-sans leading-[1.4] text-[color:var(--text-body)] mb-4">
+                  <span className="[font-feature-settings:'tnum'_1] text-[color:var(--text-muted)]">
+                    Q{QUESTIONS.length + qi + 1}.{' '}
+                  </span>
                   {q.question}
                 </h3>
                 <div className="flex flex-col gap-2">
@@ -388,6 +472,8 @@ export default function MaturityScoreQuestions({ onComplete }: MaturityScoreQues
           </div>
         </div>
       </div>
+      <DesktopRadarSidebar dimensionScores={liveDimensionScores} revealed={allDimensionIds} />
+      </div>
     )
   }
 
@@ -395,9 +481,14 @@ export default function MaturityScoreQuestions({ onComplete }: MaturityScoreQues
 
   const overallAnswered = answeredCount(answers)
   const progressFraction = 0.2 + 0.8 * (overallAnswered / TOTAL_QUESTIONS)
+  const liveDimensionScores = scoreAllDimensions(answers)
+  const revealedDimensionIds = DIMENSIONS.filter((d) =>
+    questionsForDimension(d.id).every((q) => typeof answers[q.id] === 'number')
+  ).map((d) => d.id)
 
   return (
-    <div>
+    <div className="md:flex md:gap-10 md:items-start">
+    <div className="md:flex-1 md:min-w-0">
       {/* Mobile back — steps one question at a time */}
       <div className="md:hidden">
         <BackButton onClick={handleBackMobile} />
@@ -407,9 +498,15 @@ export default function MaturityScoreQuestions({ onComplete }: MaturityScoreQues
         <BackButton onClick={handleBackDesktop} />
       </div>
 
-      <ProgressBar
-        fraction={progressFraction}
-        label={`Question ${Math.min(TOTAL_QUESTIONS, globalIndexOfDimensionStart + mobileQuestionIndex + 1)} of ${TOTAL_QUESTIONS} — ${dimension.name}`}
+      <MobileRadarToggle
+        dimensionScores={liveDimensionScores}
+        revealed={revealedDimensionIds}
+        expanded={radarExpanded}
+        onToggleExpanded={() => setRadarExpanded((v) => !v)}
+      />
+
+      <CaptionIndicator
+        label={`Question ${Math.min(TOTAL_QUESTIONS, globalIndexOfDimensionStart + mobileQuestionIndex + 1)} of ${TOTAL_QUESTIONS} · ${dimension.name} · ${Math.round(progressFraction * 100)}% complete`}
       />
 
       {/* Mobile: one question at a time */}
@@ -426,6 +523,9 @@ export default function MaturityScoreQuestions({ onComplete }: MaturityScoreQues
                 {dimension.name}
               </p>
               <h2 className="text-[20px] font-light font-sans tracking-[-0.2px] leading-[1.4] text-[color:var(--text-body)] mb-6">
+                <span className="[font-feature-settings:'tnum'_1] text-[color:var(--text-muted)]">
+                  Q{globalIndexOfDimensionStart + mobileQuestionIndex + 1}.{' '}
+                </span>
                 {q.question}
               </h2>
               <div className="flex flex-col gap-2">
@@ -464,6 +564,9 @@ export default function MaturityScoreQuestions({ onComplete }: MaturityScoreQues
           {dimensionQuestions.map((q) => (
             <div key={q.id}>
               <h3 className="text-[18px] font-light font-sans leading-[1.4] text-[color:var(--text-body)] mb-4">
+                <span className="[font-feature-settings:'tnum'_1] text-[color:var(--text-muted)]">
+                  Q{QUESTIONS.findIndex((qq) => qq.id === q.id) + 1}.{' '}
+                </span>
                 {q.question}
               </h3>
               <div className="flex flex-col gap-2">
@@ -496,6 +599,8 @@ export default function MaturityScoreQuestions({ onComplete }: MaturityScoreQues
           </button>
         </div>
       </div>
+    </div>
+      <DesktopRadarSidebar dimensionScores={liveDimensionScores} revealed={revealedDimensionIds} />
     </div>
   )
 }
