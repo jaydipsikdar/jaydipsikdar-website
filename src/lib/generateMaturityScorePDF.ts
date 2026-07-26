@@ -601,7 +601,7 @@ function buildCTA(doc: jsPDF, cur: Cursor) {
   const headingLH = mmPt(15)
   const bodyLH = mmPt(13)
   const bodyLines = doc.splitTextToSize(
-    "Book a 60-minute consultation. We'll review your scores, pressure-test the priorities, and build a plan you can execute this quarter.",
+    "Book a 60-minute consultation. We'll review your scores, pressure-test the priorities, and help you identify the top 3 most important next steps.",
     cur.contentWidth - 30
   )
   const btnH = 9
@@ -675,6 +675,23 @@ function buildFooter(doc: jsPDF, cur: Cursor) {
   }
 }
 
+// ── Per-page footer (page number + URL, not a watermark) ──
+
+function addPageFooters(doc: jsPDF) {
+  const totalPages = (doc.internal as unknown as { getNumberOfPages(): number }).getNumberOfPages()
+  for (let i = 1; i <= totalPages; i++) {
+    doc.setPage(i)
+    const pageWidth = doc.internal.pageSize.getWidth()
+    const pageHeight = doc.internal.pageSize.getHeight()
+    setFont(doc, 7.5, 'normal')
+    setTextColor(doc, TEXT_MUTED)
+    doc.text(`Page ${i} of ${totalPages}`, 20, pageHeight - 10)
+    doc.text('jaydipsikdar.com/resources/marketing-maturity-score', pageWidth - 20, pageHeight - 10, {
+      align: 'right',
+    })
+  }
+}
+
 // ── Entry point ──
 
 export function generateMaturityScorePDF(input: MaturityScorePDFInput): Uint8Array {
@@ -689,6 +706,8 @@ export function generateMaturityScorePDF(input: MaturityScorePDFInput): Uint8Arr
 
   cur.newPage()
   buildBenchmarksAndPriorities(doc, cur, input)
+
+  addPageFooters(doc)
 
   return new Uint8Array(doc.output('arraybuffer'))
 }

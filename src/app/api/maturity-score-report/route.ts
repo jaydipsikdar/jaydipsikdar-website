@@ -59,14 +59,13 @@ export async function POST(request: Request) {
   }
 
   const dateStamp = new Date().toISOString().slice(0, 10)
-  const uniqueSuffix = Math.random().toString(36).slice(2, 8)
-  const filename = `maturity-score-report-${body.result.tier.id}-${dateStamp}-${uniqueSuffix}.pdf`
+  const filename = `maturity-score-report-${body.result.tier.id}-${dateStamp}.pdf`
 
   let pdfUrl: string
   try {
     const { error: uploadError } = await supabase.storage
       .from(PDF_BUCKET)
-      .upload(filename, Buffer.from(pdfBytes), { contentType: 'application/pdf', upsert: false })
+      .upload(filename, Buffer.from(pdfBytes), { contentType: 'application/pdf', upsert: true })
     if (uploadError) throw uploadError
 
     const { data } = supabase.storage.from(PDF_BUCKET).getPublicUrl(filename)

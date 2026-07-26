@@ -139,13 +139,13 @@ export default function HomePage() {
               <h3 className="text-base font-semibold mb-3">Marketing Maturity Score</h3>
               <div className="flex-1">
                 <p className="text-brand-text text-sm leading-relaxed mb-3">
-                  Most marketing functions are running on instinct, not a system. This tool tells
-                  you which parts of yours need it most.
+                  Most marketing functions run on instinct, not a system. This tool tells you
+                  exactly where yours needs one.
                 </p>
                 <p className="text-brand-text text-sm leading-relaxed mb-6">
                   Answer 25 questions across positioning, demand generation, content, ops,
-                  measurement, and team. Get a maturity score, a radar chart, and your top priority
-                  gaps in minutes. Free.
+                  measurement, and team. Get a maturity score, a radar chart, and your top 3
+                  priority gaps in about 8 minutes. Free.
                 </p>
               </div>
               <div className="text-left">
@@ -162,18 +162,13 @@ export default function HomePage() {
               <h3 className="text-base font-semibold mb-3">Vendor Contract Check</h3>
               <div className="flex-1">
                 <p className="text-brand-text text-sm leading-relaxed mb-3">
-                  Most vendor contracts are written to protect the vendor. This tool reads yours
-                  and tells you where.
-                </p>
-                <p className="text-brand-text text-sm leading-relaxed mb-3">
-                  Paste or upload your contract — it scores every clause across scope, targets,
-                  data rights, exit terms, and payment structure. You get a risk score, flagged
-                  clauses, and specific renegotiation language you can use before you sign. Takes
-                  2 minutes. Free.
+                  Most vendor contracts are written to protect the vendor, not you. This tool reads
+                  yours and tells you exactly where.
                 </p>
                 <p className="text-brand-text text-sm leading-relaxed mb-6">
-                  Built after a real engagement where a three-month retainer delivered nothing —
-                  and the contract was designed to make that acceptable.
+                  Paste or upload your contract and get a risk score across scope, targets, data
+                  rights, exit terms, and payment, plus renegotiation language you can use before
+                  you sign. Built after a retainer that delivered nothing. Takes 2 minutes. Free.
                 </p>
               </div>
               <div className="text-left">
@@ -187,21 +182,16 @@ export default function HomePage() {
             </div>
 
             <div className="border border-gray-200 rounded-lg p-6 flex flex-col">
-              <h3 className="text-base font-semibold mb-3">Get the CMO Boardroom Kit — Free</h3>
+              <h3 className="text-base font-semibold mb-3">Get the CMO Boardroom Kit, free</h3>
               <div className="flex-1">
                 <p className="text-brand-text text-sm leading-relaxed mb-3">
-                  Making a big marketing call and want a second opinion? This kit gives you 213
-                  distilled lessons from 21 senior marketing leaders — plus eight AI-powered
-                  advisor prompts you can run in ChatGPT, Claude, or Gemini to pressure-test your
-                  thinking.
+                  Making a big marketing call and want a second opinion? This kit distills 213
+                  lessons from 21 senior marketing leaders.
                 </p>
-                <p className="text-brand-text text-sm leading-relaxed mb-3">
-                  Includes the full boardroom prompt (bring a decision, they debate it),
-                  individual advisor prompts for quick opinions, and the complete lessons
-                  playbook in plain language.
-                </p>
-                <p className="text-brand-text text-sm font-medium mb-6">
-                  Free PDF. Works in any AI chat tool.
+                <p className="text-brand-text text-sm leading-relaxed mb-6">
+                  Get eight AI advisor prompts for ChatGPT, Claude, or Gemini, a boardroom prompt
+                  that debates your decision, and the complete lessons playbook in plain language.
+                  Free PDF, works in any AI chat tool.
                 </p>
               </div>
               <KitSignupForm />
