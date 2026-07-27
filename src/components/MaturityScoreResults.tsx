@@ -80,6 +80,17 @@ export default function MaturityScoreResults({ result }: { result: MaturityResul
           )
         })}
       </div>
+
+      <p className="text-center text-[13px] font-light font-sans text-[color:var(--text-muted)] mt-10">
+        Build your content system next.{' '}
+        <a
+          href="/resources/content-office"
+          className="text-[color:var(--color-primary)] hover:text-[color:var(--color-primary-hover)] transition-colors"
+        >
+          Try Jaydip&apos;s Content Office
+        </a>
+        .
+      </p>
     </div>
   )
 }

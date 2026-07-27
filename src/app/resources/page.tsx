@@ -116,7 +116,33 @@ export default function ResourcesPage() {
 
       </div>
 
-      {/* Row 2 — CMO Boardroom Kit, full width */}
+      {/* Row 2 — Jaydip's Content Office, full width */}
+      <div className="grid grid-cols-1 gap-8 mb-8">
+        <div className="border border-[color:var(--border-hairline)] rounded-[var(--radius-lg)] p-8 flex flex-col md:flex-row md:items-center gap-8">
+          <div className="flex-1">
+            <h2 className="text-lg font-semibold mb-3">Jaydip&apos;s Content Office</h2>
+            <p className="text-brand-text text-sm leading-relaxed mb-3">
+              Answer 5 questions about your business, audience, and pillars, and get a content
+              matrix: your topics crossed with 10 proven content themes, each idea assigned a
+              structure and mapped to your channels with specific format guidance.
+            </p>
+            <p className="text-brand-text text-sm leading-relaxed mb-3">
+              30 content ideas from a 2-minute input, plus a starter sequence, a gap analysis, and
+              a content rhythm plan in the full report. Free.
+            </p>
+          </div>
+          <div className="w-full md:w-auto flex-shrink-0">
+            <a
+              href="/resources/content-office"
+              className="block text-center px-4 py-2 rounded-[var(--radius-pill)] bg-[color:var(--color-primary)] text-white text-sm font-normal hover:bg-[color:var(--color-primary-hover)] transition-colors"
+            >
+              Build your system →
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* Row 3 — CMO Boardroom Kit, full width */}
       <div className="grid grid-cols-1 gap-8">
         <div className="border border-gray-200 rounded-lg p-8 flex flex-col md:flex-row md:items-center gap-8">
           <div className="flex-1">
