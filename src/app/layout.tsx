@@ -13,7 +13,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Jaydip Sikdar — CMO Turned Builder | Free Marketing Tools & Frameworks',
+  title: 'Jaydip Sikdar - CMO turned builder | Free marketing tools & frameworks',
   description:
     "20-year CMO turned builder, making practical marketing tools for people who don't have a marketing team. Free tools, frameworks, and resources for marketers, solopreneurs, and consultants.",
   metadataBase: new URL('https://jaydipsikdar.com'),
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: 'Jaydip Sikdar — CMO Turned Builder | Free Marketing Tools & Frameworks',
+    title: 'Jaydip Sikdar - CMO turned builder | Free marketing tools & frameworks',
     description:
       "20-year CMO turned builder, making practical marketing tools for people who don't have a marketing team. Free tools, frameworks, and resources for marketers, solopreneurs, and consultants.",
     url: 'https://jaydipsikdar.com',
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Jaydip Sikdar — CMO Turned Builder | Free Marketing Tools & Frameworks',
+    title: 'Jaydip Sikdar - CMO turned builder | Free marketing tools & frameworks',
     description:
       "20-year CMO turned builder, making practical marketing tools for people who don't have a marketing team. Free tools, frameworks, and resources for marketers, solopreneurs, and consultants.",
   },

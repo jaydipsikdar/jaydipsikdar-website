@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import RazorpayBookButton from '@/components/RazorpayBookButton'
 
 export const metadata: Metadata = {
-  title: 'Contact — Jaydip Sikdar',
+  title: 'Contact - Jaydip Sikdar',
   description: 'Book a 60-minute consulting session or get in touch.',
 }
 

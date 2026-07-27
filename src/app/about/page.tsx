@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Button from '@/components/ui/Button'
 
 export const metadata: Metadata = {
-  title: 'About — Jaydip Sikdar',
+  title: 'About - Jaydip Sikdar',
   description:
     '20 years inside IBM, Adobe, Cisco, and MoEngage. Now building free marketing tools and advising AI startups as CMO.',
 }

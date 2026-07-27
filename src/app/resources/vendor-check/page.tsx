@@ -3,7 +3,7 @@ import { Suspense } from 'react'
 import VendorCheckFlow from '@/components/VendorCheckFlow'
 
 export const metadata: Metadata = {
-  title: 'Vendor Contract Check — Jaydip Sikdar',
+  title: 'Vendor Contract Check - Jaydip Sikdar',
   description:
     'Paste your lead generation agency contract and get a scored, clause-by-clause fairness assessment before you sign.',
 }

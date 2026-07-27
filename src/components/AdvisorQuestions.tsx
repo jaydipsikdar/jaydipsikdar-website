@@ -74,7 +74,7 @@ const CATEGORY_CONFIG: Record<MarketingCategory, CategoryConfig> = {
     },
     descriptionQuestion: 'Describe your brand challenge.',
     descriptionPlaceholder:
-      "e.g., I post on LinkedIn 3x a week but engagement is flat. I sell marketing consulting but my content reads like everyone else's — frameworks, tips, listicles. Nothing stands out.",
+      "e.g., I post on LinkedIn 3x a week but engagement is flat. I sell marketing consulting but my content reads like everyone else's: frameworks, tips, listicles. Nothing stands out.",
   },
   'customer-growth': {
     primaryChallengeQuestion: "What's your primary challenge?",

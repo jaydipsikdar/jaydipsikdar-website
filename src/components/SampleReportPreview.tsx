@@ -24,10 +24,10 @@ const SAMPLE_PARAMETERS = [
     whatItSays:
       'The contract includes a quarterly target range but no holdback mechanism. Full monthly retainer is payable regardless of delivery progress. The only remedy for underperformance is 15 additional days of service at no extra cost.',
     whyItMatters:
-      'Fifteen days of additional service is not a meaningful consequence — you keep paying full retainer with no leverage tied to actual delivery.',
+      'Fifteen days of additional service is not a meaningful consequence: you keep paying full retainer with no leverage tied to actual delivery.',
     whatToPropose:
       'Hold the final month’s payment until the quarterly target is achieved. Introduce a 30-day remediation period (15+15) at no additional cost, with pro-rata release if the target remains unmet.',
-    redFlags: ['15-day remedy — not real accountability'],
+    redFlags: ['15-day remedy, not real accountability'],
   },
   {
     name: 'Data Ownership',
@@ -35,7 +35,7 @@ const SAMPLE_PARAMETERS = [
     whatItSays:
       'The contract states "campaign deliverables" belong to the client but doesn’t enumerate what this includes. No mention of contact databases, engagement history, or CRM-exportable data.',
     whyItMatters:
-      'If the engagement ends, you risk losing every contact researched and every response logged — all of which you paid for.',
+      'If the engagement ends, you risk losing every contact researched and every response logged, all of which you paid for.',
     whatToPropose:
       'Add an explicit Campaign Data Ownership clause listing everything the client retains, in CRM-ready export format, plus an Exit Deliverables clause with a defined handover timeline.',
     redFlags: ['No CRM-exportable data guaranteed'],
@@ -44,16 +44,16 @@ const SAMPLE_PARAMETERS = [
     name: 'Exit Terms',
     score: 9,
     whatItSays:
-      'Either party may terminate with 30 days’ notice. A "target universe exhausted" clause allows the vendor to determine, at their sole discretion, that the market is fully contacted — ending the engagement with no refund.',
+      'Either party may terminate with 30 days’ notice. A "target universe exhausted" clause allows the vendor to determine, at their sole discretion, that the market is fully contacted, ending the engagement with no refund.',
     whyItMatters:
-      'The "sole discretion" clause gives the vendor an unchecked exit option — they can walk away without consequence while you’ve paid for a full quarter with partial delivery.',
+      'The "sole discretion" clause gives the vendor an unchecked exit option: they can walk away without consequence while you’ve paid for a full quarter with partial delivery.',
     whatToPropose:
       'Replace "sole discretion" with "mutual agreement" supported by data. Add a performance-linked exit option with pro-rata refund if targets are missed by more than 30%.',
     redFlags: ['Vendor "sole discretion" exit clause'],
     // This is the highest-scoring parameter in the sample (still below the real
     // 16+ threshold for a green flag), included here only to demonstrate the
     // green-flag pattern on the landing page preview.
-    greenFlags: ['30-day notice period — standard and fair'],
+    greenFlags: ['30-day notice period, standard and fair'],
   },
   {
     name: 'Payment vs. Delivery Alignment',
@@ -61,7 +61,7 @@ const SAMPLE_PARAMETERS = [
     whatItSays:
       'Monthly retainer payable in advance, with no portion tied to delivery milestones. Auto-renewal triggers unless 45-day written notice is provided.',
     whyItMatters:
-      'You’re fully paid up before the vendor has delivered anything each month — there’s no financial incentive for them to perform.',
+      'You’re fully paid up before the vendor has delivered anything each month, there’s no financial incentive for them to perform.',
     whatToPropose:
       'Restructure payment as 70% in advance / 30% held back until quarterly verification. Reduce auto-renewal notice to 30 days, or shift to opt-in renewal.',
     redFlags: ['Full retainer paid before delivery'],
