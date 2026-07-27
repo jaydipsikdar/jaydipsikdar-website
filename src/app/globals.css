@@ -73,3 +73,12 @@
   border-radius: 0.5rem;
   animation: review-pulse 1.4s ease-out 2;
 }
+
+@keyframes content-office-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.content-office-fade-in {
+  animation: content-office-fade-in 160ms ease-out both;
+}
