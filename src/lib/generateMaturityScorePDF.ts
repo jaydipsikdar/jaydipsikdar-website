@@ -19,12 +19,17 @@ import {
   benchmarkParagraph,
   ninetyDayPriorities,
   overallAssessment,
-  aiWorkflowCrossReferenceInsight,
+  aiReadinessPatternSummary,
   resourceGapBridge,
   strategicSequencingBridge,
   aiIntegrationMapBridge,
 } from './maturityScoreReportContent'
-import { estimateAIWorkflowAdoption, type DimensionScore, type AIAnswers } from './maturityScoring'
+import {
+  estimateAIWorkflowAdoption,
+  type DimensionScore,
+  type AIAnswers,
+  type AIWorkflowEstimate,
+} from './maturityScoring'
 import type { AIStage } from './maturityScoreData'
 
 type RGB = [number, number, number]
@@ -55,18 +60,16 @@ const SURFACE_SOFT = hex('#f6f9fc')
 const SURFACE_CREAM = hex('#f7eddc')
 const PRIMARY = hex('#e84500')
 const PRIMARY_HOVER = hex('#cc3a07')
+const PRIMARY_SUBTLE = hex('#ffd8c4')
 const WHITE: RGB = [255, 255, 255]
-const ACCENT_OCHRE = hex('#b57738')
-const ACCENT_ROSE = hex('#df4770')
-const ACCENT_PINK = hex('#ef7bc2')
 
-// AI readiness heatmap bars use the data-viz accent colors, never ember
-// (ember is reserved for actions/emphasis per DESIGN.md).
-const AI_STAGE_COLOR: Record<AIStageId, RGB> = {
-  unaware: TEXT_MUTED,
-  experimenting: ACCENT_OCHRE,
-  functional: ACCENT_ROSE,
-  integrated: ACCENT_PINK,
+// AI readiness heatmap columns, left to right (used for cell index lookup).
+const AI_STAGE_ORDER: AIStageId[] = ['unaware', 'experimenting', 'functional', 'integrated']
+const AI_STAGE_COLUMN_OPACITY: Record<AIStageId, number> = {
+  unaware: 0.15,
+  experimenting: 0.35,
+  functional: 0.6,
+  integrated: 0.85,
 }
 
 // ── Text sanitization (mirrors generateAdvisorPDF.ts / generateVendorCheckPDF.ts) ──
@@ -541,31 +544,102 @@ function buildDimensionBreakdowns(doc: jsPDF, cur: Cursor, input: MaturityScoreP
   })
 }
 
-// ── AI readiness overlay: score, stage, per-workflow heatmap bars ──
+// ── AI readiness overlay: score, stage, 6x4 adoption heatmap ──
 
-function drawWorkflowBar(doc: jsPDF, cur: Cursor, label: string, stageLabel: string, score: number, color: RGB) {
-  cur.ensureSpace(8)
-  setFont(doc, 9.5, 'normal')
-  setTextColor(doc, TEXT_BODY)
-  doc.text(label, cur.margin, cur.y + 3.5)
-  setFont(doc, 8.5, 'normal')
-  setTextColor(doc, color)
-  doc.text(stageLabel, cur.pageWidth - cur.margin, cur.y + 3.5, { align: 'right' })
-  cur.addSpace(6)
+const HEATMAP_ROW_LABEL_WIDTH = 44
+const HEATMAP_ROW_HEIGHT = 13
+const HEATMAP_STAGE_LABELS: Record<AIStageId, string> = {
+  unaware: 'Unaware',
+  experimenting: 'Experimenting',
+  functional: 'Functional',
+  integrated: 'Integrated',
+}
 
-  const barHeight = 3.2
-  setFillColor(doc, BORDER)
-  doc.rect(cur.margin, cur.y, cur.contentWidth, barHeight, 'F')
+function fillRectWithOpacity(doc: jsPDF, x: number, y: number, w: number, h: number, color: RGB, opacity: number) {
   setFillColor(doc, color)
-  doc.rect(cur.margin, cur.y, cur.contentWidth * Math.min(1, Math.max(0, score / 5)), barHeight, 'F')
-  cur.addSpace(barHeight + 5)
+  doc.saveGraphicsState()
+  const gState = (doc as unknown as { GState: new (opts: { opacity: number }) => unknown }).GState
+  doc.setGState(new gState({ opacity }))
+  doc.rect(x, y, w, h, 'F')
+  doc.restoreGraphicsState()
+}
+
+function drawAIReadinessHeatmap(doc: jsPDF, cur: Cursor, estimates: AIWorkflowEstimate[]) {
+  const gridX = cur.margin + HEATMAP_ROW_LABEL_WIDTH
+  const gridWidth = cur.contentWidth - HEATMAP_ROW_LABEL_WIDTH
+  const colWidth = gridWidth / 4
+
+  // Column headers
+  cur.ensureSpace(7)
+  setFont(doc, 8, 'normal')
+  setTextColor(doc, TEXT_SECONDARY)
+  AI_STAGE_ORDER.forEach((stageId, i) => {
+    const cx = gridX + colWidth * i + colWidth / 2
+    doc.text(HEATMAP_STAGE_LABELS[stageId], cx, cur.y + 3.5, { align: 'center' })
+  })
+  cur.addSpace(9)
+
+  // Rows: one per workflow, gradient cells + a dot marking the assessed stage
+  AI_WORKFLOWS.forEach((workflow) => {
+    const estimate = estimates.find((e) => e.workflowId === workflow.id)
+    if (!estimate) return
+
+    cur.ensureSpace(HEATMAP_ROW_HEIGHT)
+    const rowTop = cur.y
+
+    setFont(doc, 9, 'normal')
+    setTextColor(doc, TEXT_BODY)
+    const labelLines: string[] = doc.splitTextToSize(workflow.name, HEATMAP_ROW_LABEL_WIDTH - 4)
+    const labelBlockHeight = labelLines.length * mmPt(11)
+    let ly = rowTop + (HEATMAP_ROW_HEIGHT - labelBlockHeight) / 2 + mmPt(11) * 0.75
+    for (const line of labelLines) {
+      doc.text(line, cur.margin, ly)
+      ly += mmPt(11)
+    }
+
+    AI_STAGE_ORDER.forEach((stageId, col) => {
+      fillRectWithOpacity(
+        doc,
+        gridX + colWidth * col + 1,
+        rowTop,
+        colWidth - 2,
+        HEATMAP_ROW_HEIGHT - 2,
+        PRIMARY_SUBTLE,
+        AI_STAGE_COLUMN_OPACITY[stageId]
+      )
+    })
+
+    const stageIndex = AI_STAGE_ORDER.indexOf(estimate.stage.id)
+    const dotX = gridX + colWidth * stageIndex + colWidth / 2
+    const dotY = rowTop + (HEATMAP_ROW_HEIGHT - 2) / 2
+    setFillColor(doc, PRIMARY)
+    doc.circle(dotX, dotY, 2.2, 'F')
+
+    cur.y = rowTop + HEATMAP_ROW_HEIGHT
+  })
+
+  // Legend
+  cur.addSpace(4)
+  cur.ensureSpace(6)
+  setFillColor(doc, PRIMARY)
+  doc.circle(cur.margin + 1.5, cur.y + 1.8, 1.6, 'F')
+  setFont(doc, 8, 'normal')
+  setTextColor(doc, TEXT_MUTED)
+  doc.text('Your AI adoption stage in each workflow', cur.margin + 6, cur.y + 2.8)
+  cur.addSpace(9)
 }
 
 function buildAIReadinessOverlay(doc: jsPDF, cur: Cursor, input: MaturityScorePDFInput) {
+  setFont(doc, 8, 'normal')
+  setTextColor(doc, PRIMARY)
+  cur.ensureSpace(4)
+  doc.text('AI READINESS', cur.margin, cur.y + 3.5)
+  cur.addSpace(7)
+
   setFont(doc, 20, 'normal')
   setTextColor(doc, TEXT_BODY)
-  doc.text('AI readiness overlay', cur.margin, cur.y + 6)
-  cur.addSpace(14)
+  doc.text('Where AI fits into your marketing today', cur.margin, cur.y + 6)
+  cur.addSpace(11)
 
   const stage = input.aiReadinessStage
   drawParagraph(
@@ -574,34 +648,23 @@ function buildAIReadinessOverlay(doc: jsPDF, cur: Cursor, input: MaturityScorePD
     `AI readiness score: ${input.aiReadinessScore.toFixed(1)}, ${stage.label}. ${AI_STAGE_DEFINITION[stage.id]}`,
     { fontSize: 10, color: TEXT_SECONDARY, lineHeight: mmPt(14.5) }
   )
+  cur.addSpace(9)
+
+  const estimates = estimateAIWorkflowAdoption(input.aiAnswers)
+  drawAIReadinessHeatmap(doc, cur, estimates)
+
+  drawParagraph(doc, cur, aiReadinessPatternSummary(estimates), {
+    fontSize: 10,
+    color: TEXT_SECONDARY,
+    lineHeight: mmPt(14.5),
+  })
   cur.addSpace(4)
   drawParagraph(
     doc,
     cur,
     "This overlay does not affect your 6-dimension maturity score. It's a separate, non-scored read on where AI is (and isn't) embedded in how your marketing work gets done.",
-    { fontSize: 9, color: TEXT_MUTED, lineHeight: mmPt(13) }
+    { fontSize: 8.5, color: TEXT_MUTED, lineHeight: mmPt(12.5) }
   )
-  cur.addSpace(10)
-
-  setFont(doc, 12, 'normal')
-  setTextColor(doc, TEXT_BODY)
-  cur.ensureSpace(8)
-  doc.text('Estimated adoption stage by workflow', cur.margin, cur.y + 4)
-  cur.addSpace(10)
-
-  const estimates = estimateAIWorkflowAdoption(input.aiAnswers)
-  AI_WORKFLOWS.forEach((workflow, idx) => {
-    const estimate = estimates.find((e) => e.workflowId === workflow.id)
-    if (!estimate) return
-    const color = AI_STAGE_COLOR[estimate.stage.id]
-    drawWorkflowBar(doc, cur, workflow.name, estimate.stage.label, estimate.score, color)
-    drawParagraph(doc, cur, aiWorkflowCrossReferenceInsight(workflow.id, estimate.stage.label, input.dimensionScores), {
-      fontSize: 8.5,
-      color: TEXT_SECONDARY,
-      lineHeight: mmPt(12.5),
-    })
-    cur.addSpace(idx < AI_WORKFLOWS.length - 1 ? 8 : 0)
-  })
 }
 
 // ── Consulting bridge sections ──

@@ -4,9 +4,9 @@
 // "Recommendation" paragraphs are original, one per dimension per tier.
 // Source of truth for structure: 00-context/maturity-score-sample-report.html
 
-import type { DimensionId, StageId, FundingId, Tier, AIWorkflowId } from './maturityScoreData'
-import { STAGE_OPTIONS, DIMENSIONS, dimensionById, AI_WORKFLOWS, AI_WORKFLOW_MAIN_DIMENSION } from './maturityScoreData'
-import type { DimensionScore, AIAnswers } from './maturityScoring'
+import type { DimensionId, StageId, FundingId, Tier } from './maturityScoreData'
+import { STAGE_OPTIONS, DIMENSIONS, dimensionById, AI_WORKFLOWS } from './maturityScoreData'
+import type { DimensionScore, AIAnswers, AIWorkflowEstimate } from './maturityScoring'
 
 type TierId = Tier['id']
 
@@ -249,34 +249,36 @@ export function overallAssessment(
   return `Your marketing function has moved beyond founder-only execution, but several systems are still fragile. You have real strength in ${strongest.name.toLowerCase()}, but gaps in ${weakestTwo.join(' and ')} mean decisions are being made with incomplete information. ${fundingClause}`
 }
 
-// ── AI Readiness Overlay: cross-reference insights ──
-// Pairs each AI workflow's estimated adoption stage with the relevant main
-// dimension score. Source of truth for the pairing text:
-// ai-marketing-maturity-framework.md, "Cross-Reference with Main Dimensions".
+// ── AI Readiness Overlay: pattern summary ──
+// Replaces per-workflow paragraphs with one consolidated read on the
+// heatmap: where adoption is furthest ahead, where the biggest gap is, and
+// one observation about the shape of the pattern.
 
-const AI_WORKFLOW_CROSS_REFERENCE: Record<AIWorkflowId, (mainScore: number, stageLabel: string) => string> = {
-  'target-segmentation': (score, stage) =>
-    `Your positioning score is ${score.toFixed(1)} and your AI adoption in research and segmentation is ${stage}. AI could accelerate ICP refinement and competitive analysis, where your current gaps are largest.`,
-  'campaign-strategy': (score, stage) =>
-    `Your strategy-level AI adoption is ${stage}. At your maturity tier, AI is most valuable for messaging variant testing and channel-mix analysis, not for replacing the judgment calls.`,
-  'campaign-execution': (score, stage) =>
-    `Your content score is ${score.toFixed(1)} and your AI content usage is ${stage}. Here's where AI could close that gap fastest, and where it still needs a human hand.`,
-  distribution: (score) =>
-    `Your demand generation score is ${score.toFixed(1)}. AI-driven distribution, personalization, bid optimization, send-time optimization, could improve channel performance without increasing budget.`,
-  operations: (score) =>
-    `Your ops score is ${score.toFixed(1)}. AI integration in operations compounds over time, but only if the underlying processes are sound. Fix the process first, then automate it.`,
-  'analytics-optimization': (score) =>
-    `Your measurement score is ${score.toFixed(1)}. AI-assisted analytics and optimization is where most companies see the fastest ROI, but it requires clean data infrastructure first.`,
-}
+export function aiReadinessPatternSummary(estimates: AIWorkflowEstimate[]): string {
+  const byWorkflow = new Map(estimates.map((e) => [e.workflowId, e]))
+  const sorted = [...estimates].sort((a, b) => b.score - a.score)
+  const strongest = sorted[0]
+  const weakest = sorted[sorted.length - 1]
+  const strongestName = AI_WORKFLOWS.find((w) => w.id === strongest.workflowId)!.name
+  const weakestName = AI_WORKFLOWS.find((w) => w.id === weakest.workflowId)!.name
 
-export function aiWorkflowCrossReferenceInsight(
-  workflowId: AIWorkflowId,
-  workflowStageLabel: string,
-  dimensionScores: DimensionScore[]
-): string {
-  const mainDimensionId = AI_WORKFLOW_MAIN_DIMENSION[workflowId]
-  const mainScore = dimensionScores.find((d) => d.dimensionId === mainDimensionId)?.score ?? 0
-  return AI_WORKFLOW_CROSS_REFERENCE[workflowId](mainScore, workflowStageLabel.toLowerCase())
+  const range = strongest.score - weakest.score
+  let observation: string
+  if (range <= 1) {
+    observation = 'Adoption is fairly even across workflows rather than concentrated in one or two.'
+  } else {
+    const execution = byWorkflow.get('campaign-execution')?.score ?? 0
+    const strategy = byWorkflow.get('campaign-strategy')?.score ?? 0
+    const segmentation = byWorkflow.get('target-segmentation')?.score ?? 0
+    if (execution - Math.max(strategy, segmentation) >= 1) {
+      observation =
+        'The pattern is a common one: execution is ahead of strategy, AI is producing things faster before it is helping decide what to produce.'
+    } else {
+      observation = `Adoption is concentrated in ${strongestName.toLowerCase()} and thin everywhere else.`
+    }
+  }
+
+  return `You are furthest ahead in ${strongestName.toLowerCase()}, at the ${strongest.stage.label.toLowerCase()} stage. The biggest gap is ${weakestName.toLowerCase()}, still at the ${weakest.stage.label.toLowerCase()} stage. ${observation}`
 }
 
 // ── Team composition / resource gap pattern matching ──
