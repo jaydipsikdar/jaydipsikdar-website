@@ -15,6 +15,7 @@ export default function ContentOfficeFlow() {
   const [result, setResult] = useState<ContentOfficeResult | null>(null)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [emailCaptured, setEmailCaptured] = useState(false)
+  const [submissionId, setSubmissionId] = useState<string | null>(null)
 
   async function handleFormSubmit(inputs: ContentOfficeInputs) {
     setStep('processing')
@@ -33,6 +34,20 @@ export default function ContentOfficeFlow() {
       const data: ContentOfficeResult = await res.json()
       setResult(data)
       setStep('results')
+
+      try {
+        const submitRes = await fetch('/api/content-office-submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ inputs, result: data }),
+        })
+        if (submitRes.ok) {
+          const submitData = await submitRes.json()
+          setSubmissionId(submitData.id)
+        }
+      } catch (err) {
+        console.error('[ContentOfficeFlow] submit failed:', err)
+      }
     } catch (err) {
       console.error('[ContentOfficeFlow] generation error:', err)
       setErrorMessage(err instanceof Error ? err.message : 'Something went wrong while building your matrix.')
@@ -41,12 +56,12 @@ export default function ContentOfficeFlow() {
   }
 
   async function handleEmailSubmit(email: string): Promise<{ ok: boolean; url?: string }> {
-    if (!result) return { ok: false }
+    if (!result || !submissionId) return { ok: false }
     try {
       const res = await fetch('/api/content-office-report', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, result }),
+        body: JSON.stringify({ submissionId, email, result }),
       })
       if (!res.ok) return { ok: false }
       const data = await res.json()

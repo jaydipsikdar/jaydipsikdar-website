@@ -11,6 +11,7 @@ export const runtime = 'nodejs'
 const PDF_BUCKET = 'vendor-check-reports'
 
 interface ReportRequestBody {
+  submissionId?: string
   email?: string
   result?: ContentOfficeResult
 }
@@ -88,8 +89,19 @@ export async function POST(request: Request) {
   }
 
   // The PDF is already generated and stored, so the download link works
-  // regardless of what happens below. MailerLite subscription is secondary
-  // and shouldn't block or fail the response the visitor is waiting on.
+  // regardless of what happens below. Saving the email on the submission
+  // record and subscribing to MailerLite are secondary and shouldn't block
+  // or fail the response the visitor is waiting on.
+  if (body.submissionId) {
+    const { error: updateError } = await supabase
+      .from('content_office_submissions')
+      .update({ email: body.email, pdf_url: pdfUrl })
+      .eq('id', body.submissionId)
+    if (updateError) {
+      console.error('[content-office-report] submission update failed:', updateError)
+    }
+  }
+
   try {
     // Extra fields (starter_post_1_*, top_underused_theme) exist so the Day
     // 3 / Day 7 follow-up automations can reference real per-user content
