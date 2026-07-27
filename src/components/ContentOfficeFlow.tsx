@@ -86,7 +86,7 @@ export default function ContentOfficeFlow() {
           Stop guessing what to post. Get a personalized content matrix: topics mapped to themes, structures, and channels.
         </p>
 
-        <div className="mb-10">
+        <div id="sample" className="mb-10 scroll-mt-24">
           <ContentOfficeSamplePreview />
         </div>
 

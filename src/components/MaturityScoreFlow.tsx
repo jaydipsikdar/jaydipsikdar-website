@@ -83,7 +83,7 @@ export default function MaturityScoreFlow() {
           and see exactly where the gaps are. Takes about 10 minutes, and the preview is free.
         </p>
 
-        <div className="mb-10">
+        <div id="sample" className="mb-10 scroll-mt-24">
           <MaturityScoreSamplePreview />
         </div>
 
