@@ -9,7 +9,7 @@ declare global {
 }
 
 const RAZORPAY_SCRIPT_SRC = 'https://checkout.razorpay.com/v1/checkout.js'
-const CALENDLY_URL = 'https://calendly.com/jaydipsikdar/book-a-consulting-session'
+export const CALENDLY_URL = 'https://calendly.com/jaydipsikdar/book-a-consulting-session'
 
 function loadRazorpayScript(): Promise<boolean> {
   return new Promise((resolve) => {
@@ -28,9 +28,12 @@ function loadRazorpayScript(): Promise<boolean> {
 export default function RazorpayBookButton({
   children,
   className,
+  bookingUrl = CALENDLY_URL,
 }: {
   children: React.ReactNode
   className?: string
+  /** Override the Calendly URL opened after payment, e.g. to attach UTM params for a specific placement. */
+  bookingUrl?: string
 }) {
   const [loading, setLoading] = useState(false)
   const [paid, setPaid] = useState(false)
@@ -52,7 +55,7 @@ export default function RazorpayBookButton({
       name: 'Jaydip Sikdar',
       description: '1:1 Consulting Session (60 mins)',
       handler: function () {
-        window.open(CALENDLY_URL, '_blank', 'noopener,noreferrer')
+        window.open(bookingUrl, '_blank', 'noopener,noreferrer')
         setPaid(true)
       },
     })
@@ -63,7 +66,7 @@ export default function RazorpayBookButton({
     return (
       <p className="text-sm text-brand-text">
         Payment received! Your booking page opened in a new tab —{' '}
-        <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="underline">
+        <a href={bookingUrl} target="_blank" rel="noopener noreferrer" className="underline">
           click here
         </a>{' '}
         if it didn&apos;t.
