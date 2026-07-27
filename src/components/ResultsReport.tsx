@@ -2,6 +2,7 @@
 
 import PdfExportSection from './PdfExportSection'
 import ReviewSubmissionForm from './ReviewSubmissionForm'
+import Button from './ui/Button'
 
 export interface VendorCheckParameter {
   name: string
@@ -50,26 +51,28 @@ export default function ResultsReport({
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold text-center mb-2">Your contract, parameter by parameter.</h2>
+      <h2 className="text-[26px] font-light tracking-[-0.26px] leading-[1.12] text-ink-900 text-center mb-2">
+        Your contract, parameter by parameter.
+      </h2>
 
       <div className="text-center my-8">
-        <div className={`text-4xl font-bold ${colorClass}`}>{result.overallScore} / 100</div>
-        <div className={`text-sm font-medium mt-1 ${colorClass}`}>{result.riskLevel}</div>
-        <p className="text-brand-text mt-3 max-w-lg mx-auto">{result.verdict}</p>
+        <div className={`text-4xl font-light tabular-nums ${colorClass}`}>{result.overallScore} / 100</div>
+        <div className={`text-sm font-normal mt-1 ${colorClass}`}>{result.riskLevel}</div>
+        <p className="text-ink-700 leading-[1.4] mt-3 max-w-lg mx-auto">{result.verdict}</p>
       </div>
 
       {result.vendorTypeDisclaimer && (
-        <p className="text-xs text-gray-500 text-center mb-8 max-w-lg mx-auto italic">
+        <p className="text-xs text-ink-500 text-center mb-8 max-w-lg mx-auto italic">
           {result.vendorTypeDisclaimer}
         </p>
       )}
 
       <div className="flex flex-col gap-8 mb-10">
         {result.parameters.map((param) => (
-          <div key={param.name} className="border border-gray-200 rounded-lg p-6">
+          <div key={param.name} className="border border-hairline rounded-lg p-6">
             <div className="flex items-baseline justify-between mb-3">
-              <h3 className="text-base font-semibold">{param.name}</h3>
-              <span className="text-sm font-medium text-brand-accent">{param.score} / 20</span>
+              <h3 className="text-base font-light text-ink-900">{param.name}</h3>
+              <span className="text-sm font-normal text-primary tabular-nums">{param.score} / 20</span>
             </div>
 
             {(param.redFlags?.filter((flag) => flag.trim()).length ?? 0) > 0 && (
@@ -100,45 +103,42 @@ export default function ResultsReport({
 
             <div className="space-y-3 text-sm">
               <div>
-                <p className="font-medium text-brand-text mb-1">What your contract currently says:</p>
-                <p className="text-brand-text leading-relaxed">{param.whatItSays}</p>
+                <p className="font-normal text-ink-900 mb-1">What your contract currently says:</p>
+                <p className="text-ink-700 leading-[1.4]">{param.whatItSays}</p>
               </div>
               <div>
-                <p className="font-medium text-brand-text mb-1">Why this matters:</p>
-                <p className="text-brand-text leading-relaxed">{param.whyItMatters}</p>
+                <p className="font-normal text-ink-900 mb-1">Why this matters:</p>
+                <p className="text-ink-700 leading-[1.4]">{param.whyItMatters}</p>
               </div>
               <div>
-                <p className="font-medium text-brand-text mb-1">What to propose instead:</p>
-                <p className="text-brand-text leading-relaxed">{param.whatToPropose}</p>
+                <p className="font-normal text-ink-900 mb-1">What to propose instead:</p>
+                <p className="text-ink-700 leading-[1.4]">{param.whatToPropose}</p>
               </div>
             </div>
           </div>
         ))}
       </div>
 
-      <div className="border-t border-gray-200 pt-8 mb-10">
-        <h3 className="text-lg font-semibold mb-4 text-center">{priorityHeading(processStage)}</h3>
-        <ol className="max-w-xl mx-auto space-y-3 list-decimal list-inside text-sm text-brand-text">
+      <div className="border-t border-hairline pt-8 mb-10">
+        <h3 className="text-lg font-light text-ink-900 mb-4 text-center">{priorityHeading(processStage)}</h3>
+        <ol className="max-w-xl mx-auto space-y-3 list-decimal list-inside text-sm text-ink-700">
           {result.topPriorities.map((priority, i) => (
-            <li key={i} className="leading-relaxed">{priority}</li>
+            <li key={i} className="leading-[1.4]">{priority}</li>
           ))}
         </ol>
       </div>
 
-      <div className="border-t border-gray-200 pt-8 mb-10">
+      <div className="border-t border-hairline pt-8 mb-10">
         <PdfExportSection result={result} processStage={processStage} />
       </div>
 
       <div className="text-center mb-10">
-        <a
-          href="https://www.jaydipsikdar.com/contact"
-          className="inline-block px-6 py-3 bg-brand-accent text-white rounded hover:opacity-90 transition-opacity"
-        >
-          Want to discuss the risks with me? Book a session →
-        </a>
+        <Button href="https://www.jaydipsikdar.com/contact">
+          Want to discuss the risks with me? Book a session
+        </Button>
       </div>
 
-      <div className="border-t border-gray-200 pt-8">
+      <div className="border-t border-hairline pt-8">
         <ReviewSubmissionForm productSlug="vendor-check" productName="Vendor Contract Check" />
       </div>
     </div>

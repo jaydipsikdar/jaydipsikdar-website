@@ -73,26 +73,26 @@ export default function SampleReportPreview() {
   const visibleParams = expanded ? SAMPLE_PARAMETERS : SAMPLE_PARAMETERS.slice(0, 1)
 
   return (
-    <div className="border border-gray-200 rounded-lg p-6 bg-white">
-      <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-3 text-center">
+    <div className="border border-hairline rounded-lg p-6 bg-white">
+      <p className="text-[10px] font-normal text-ink-500 uppercase tracking-[0.1px] mb-3 text-center">
         Example output
       </p>
 
       <div className="text-center mb-6">
-        <div className="text-3xl font-bold text-brand-accent">38 / 100</div>
-        <div className="text-sm font-medium text-brand-text mt-1">High Risk</div>
-        <p className="text-brand-text text-sm mt-2 max-w-md mx-auto">
-          This contract materially favours the vendor. Multiple critical protections are either
+        <div className="text-3xl font-light tabular-nums text-primary">38 / 100</div>
+        <div className="text-sm font-normal text-ink-900 mt-1">High risk</div>
+        <p className="text-ink-700 text-sm mt-2 max-w-md mx-auto">
+          This contract materially favors the vendor. Multiple critical protections are either
           missing or too weak to enforce.
         </p>
       </div>
 
       <div className="flex flex-col gap-6">
         {visibleParams.map((param) => (
-          <div key={param.name} className="border-t border-gray-200 pt-5 first:border-t-0 first:pt-0">
+          <div key={param.name} className="border-t border-hairline pt-5 first:border-t-0 first:pt-0">
             <div className="flex items-baseline justify-between mb-2">
-              <h4 className="text-sm font-semibold">{param.name}</h4>
-              <span className="text-sm font-medium text-brand-accent">{param.score} / 20</span>
+              <h4 className="text-sm font-light text-ink-900">{param.name}</h4>
+              <span className="text-sm font-normal text-primary tabular-nums">{param.score} / 20</span>
             </div>
 
             {'redFlags' in param && param.redFlags && param.redFlags.length > 0 && (
@@ -100,7 +100,7 @@ export default function SampleReportPreview() {
                 {param.redFlags.map((flag, i) => (
                   <span
                     key={i}
-                    className="px-3 py-1 bg-red-50 text-red-700 text-sm rounded-full"
+                    className="px-3 py-1 bg-red-50 text-red-700 text-sm rounded-pill"
                   >
                     {flag}
                   </span>
@@ -113,7 +113,7 @@ export default function SampleReportPreview() {
                 {param.greenFlags.map((flag, i) => (
                   <span
                     key={i}
-                    className="px-3 py-1 bg-green-50 text-green-700 text-sm rounded-full"
+                    className="px-3 py-1 bg-green-50 text-green-700 text-sm rounded-pill"
                   >
                     {flag}
                   </span>
@@ -121,10 +121,10 @@ export default function SampleReportPreview() {
               </div>
             )}
 
-            <div className="space-y-2 text-xs text-brand-text leading-relaxed">
-              <p><span className="font-medium">What it says: </span>{param.whatItSays}</p>
-              <p><span className="font-medium">Why it matters: </span>{param.whyItMatters}</p>
-              <p><span className="font-medium">What to propose: </span>{param.whatToPropose}</p>
+            <div className="space-y-2 text-xs text-ink-700 leading-[1.4]">
+              <p><span className="font-normal text-ink-900">What it says: </span>{param.whatItSays}</p>
+              <p><span className="font-normal text-ink-900">Why it matters: </span>{param.whyItMatters}</p>
+              <p><span className="font-normal text-ink-900">What to propose: </span>{param.whatToPropose}</p>
             </div>
           </div>
         ))}
@@ -134,9 +134,9 @@ export default function SampleReportPreview() {
         <button
           type="button"
           onClick={() => setExpanded((v) => !v)}
-          className="text-sm text-brand-accent underline hover:opacity-80 transition-opacity"
+          className="text-sm text-primary hover:text-primary-hover transition-colors"
         >
-          {expanded ? 'Show less' : 'See full example →'}
+          {expanded ? 'Show less' : 'See full example'}
         </button>
       </div>
     </div>

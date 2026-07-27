@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 import type { VendorCheckResult } from './ResultsReport'
+import Button from './ui/Button'
+import TextInput from './ui/TextInput'
 
 export default function PdfExportSection({
   result,
@@ -36,36 +38,31 @@ export default function PdfExportSection({
   if (status === 'success') {
     return (
       <div className="text-center py-4">
-        <p className="text-brand-text text-sm font-medium">Report sent! Check your inbox.</p>
+        <p className="text-ink-900 text-sm font-normal">Report sent! Check your inbox.</p>
       </div>
     )
   }
 
   return (
     <div className="text-center">
-      <h3 className="text-lg font-semibold mb-2">Get your report as PDF</h3>
-      <p className="text-xs text-gray-500 mb-4 max-w-sm mx-auto">
+      <h3 className="text-lg font-light text-ink-900 mb-2">Get your report as PDF</h3>
+      <p className="text-xs text-ink-500 mb-4 max-w-sm mx-auto">
         Enter your email and we&apos;ll send your PDF report straight to your inbox, plus marketing
         insights.
       </p>
       <form onSubmit={handleSubmit} className="max-w-sm mx-auto flex flex-col gap-3">
-        <input
+        <TextInput
           type="email"
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Your email address"
-          className="w-full px-4 py-2.5 border border-gray-300 rounded text-sm text-brand-text bg-white placeholder-gray-400 focus:outline-none focus:border-brand-accent transition-colors"
         />
-        <button
-          type="submit"
-          disabled={status === 'loading'}
-          className="w-full px-4 py-2.5 bg-brand-accent text-white text-sm font-medium rounded hover:opacity-90 transition-opacity disabled:opacity-60"
-        >
-          {status === 'loading' ? 'Sending…' : 'Get my report'}
-        </button>
+        <Button type="submit" disabled={status === 'loading'} className="w-full">
+          {status === 'loading' ? 'Sending...' : 'Get my report'}
+        </Button>
         {status === 'error' && (
-          <p className="text-red-600 text-xs text-center">Something went wrong. Please try again.</p>
+          <p className="text-accent-rose text-xs text-center">Something went wrong. Please try again.</p>
         )}
       </form>
     </div>
