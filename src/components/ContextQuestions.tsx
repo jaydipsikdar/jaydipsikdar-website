@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Button from './ui/Button'
 
 export interface ContextAnswers {
   vendorType: string
@@ -44,17 +45,17 @@ function QuestionBlock({
 }) {
   return (
     <div className="mb-8">
-      <h3 className="text-base font-semibold mb-3">{question}</h3>
+      <h3 className="text-base font-light text-ink-900 mb-3">{question}</h3>
       <div className="flex flex-col gap-2">
         {options.map((option) => (
           <button
             key={option}
             type="button"
             onClick={() => onSelect(option)}
-            className={`text-left px-4 py-3 rounded border text-sm transition-colors ${
+            className={`text-left px-4 py-3 rounded-md border text-sm transition-colors ${
               selected === option
-                ? 'border-brand-accent bg-brand-accent/5 text-brand-text font-medium'
-                : 'border-gray-300 bg-white text-brand-text hover:border-brand-accent'
+                ? 'border-primary bg-primary-subtle/30 text-ink-900 font-normal'
+                : 'border-hairline-input bg-white text-ink-700 hover:border-primary'
             }`}
           >
             {option}
@@ -94,14 +95,14 @@ export default function ContextQuestions({ onSubmit }: ContextQuestionsProps) {
       />
 
       {vendorType && vendorType !== 'Lead generation / demand generation agency' && (
-        <p className="text-xs text-gray-500 mb-6 -mt-4">
+        <p className="text-xs text-ink-500 mb-6 -mt-4">
           This version is tuned for lead generation contracts. Your results will be directionally
           useful, but built specifically for lead gen engagements.
         </p>
       )}
 
       <div className="text-center">
-        <button
+        <Button
           type="button"
           disabled={!canSubmit}
           onClick={() =>
@@ -112,10 +113,9 @@ export default function ContextQuestions({ onSubmit }: ContextQuestionsProps) {
               processStage: processStage!,
             })
           }
-          className="px-6 py-3 bg-brand-accent text-white rounded hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
         >
-          Score my contract →
-        </button>
+          Score my contract
+        </Button>
       </div>
     </div>
   )

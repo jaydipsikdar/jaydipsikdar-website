@@ -8,6 +8,7 @@ import AdvisorResults, { type MarketingAdvisorResult } from './AdvisorResults'
 import AdvisorSamplePreview from './AdvisorSamplePreview'
 import ReviewDisplay from './ReviewDisplay'
 import ReviewSubmissionForm from './ReviewSubmissionForm'
+import Button from './ui/Button'
 
 type Step = 'landing' | 'questions' | 'processing' | 'results' | 'error'
 
@@ -73,12 +74,12 @@ export default function MarketingAdvisorFlow() {
   if (step === 'landing') {
     return (
       <div>
-        <h1 className="text-3xl font-bold text-center mb-4">
+        <h1 className="text-[32px] font-light tracking-[-0.64px] leading-[1.1] text-ink-900 text-center mb-4">
           What marketing problem are you facing?
         </h1>
-        <p className="text-center text-brand-text mb-10 max-w-xl mx-auto">
+        <p className="text-center text-ink-700 leading-[1.4] mb-10 max-w-xl mx-auto">
           Pick the challenge closest to yours, answer a few questions about your situation, and get
-          a tailored advisory report grounded in 213 operator-level lessons — free.
+          a tailored advisory report grounded in 213 operator-level lessons. Free.
         </p>
 
         <div className="mb-10">
@@ -93,7 +94,7 @@ export default function MarketingAdvisorFlow() {
           <div
             ref={reviewFormRef}
             id="review-form"
-            className="review-pulse mt-12 pt-8 border-t border-gray-200"
+            className="review-pulse mt-12 pt-8 border-t border-hairline"
           >
             <ReviewSubmissionForm
               productSlug="marketing-advisor"
@@ -101,7 +102,7 @@ export default function MarketingAdvisorFlow() {
             />
           </div>
         ) : (
-          <p className="text-center text-sm mt-10" style={{ color: '#666666' }}>
+          <p className="text-center text-sm text-ink-500 mt-10">
             Already used this tool?{' '}
             <a
               href="?review=true"
@@ -110,9 +111,9 @@ export default function MarketingAdvisorFlow() {
                 setShowReviewForm(true)
                 window.history.replaceState(null, '', '?review=true')
               }}
-              className="text-brand-accent hover:opacity-80 transition-opacity"
+              className="text-primary hover:text-primary-hover transition-colors"
             >
-              Rate your experience →
+              Rate your experience
             </a>
           </p>
         )}
@@ -123,7 +124,9 @@ export default function MarketingAdvisorFlow() {
   if (step === 'questions' && category) {
     return (
       <div>
-        <h2 className="text-2xl font-semibold text-center mb-8">A few quick questions.</h2>
+        <h2 className="text-[26px] font-light tracking-[-0.26px] leading-[1.12] text-ink-900 text-center mb-8">
+          A few quick questions.
+        </h2>
         <AdvisorQuestions category={category} onSubmit={handleQuestionsSubmit} />
       </div>
     )
@@ -132,8 +135,8 @@ export default function MarketingAdvisorFlow() {
   if (step === 'processing') {
     return (
       <div className="text-center py-20">
-        <p className="text-brand-text text-lg">Building your advisory report…</p>
-        <p className="text-sm text-gray-500 mt-2">This usually takes about 20-30 seconds.</p>
+        <p className="text-ink-900 text-lg">Building your advisory report...</p>
+        <p className="text-sm text-ink-500 mt-2">This usually takes about 20 to 30 seconds.</p>
       </div>
     )
   }
@@ -141,15 +144,9 @@ export default function MarketingAdvisorFlow() {
   if (step === 'error') {
     return (
       <div className="text-center py-20">
-        <p className="text-red-600 text-base font-medium mb-2">Something went wrong.</p>
-        <p className="text-sm text-gray-500 mb-6">{errorMessage}</p>
-        <button
-          type="button"
-          onClick={() => setStep('questions')}
-          className="px-6 py-3 bg-brand-accent text-white rounded hover:opacity-90 transition-opacity"
-        >
-          Try again
-        </button>
+        <p className="text-accent-rose text-base font-normal mb-2">Something went wrong.</p>
+        <p className="text-sm text-ink-500 mb-6">{errorMessage}</p>
+        <Button onClick={() => setStep('questions')}>Try again</Button>
       </div>
     )
   }

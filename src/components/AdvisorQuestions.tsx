@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import type { MarketingCategory } from './CategorySelect'
+import Button from './ui/Button'
 
 export interface AdvisorAnswers {
   userRole: string
@@ -136,17 +137,17 @@ function QuestionBlock({
 }) {
   return (
     <div className="mb-8">
-      <h3 className="text-base font-semibold mb-3">{question}</h3>
+      <h3 className="text-base font-light text-ink-900 mb-3">{question}</h3>
       <div className="flex flex-col gap-2">
         {options.map((option) => (
           <button
             key={option}
             type="button"
             onClick={() => onSelect(option)}
-            className={`text-left px-4 py-3 rounded border text-sm transition-colors ${
+            className={`text-left px-4 py-3 rounded-md border text-sm transition-colors ${
               selected === option
-                ? 'border-brand-accent bg-brand-accent/5 text-brand-text font-medium'
-                : 'border-gray-300 bg-white text-brand-text hover:border-brand-accent'
+                ? 'border-primary bg-primary-subtle/30 text-ink-900 font-normal'
+                : 'border-hairline-input bg-white text-ink-700 hover:border-primary'
             }`}
           >
             {option}
@@ -215,28 +216,23 @@ export default function AdvisorQuestions({ category, onSubmit }: AdvisorQuestion
       )}
 
       <div className="mb-8">
-        <h3 className="text-base font-semibold mb-3">{config.descriptionQuestion}</h3>
+        <h3 className="text-base font-light text-ink-900 mb-3">{config.descriptionQuestion}</h3>
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder={config.descriptionPlaceholder}
           rows={5}
-          className="w-full px-4 py-3 border border-gray-300 rounded text-sm text-brand-text bg-white placeholder-gray-400 focus:outline-none focus:border-brand-accent transition-colors resize-none"
+          className="w-full rounded-sm border border-hairline-input bg-white px-4 py-3 text-sm text-ink-900 placeholder-ink-500 transition-colors focus:border-primary focus:outline-none resize-none"
         />
         {description.trim().length > 0 && description.trim().length < 20 && (
-          <p className="text-xs text-gray-500 mt-2">A couple of sentences helps a lot — keep going.</p>
+          <p className="text-xs text-ink-500 mt-2">A couple of sentences helps a lot, keep going.</p>
         )}
       </div>
 
       <div className="text-center">
-        <button
-          type="button"
-          disabled={!canSubmit}
-          onClick={handleSubmit}
-          className="px-6 py-3 bg-brand-accent text-white rounded hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
-        >
-          Get my advice →
-        </button>
+        <Button type="button" disabled={!canSubmit} onClick={handleSubmit}>
+          Get my advice
+        </Button>
       </div>
     </div>
   )

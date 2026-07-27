@@ -10,12 +10,12 @@ import { IconSearch, IconTarget, IconChecklist, IconQuestion } from './AdvisorIc
 // (Vendor Contract Check).
 
 const SAMPLE = {
-  category: 'Brand Strategy',
-  context: 'Marketing professional · Just launched (0–6 months)',
+  category: 'Brand strategy',
+  context: 'Marketing professional · Just launched (0-6 months)',
   diagnosis:
     'You are posting promotional content about your practice into a feed that owes you nothing, and there is no reason for a stranger to stop scrolling for it. This is not a distribution volume problem, it is a positioning and content quality problem: nobody knows what specific pain you own, so nobody has a reason to remember you, engage, or refer you when that pain shows up.',
   firstThingToFix:
-    'Fix your positioning before you touch your posting schedule again. Right now you are likely speaking to "marketing consulting" broadly, which is a category, not a problem — you need to niche down to one ideal customer and one specific problem you own, because that is what cuts through noise and gives people a reason to think of you at the right moment.',
+    'Fix your positioning before you touch your posting schedule again. Right now you are likely speaking to "marketing consulting" broadly, which is a category, not a problem. You need to niche down to one ideal customer and one specific problem you own, because that is what cuts through noise and gives people a reason to think of you at the right moment.',
   moves: [
     {
       order: 1,
@@ -40,61 +40,61 @@ export default function AdvisorSamplePreview() {
   const [expanded, setExpanded] = useState(false)
 
   return (
-    <div className="border border-gray-200 rounded-lg p-6 bg-white">
-      <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-3 text-center">
+    <div className="border border-hairline rounded-lg p-6 bg-white">
+      <p className="text-[10px] font-normal text-ink-500 uppercase tracking-[0.1px] mb-3 text-center">
         Example output
       </p>
 
       <div className="text-center mb-6">
-        <span className="inline-block px-4 py-1.5 bg-brand-accent text-white text-xs font-semibold rounded-full mb-2">
+        <span className="inline-flex items-center rounded-pill bg-primary px-4 py-1.5 text-xs font-normal text-white mb-2">
           {SAMPLE.category}
         </span>
-        <p className="text-xs text-gray-500">{SAMPLE.context}</p>
+        <p className="text-xs text-ink-500">{SAMPLE.context}</p>
       </div>
 
       <div className="mb-5">
         <div className="flex items-center gap-2 mb-2">
-          <span className="flex-shrink-0 w-6 h-6 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center">
+          <span className="flex-shrink-0 w-6 h-6 rounded-pill bg-surface-soft text-ink-700 flex items-center justify-center">
             <IconSearch className="w-3.5 h-3.5" />
           </span>
-          <h4 className="text-sm font-semibold">Diagnosis</h4>
+          <h4 className="text-sm font-light text-ink-900">Diagnosis</h4>
         </div>
-        <p className="text-brand-text text-xs leading-relaxed">{SAMPLE.diagnosis}</p>
+        <p className="text-ink-700 text-xs leading-[1.4]">{SAMPLE.diagnosis}</p>
       </div>
 
-      <div className="mb-5 border-l-4 border-brand-accent bg-brand-accent/5 rounded-r-lg p-4">
+      <div className="mb-5 border-l-4 border-primary bg-primary-subtle/20 rounded-r-lg p-4">
         <div className="flex items-center gap-2 mb-2">
-          <span className="flex-shrink-0 w-6 h-6 rounded-full bg-brand-accent text-white flex items-center justify-center">
+          <span className="flex-shrink-0 w-6 h-6 rounded-pill bg-primary text-white flex items-center justify-center">
             <IconTarget className="w-3.5 h-3.5" />
           </span>
-          <h4 className="text-sm font-semibold">The First Thing to Fix</h4>
+          <h4 className="text-sm font-light text-ink-900">The first thing to fix</h4>
         </div>
-        <p className="text-brand-text text-xs leading-relaxed">{SAMPLE.firstThingToFix}</p>
+        <p className="text-ink-700 text-xs leading-[1.4]">{SAMPLE.firstThingToFix}</p>
       </div>
 
       {expanded && (
         <div className="mb-5">
           <div className="flex items-center gap-2 mb-3">
-            <span className="flex-shrink-0 w-6 h-6 rounded-full bg-brand-accent text-white flex items-center justify-center">
+            <span className="flex-shrink-0 w-6 h-6 rounded-pill bg-primary text-white flex items-center justify-center">
               <IconChecklist className="w-3.5 h-3.5" />
             </span>
-            <h4 className="text-sm font-semibold">Your Moves</h4>
+            <h4 className="text-sm font-light text-ink-900">Your moves</h4>
           </div>
           <div className="flex flex-col gap-3">
             {SAMPLE.moves.map((move) => (
-              <div key={move.order} className="border border-gray-200 rounded-lg p-4">
+              <div key={move.order} className="border border-hairline rounded-lg p-4">
                 <div className="flex items-start gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-brand-accent text-white text-xs font-semibold flex items-center justify-center">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-pill bg-primary text-white text-xs font-normal flex items-center justify-center">
                     {move.order}
                   </span>
                   <div className="flex-1">
                     <div className="flex items-center justify-between gap-3 mb-1">
-                      <p className="text-xs font-semibold text-brand-text">{move.action}</p>
-                      <span className="flex-shrink-0 px-2 py-0.5 bg-gray-100 text-gray-700 text-[10px] rounded-full">
+                      <p className="text-xs font-normal text-ink-900">{move.action}</p>
+                      <span className="flex-shrink-0 px-2 py-0.5 bg-surface-soft text-ink-700 text-[10px] rounded-pill">
                         {move.timeframe}
                       </span>
                     </div>
-                    <span className="inline-block px-2 py-0.5 bg-brand-accent/10 text-brand-accent text-[10px] font-medium rounded-full">
+                    <span className="inline-block px-2 py-0.5 bg-primary-subtle text-primary-press text-[10px] font-normal rounded-pill">
                       {move.lessonTag}
                     </span>
                   </div>
@@ -102,8 +102,8 @@ export default function AdvisorSamplePreview() {
               </div>
             ))}
           </div>
-          <p className="text-xs text-gray-500 mt-3 italic">
-            The full report includes 3-5 moves, a &quot;What Would Break This&quot; risk check, and
+          <p className="text-xs text-ink-500 mt-3 italic">
+            The full report includes 3 to 5 moves, a &quot;what would break this&quot; risk check, and
             a closing question.
           </p>
         </div>
@@ -111,8 +111,8 @@ export default function AdvisorSamplePreview() {
 
       {expanded && (
         <div className="text-center px-2 mb-2">
-          <IconQuestion className="w-5 h-5 text-brand-accent mx-auto mb-2" />
-          <p className="text-sm font-semibold italic text-brand-text leading-relaxed">
+          <IconQuestion className="w-5 h-5 text-primary mx-auto mb-2" />
+          <p className="text-sm font-light italic text-ink-900 leading-[1.4]">
             {SAMPLE.oneQuestion}
           </p>
         </div>
@@ -122,9 +122,9 @@ export default function AdvisorSamplePreview() {
         <button
           type="button"
           onClick={() => setExpanded((v) => !v)}
-          className="text-sm text-brand-accent underline hover:opacity-80 transition-opacity"
+          className="text-sm text-primary hover:text-primary-hover transition-colors"
         >
-          {expanded ? 'Show less' : 'See full example →'}
+          {expanded ? 'Show less' : 'See full example'}
         </button>
       </div>
     </div>
