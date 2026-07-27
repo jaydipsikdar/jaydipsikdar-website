@@ -11,11 +11,8 @@ const MARKETING_ADVISOR_GROUP_ID = '193314253973751516'
 // Marketing Maturity Score — group created manually in MailerLite.
 const MATURITY_SCORE_GROUP_ID = '193980625736173142'
 
-// Content Office — TODO: create a "Content Office" group in MailerLite and
-// replace this placeholder with its real group ID before shipping. Every
-// other group above was created manually in the MailerLite dashboard first;
-// this one still needs that step.
-const CONTENT_OFFICE_GROUP_ID = 'REPLACE_WITH_CONTENT_OFFICE_GROUP_ID'
+// Content Office — group created manually in MailerLite.
+const CONTENT_OFFICE_GROUP_ID = '194163307787060328'
 
 function resolveGroupId(group?: string): string {
   if (group === 'vendor-check') return VENDOR_CHECK_GROUP_ID
