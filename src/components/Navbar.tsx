@@ -3,6 +3,8 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
+import { X, Menu } from 'lucide-react'
+import Button from '@/components/ui/Button'
 
 const links = [
   { href: '/', label: 'Home' },
@@ -14,6 +16,7 @@ const links = [
 export default function Navbar() {
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
 
   // Close menu on route change
   useEffect(() => {
@@ -30,31 +33,35 @@ export default function Navbar() {
     return () => { document.body.style.overflow = '' }
   }, [menuOpen])
 
+  // Translucent-blur treatment once the page scrolls
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   return (
     <>
-      <nav className="w-full bg-brand-bg border-b border-gray-200 relative z-40">
-        <div className="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
-          {/* Brand name */}
-          <Link
-            href="/"
-            className="font-serif text-lg text-brand-text hover:text-brand-accent transition-colors"
-          >
+      <nav
+        className={`sticky top-0 z-40 w-full transition-colors duration-150 ease-out ${
+          scrolled ? 'bg-white/85 backdrop-blur-md border-b border-hairline' : 'bg-white border-b border-transparent'
+        }`}
+      >
+        <div className="mx-auto flex max-w-[1200px] items-center justify-between px-6 py-4">
+          <Link href="/" className="font-sans text-lg font-light text-ink-900 transition-colors hover:text-primary">
             Jaydip Sikdar
           </Link>
 
-          {/* Desktop nav links — hidden on mobile */}
-          <ul className="hidden md:flex items-center gap-8">
+          <ul className="hidden md:flex md:absolute md:left-1/2 md:-translate-x-1/2 items-center gap-8">
             {links.map(({ href, label }) => {
-              const isActive =
-                href === '/' ? pathname === '/' : pathname.startsWith(href)
+              const isActive = href === '/' ? pathname === '/' : pathname.startsWith(href)
               return (
                 <li key={href}>
                   <Link
                     href={href}
-                    className={`font-sans text-sm transition-colors ${
-                      isActive
-                        ? 'text-brand-accent'
-                        : 'text-brand-text hover:text-brand-accent'
+                    className={`font-sans text-sm font-light transition-colors ${
+                      isActive ? 'text-primary' : 'text-ink-700 hover:text-primary'
                     }`}
                   >
                     {label}
@@ -64,61 +71,47 @@ export default function Navbar() {
             })}
           </ul>
 
-          {/* Hamburger button — mobile only */}
+          <div className="hidden md:block">
+            <Button href="/contact" size="sm">
+              Book a call
+            </Button>
+          </div>
+
           <button
             onClick={() => setMenuOpen(true)}
             aria-label="Open menu"
-            className="md:hidden flex flex-col justify-center gap-1.5 p-1 text-brand-text"
+            className="flex h-10 w-10 items-center justify-center text-ink-900 md:hidden"
           >
-            <span className="block w-6 h-px bg-current" />
-            <span className="block w-6 h-px bg-current" />
-            <span className="block w-6 h-px bg-current" />
+            <Menu size={22} strokeWidth={1.5} />
           </button>
         </div>
       </nav>
 
-      {/* Mobile menu overlay */}
       {menuOpen && (
-        <div
-          className="fixed inset-0 z-50 bg-brand-bg flex flex-col"
-          style={{ animation: 'fadeIn 0.2s ease' }}
-        >
-          {/* Top bar: brand + close */}
-          <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-            <Link
-              href="/"
-              className="font-serif text-lg text-brand-text"
-              onClick={() => setMenuOpen(false)}
-            >
+        <div className="fixed inset-0 z-50 flex flex-col bg-white" style={{ animation: 'fadeIn 0.15s ease-out' }}>
+          <div className="flex items-center justify-between border-b border-hairline px-6 py-4">
+            <Link href="/" className="font-sans text-lg font-light text-ink-900" onClick={() => setMenuOpen(false)}>
               Jaydip Sikdar
             </Link>
             <button
               onClick={() => setMenuOpen(false)}
               aria-label="Close menu"
-              className="text-brand-text p-1"
+              className="flex h-10 w-10 items-center justify-center text-ink-900"
             >
-              {/* × icon drawn with two lines */}
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-                <line x1="4" y1="4" x2="20" y2="20" />
-                <line x1="20" y1="4" x2="4" y2="20" />
-              </svg>
+              <X size={22} strokeWidth={1.5} />
             </button>
           </div>
 
-          {/* Nav links */}
-          <ul className="flex flex-col px-6 pt-10 gap-8">
+          <ul className="flex flex-col gap-8 px-6 pt-10">
             {links.map(({ href, label }) => {
-              const isActive =
-                href === '/' ? pathname === '/' : pathname.startsWith(href)
+              const isActive = href === '/' ? pathname === '/' : pathname.startsWith(href)
               return (
                 <li key={href}>
                   <Link
                     href={href}
                     onClick={() => setMenuOpen(false)}
-                    className={`font-serif text-2xl transition-colors ${
-                      isActive
-                        ? 'text-brand-accent'
-                        : 'text-brand-text hover:text-brand-accent'
+                    className={`font-sans text-2xl font-light tracking-tight transition-colors ${
+                      isActive ? 'text-primary' : 'text-ink-900 hover:text-primary'
                     }`}
                   >
                     {label}
@@ -127,6 +120,12 @@ export default function Navbar() {
               )
             })}
           </ul>
+
+          <div className="mt-auto px-6 pb-10">
+            <Button href="/contact" className="w-full">
+              Book a call
+            </Button>
+          </div>
         </div>
       )}
 
