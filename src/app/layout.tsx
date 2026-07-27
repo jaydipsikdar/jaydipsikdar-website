@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Playfair_Display } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import Script from 'next/script'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
@@ -8,12 +8,7 @@ import './globals.css'
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
-  display: 'swap',
-})
-
-const playfair = Playfair_Display({
-  subsets: ['latin'],
-  variable: '--font-playfair',
+  weight: ['300', '400'],
   display: 'swap',
 })
 
@@ -54,7 +49,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="en" className={inter.variable}>
       <head>
         {/* GA4 — Google Analytics 4 — Measurement ID: G-V5X6DHSLD7 */}
         <Script
@@ -70,7 +65,7 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body className="bg-brand-bg text-brand-text font-sans antialiased flex flex-col min-h-screen">
+      <body className="bg-white text-ink-900 font-sans font-light antialiased flex flex-col min-h-screen">
         <Navbar />
         <div className="flex-1">{children}</div>
         <Footer />

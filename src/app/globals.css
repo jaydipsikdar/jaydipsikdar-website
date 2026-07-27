@@ -3,15 +3,27 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    font-feature-settings: "ss01" 1;
+  }
+
+  body {
+    @apply bg-white text-ink-900 font-light;
+  }
+
   h1, h2, h3, h4 {
-    @apply font-serif;
+    @apply font-light tracking-tight;
   }
 }
 
-/* Design system tokens (docs/brand/design.md) — used by newer tools such as
-   Marketing Maturity Score. Scoped to CSS variables rather than Tailwind
-   theme keys so they don't collide with the site-wide brand.* tokens above,
-   which stay in place until the rest of the site migrates. */
+@layer utilities {
+  .tabular-nums {
+    font-feature-settings: "tnum" 1, "ss01" 1;
+  }
+}
+
+/* Design system tokens (docs/brand/design.md), the single source of truth
+   for color, radius, and shadow across the site. */
 :root {
   --color-primary: #e84500;
   --color-primary-hover: #cc3a07;
