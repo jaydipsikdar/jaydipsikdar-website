@@ -1,5 +1,7 @@
 import Link from 'next/link'
-import { Music, Mic, Video } from 'lucide-react'
+import { Music, Mic, Video, Link as LinkIcon } from 'lucide-react'
+
+const LINKEDIN_URL = 'https://www.linkedin.com/in/jaydipsikdar/'
 
 const siteLinks = [
   { href: '/', label: 'Home' },
@@ -37,6 +39,15 @@ export default function Footer() {
               Fractional CMO and marketing consultant, building free tools and frameworks from
               20 years in the seat.
             </p>
+            <a
+              href={LINKEDIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex items-center gap-2 text-sm text-ink-700 transition-colors hover:text-primary"
+            >
+              <LinkIcon size={16} strokeWidth={1.5} />
+              LinkedIn
+            </a>
           </div>
 
           <div className="flex flex-wrap gap-16">
