@@ -64,9 +64,9 @@ export default function RazorpayBookButton({
 
   if (paid) {
     return (
-      <p className="text-sm text-brand-text">
-        Payment received! Your booking page opened in a new tab —{' '}
-        <a href={bookingUrl} target="_blank" rel="noopener noreferrer" className="underline">
+      <p className="text-sm text-ink-700">
+        Payment received! Your booking page opened in a new tab,{' '}
+        <a href={bookingUrl} target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary-hover transition-colors">
           click here
         </a>{' '}
         if it didn&apos;t.

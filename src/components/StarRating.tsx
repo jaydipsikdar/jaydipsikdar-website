@@ -26,7 +26,7 @@ export function StarRatingDisplay({ rating, size = 18 }: { rating: number; size?
           key={n}
           filled={n <= Math.round(rating)}
           size={size}
-          className={n <= Math.round(rating) ? 'text-brand-accent' : 'text-gray-300'}
+          className={n <= Math.round(rating) ? 'text-primary' : 'text-gray-300'}
         />
       ))}
     </div>
@@ -63,7 +63,7 @@ export function StarRatingInput({
           <StarIcon
             filled={n <= active}
             size={size}
-            className={n <= active ? 'text-brand-accent' : 'text-gray-300'}
+            className={n <= active ? 'text-primary' : 'text-gray-300'}
           />
         </button>
       ))}

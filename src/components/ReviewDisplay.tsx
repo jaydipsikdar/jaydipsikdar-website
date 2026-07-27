@@ -6,21 +6,21 @@ import { relativeTime, type ApprovedReview, type ProductSlug } from '@/lib/revie
 
 function ReviewCard({ review }: { review: ApprovedReview }) {
   return (
-    <div className="border border-gray-200 rounded-lg bg-white p-5 flex flex-col">
+    <div className="border border-hairline rounded-lg bg-white p-5 flex flex-col">
       <StarRatingDisplay rating={review.rating} size={16} />
       {review.review_text && (
-        <p className="text-sm text-brand-text leading-relaxed mt-3 flex-1">
+        <p className="text-sm text-ink-700 leading-[1.4] mt-3 flex-1">
           &ldquo;{review.review_text}&rdquo;
         </p>
       )}
-      <div className="mt-4 pt-3 border-t border-gray-100">
-        <p className="text-sm font-medium text-brand-text">{review.reviewer_name}</p>
+      <div className="mt-4 pt-3 border-t border-hairline">
+        <p className="text-sm font-normal text-ink-900">{review.reviewer_name}</p>
         {(review.reviewer_title || review.reviewer_company) && (
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-ink-500">
             {[review.reviewer_title, review.reviewer_company].filter(Boolean).join(', ')}
           </p>
         )}
-        <p className="text-xs text-gray-400 mt-1">{relativeTime(review.created_at)}</p>
+        <p className="text-xs text-ink-500 mt-1">{relativeTime(review.created_at)}</p>
       </div>
     </div>
   )
@@ -54,9 +54,11 @@ export default function ReviewDisplay({ productSlug }: { productSlug: ProductSlu
 
   return (
     <div className="mb-10">
-      <h2 className="text-2xl font-semibold text-center mb-2">What others are saying</h2>
-      <p className="text-center text-sm text-gray-500 mb-8">
-        ★ {average.toFixed(1)} from {reviews.length} review{reviews.length === 1 ? '' : 's'}
+      <h2 className="text-[26px] font-light tracking-[-0.26px] leading-[1.12] text-ink-900 text-center mb-2">
+        What others are saying
+      </h2>
+      <p className="text-center text-sm text-ink-500 tabular-nums mb-8">
+        &#9733; {average.toFixed(1)} from {reviews.length} review{reviews.length === 1 ? '' : 's'}
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -70,9 +72,9 @@ export default function ReviewDisplay({ productSlug }: { productSlug: ProductSlu
           <button
             type="button"
             onClick={() => setShowAll((prev) => !prev)}
-            className="text-sm text-brand-accent underline hover:opacity-80 transition-opacity"
+            className="text-sm text-primary hover:text-primary-hover transition-colors"
           >
-            {showAll ? 'Show fewer reviews' : 'See all reviews →'}
+            {showAll ? 'Show fewer reviews' : 'See all reviews'}
           </button>
         </div>
       )}
