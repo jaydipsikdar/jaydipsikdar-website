@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
+import Button from '@/components/ui/Button'
 
 export const metadata: Metadata = {
   title: 'About — Jaydip Sikdar',
@@ -10,18 +11,18 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <main className="px-6 py-20 max-w-2xl mx-auto">
-      <h1 className="text-3xl font-bold mb-10">About</h1>
+      <h1 className="text-[32px] font-light tracking-[-0.64px] leading-[1.1] text-ink-900 mb-10">About</h1>
 
       <Image
         src="/images/jaydip-sikdar.png"
         alt="Jaydip Sikdar"
         width={150}
         height={150}
-        className="rounded-full mb-10 object-cover"
+        className="rounded-pill mb-10 object-cover"
         priority
       />
 
-      <div className="space-y-5 text-brand-text text-lg leading-relaxed">
+      <div className="space-y-5 text-ink-700 text-lg leading-[1.4]">
         <p>
           I&apos;m Jaydip Sikdar. Here&apos;s what 20 years inside IBM, Adobe, Cisco, and MoEngage
           taught me: the gap between how large companies do marketing and how everyone else does
@@ -30,7 +31,7 @@ export default function AboutPage() {
         <p>
           Enterprise marketing teams have decision frameworks for every recurring problem. Vendor
           evaluation models. Launch playbooks. Positioning diagnostics they run quarterly. None of
-          this is revolutionary — it&apos;s just accumulated operational knowledge. And almost none
+          this is revolutionary, it&apos;s just accumulated operational knowledge. And almost none
           of it is accessible to the people outside those walls.
         </p>
         <p>
@@ -39,7 +40,7 @@ export default function AboutPage() {
           growth marketing for their consulting business across Americas, EMEA, and APAC, then moved
           into customer success leadership for the region. At MoEngage, I led customer success for
           India. At Cisco, I was among the first to market their mobile data services platform to
-          leading telecom operators globally. Across these roles — especially customer success — I
+          leading telecom operators globally. Across these roles (especially customer success), I
           worked directly with 200+ CMOs, and the pattern became impossible to ignore: the most
           common problems weren&apos;t unique. The same positioning mistakes, the same vendor traps,
           the same launch blind spots showed up whether the company had 10 people or 10,000. The
@@ -47,7 +48,7 @@ export default function AboutPage() {
         </p>
         <p>That&apos;s the problem I keep working on.</p>
         <p>
-          <strong>The tools</strong> — I&apos;m building a set of free, interactive tools at
+          <strong className="font-normal">The tools:</strong> I&apos;m building a set of free, interactive tools at
           jaydipsikdar.com that package the frameworks I&apos;ve used and seen work. The Vendor
           Contract Checker scores your agency contract clause-by-clause and flags what to
           renegotiate. The Marketing Decision Advisor gives you a structured diagnosis and action
@@ -55,13 +56,13 @@ export default function AboutPage() {
           problem in minutes. More are in progress.
         </p>
         <p>
-          <strong>The consulting</strong> — I work as CMO for AI and B2B SaaS
-          startups, typically $1M–$10M ARR. I build the full marketing function — positioning, GTM,
-          demand gen, ops, tech stack — and hire the team to run it after I leave. Two current
+          <strong className="font-normal">The consulting:</strong> I work as CMO for AI and B2B SaaS
+          startups, typically $1M–$10M ARR. I build the full marketing function (positioning, GTM,
+          demand gen, ops, tech stack) and hire the team to run it after I leave. Two current
           clients, both AI companies in India.
         </p>
         <p>
-          <strong>The podcast</strong> — The Marketing Couch is 21 conversations with B2B
+          <strong className="font-normal">The podcast:</strong> The Marketing Couch is 21 conversations with B2B
           marketing, product, sales, and CS leaders about how they actually make decisions. Season 1
           is complete. Available on Spotify, Apple Podcasts, and YouTube.
         </p>
@@ -69,14 +70,9 @@ export default function AboutPage() {
           I&apos;ve guest-lectured on marketing strategy at Christ University, PES University,
           Amity University, and FORE School of Management.
         </p>
-        <p>
-          <a
-            href="/resources"
-            className="text-brand-accent underline hover:opacity-80 transition-opacity"
-          >
-            Explore the tools →
-          </a>
-        </p>
+        <div className="pt-4">
+          <Button href="/resources">Explore the tools</Button>
+        </div>
       </div>
     </main>
   )
