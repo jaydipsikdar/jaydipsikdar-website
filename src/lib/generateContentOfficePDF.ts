@@ -7,10 +7,9 @@ import {
   type ContentOfficeResult,
   type MatrixCell,
 } from './contentOfficeData'
-// Kept in sync with RazorpayBookButton.tsx's CALENDLY_URL — duplicated here
-// rather than imported so this server-side PDF generator doesn't pull in a
-// 'use client' UI component module.
-const CALENDLY_URL = 'https://calendly.com/jaydipsikdar/book-a-consulting-session'
+// PDFs can't trigger the Razorpay Checkout SDK, so these CTAs route to the
+// /contact page instead, where the payment flow lives.
+const CONTACT_URL = 'https://jaydipsikdar.com/contact'
 
 type RGB = [number, number, number]
 type FontStyle = 'normal' | 'bold' | 'italic'
@@ -373,7 +372,7 @@ function buildAnalysisSection(doc: jsPDF, cur: Cursor, title: string, body: stri
 // ── Section 7: consulting bridges ──
 
 function bridgeUrl(campaign: string): string {
-  return `${CALENDLY_URL}?utm_source=content-office&utm_medium=pdf&utm_campaign=${campaign}`
+  return `${CONTACT_URL}?utm_source=content-office&utm_medium=pdf&utm_campaign=${campaign}`
 }
 
 function buildConsultingBridge(doc: jsPDF, cur: Cursor, title: string, body: string, prompt: string, campaign: string) {
@@ -412,7 +411,7 @@ function buildConsultingBridge(doc: jsPDF, cur: Cursor, title: string, body: str
   cur.y = top + promptHeight
   cur.addSpace(5)
 
-  const btnText = 'Set up a conversation ->'
+  const btnText = 'Book a consulting session at jaydipsikdar.com/contact'
   setFont(doc, 10, 'normal')
   const btnW = doc.getTextWidth(btnText) + 14
   setFillColor(doc, PRIMARY)

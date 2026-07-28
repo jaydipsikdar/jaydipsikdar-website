@@ -87,7 +87,7 @@ that will actually move their specific goal, and building the workflow around th
 If that's you, set up a 60-minute conversation. We'll review your matrix, pick your priorities,
 and build your 90-day plan. Rs. 999.
 
-[Book a 60-minute content strategy session]({$content_office_pdf_url_calendly_link})
+[Book a 60-minute content strategy session]({$content_office_contact_link})
 
 Jaydip
 
@@ -105,8 +105,9 @@ Jaydip
 3. Build a 3-step automation triggered on "subscriber joins group: Content Office," with delays
    of 3 days, 4 days (to land Day 7), and 7 days (to land Day 14) between steps.
 4. Paste the subject lines and bodies above into each step. Replace the
-   `{$content_office_pdf_url_calendly_link}` placeholder with the actual Calendly URL plus UTM
-   parameters: `https://calendly.com/jaydipsikdar/book-a-consulting-session?utm_source=content-office&utm_medium=email&utm_campaign=day-14`.
+   `{$content_office_contact_link}` placeholder with the contact page URL plus UTM parameters:
+   `https://jaydipsikdar.com/contact?utm_source=content-office&utm_medium=email&utm_campaign=day-14`.
+   Do not link to Calendly directly, the payment flow lives on `/contact`.
 5. If the MailerLite plan doesn't support multi-step automations yet, these can ship as 3
    one-off scheduled campaigns filtered to the Content Office group instead, until the plan
    upgrades.

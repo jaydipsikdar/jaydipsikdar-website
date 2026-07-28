@@ -852,7 +852,9 @@ function buildCTA(doc: jsPDF, cur: Cursor) {
   setFillColor(doc, PRIMARY)
   doc.roundedRect(btnX, y, btnW, btnH, btnH / 2, btnH / 2, 'F')
   setTextColor(doc, WHITE)
-  doc.textWithLink(btnText, btnX + 8, y + btnH * 0.65, { url: 'https://www.jaydipsikdar.com/contact' })
+  doc.textWithLink(btnText, btnX + 8, y + btnH * 0.65, {
+    url: 'https://jaydipsikdar.com/contact?utm_source=maturity-score&utm_medium=pdf&utm_campaign=consulting',
+  })
 
   cur.y = top + height
   cur.addSpace(10)

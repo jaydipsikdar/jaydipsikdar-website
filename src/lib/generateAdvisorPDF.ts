@@ -683,7 +683,9 @@ function buildCTA(doc: jsPDF, cur: Cursor) {
   setTextColor(doc, ACCENT)
   const linkWidth = doc.getTextWidth(linkText)
   const linkX = cur.pageWidth / 2 - linkWidth / 2
-  doc.textWithLink(linkText, linkX, y + linkLH * 0.75, { url: 'https://www.jaydipsikdar.com/contact' })
+  doc.textWithLink(linkText, linkX, y + linkLH * 0.75, {
+    url: 'https://jaydipsikdar.com/contact?utm_source=marketing-advisor&utm_medium=pdf&utm_campaign=consulting',
+  })
 
   cur.y = top + height
 }
