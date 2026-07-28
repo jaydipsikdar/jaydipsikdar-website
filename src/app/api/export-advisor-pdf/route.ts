@@ -91,5 +91,5 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: subscribeResult.detail }, { status: subscribeResult.status })
   }
 
-  return NextResponse.json({ success: true, url })
+  return NextResponse.json({ success: true, url, isNewSubscriber: subscribeResult.isNewSubscriber })
 }

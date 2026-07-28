@@ -7,6 +7,7 @@ import TextInput from './ui/TextInput'
 export default function KitSignupForm() {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [isNewSubscriber, setIsNewSubscriber] = useState(true)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -20,6 +21,8 @@ export default function KitSignupForm() {
       })
 
       if (!res.ok) throw new Error('Subscription failed')
+      const data = await res.json()
+      setIsNewSubscriber(data.isNewSubscriber ?? true)
       setStatus('success')
     } catch {
       setStatus('error')
@@ -30,7 +33,9 @@ export default function KitSignupForm() {
     return (
       <div>
         <p className="text-ink-900 text-sm font-normal mb-3">
-          Check your inbox. The kit is on its way, or download it now below.
+          {isNewSubscriber
+            ? 'Check your inbox. The kit is on its way, or download it now below.'
+            : 'Welcome back. Download your kit below.'}
         </p>
         <Button href="/downloads/cmo-boardroom-kit.pdf" target="_blank" rel="noopener noreferrer" className="w-full">
           Download the kit

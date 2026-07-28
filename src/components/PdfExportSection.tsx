@@ -15,6 +15,7 @@ export default function PdfExportSection({
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [pdfUrl, setPdfUrl] = useState<string | null>(null)
+  const [isNewSubscriber, setIsNewSubscriber] = useState(true)
 
   async function sendReport(targetEmail: string) {
     setStatus('loading')
@@ -27,6 +28,7 @@ export default function PdfExportSection({
       if (!res.ok) throw new Error('export failed')
       const data = await res.json()
       setPdfUrl(data.url ?? null)
+      setIsNewSubscriber(data.isNewSubscriber ?? true)
       setStatus('success')
     } catch {
       setStatus('error')
@@ -42,7 +44,9 @@ export default function PdfExportSection({
     return (
       <div className="text-center py-4">
         <p className="text-ink-900 text-sm font-normal mb-3">
-          Report sent! Check your inbox, or grab it straight away below.
+          {isNewSubscriber
+            ? 'Report sent! Check your inbox, or grab it straight away below.'
+            : 'Welcome back. Download your report below.'}
         </p>
         {pdfUrl && (
           <Button href={pdfUrl} target="_blank" rel="noopener noreferrer">

@@ -28,5 +28,5 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: result.detail }, { status: result.status })
   }
 
-  return NextResponse.json({ success: true })
+  return NextResponse.json({ success: true, isNewSubscriber: result.isNewSubscriber })
 }

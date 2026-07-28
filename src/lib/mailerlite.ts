@@ -23,7 +23,9 @@ function resolveGroupId(group?: string): string {
   return group
 }
 
-export type SubscribeResult = { ok: true } | { ok: false; status: number; detail: string }
+export type SubscribeResult =
+  | { ok: true; isNewSubscriber: boolean }
+  | { ok: false; status: number; detail: string }
 
 export async function subscribeToMailerLite(params: {
   email: string
@@ -68,15 +70,19 @@ export async function subscribeToMailerLite(params: {
         params.email,
         groupId
       )
-      return { ok: true }
+      return { ok: true, isNewSubscriber: false }
     }
 
     console.error('[mailerlite] MailerLite returned error:', res.status, responseBody)
     return { ok: false, status: 502, detail: `Subscription failed (${res.status})` }
   }
 
+  // The Connect API returns 201 Created for a brand-new subscriber and
+  // 200 OK when it upserted an existing one.
+  const isNewSubscriber = res.status === 201
+
   console.log('[mailerlite] Success:', res.status, responseBody)
-  return { ok: true }
+  return { ok: true, isNewSubscriber }
 }
 
 // The Connect API upserts subscribers (200 for both new and existing), so a
