@@ -28,9 +28,14 @@ export default function KitSignupForm() {
 
   if (status === 'success') {
     return (
-      <p className="text-ink-900 text-sm font-normal">
-        Check your inbox. The kit is on its way.
-      </p>
+      <div>
+        <p className="text-ink-900 text-sm font-normal mb-3">
+          Check your inbox. The kit is on its way, or download it now below.
+        </p>
+        <Button href="/downloads/cmo-boardroom-kit.pdf" target="_blank" rel="noopener noreferrer" className="w-full">
+          Download the kit
+        </Button>
+      </div>
     )
   }
 

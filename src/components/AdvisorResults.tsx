@@ -36,6 +36,7 @@ function categoryLabel(category: MarketingCategory): string {
 function AdvisorPdfExportSection({ result }: { result: MarketingAdvisorResult }) {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -47,6 +48,8 @@ function AdvisorPdfExportSection({ result }: { result: MarketingAdvisorResult })
         body: JSON.stringify({ result, email }),
       })
       if (!res.ok) throw new Error('export failed')
+      const data = await res.json()
+      setPdfUrl(data.url ?? null)
       setStatus('success')
     } catch {
       setStatus('error')
@@ -56,7 +59,14 @@ function AdvisorPdfExportSection({ result }: { result: MarketingAdvisorResult })
   if (status === 'success') {
     return (
       <div className="text-center py-4">
-        <p className="text-ink-900 text-sm font-normal">Report sent! Check your inbox.</p>
+        <p className="text-ink-900 text-sm font-normal mb-3">
+          Report sent! Check your inbox, or grab it straight away below.
+        </p>
+        {pdfUrl && (
+          <Button href={pdfUrl} target="_blank" rel="noopener noreferrer">
+            Download PDF
+          </Button>
+        )}
       </div>
     )
   }

@@ -62,10 +62,28 @@ export async function subscribeToMailerLite(params: {
   const responseBody = await res.text()
 
   if (!res.ok) {
+    if (indicatesExistingSubscriber(responseBody)) {
+      console.log(
+        '[mailerlite] Subscriber already exists in group, treating as success:',
+        params.email,
+        groupId
+      )
+      return { ok: true }
+    }
+
     console.error('[mailerlite] MailerLite returned error:', res.status, responseBody)
     return { ok: false, status: 502, detail: `Subscription failed (${res.status})` }
   }
 
   console.log('[mailerlite] Success:', res.status, responseBody)
   return { ok: true }
+}
+
+// The Connect API upserts subscribers (200 for both new and existing), so a
+// returning user hitting the same group should never fail. This is a
+// defensive net in case an account/plan quirk ever surfaces a duplicate as
+// an error response instead of the documented upsert.
+function indicatesExistingSubscriber(responseBody: string): boolean {
+  const normalized = responseBody.toLowerCase()
+  return normalized.includes('already') && (normalized.includes('exist') || normalized.includes('subscri'))
 }
