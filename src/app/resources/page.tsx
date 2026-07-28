@@ -29,7 +29,7 @@ export default function ResourcesPage() {
       </h1>
       <p className="text-center text-ink-700 mb-12 max-w-lg mx-auto">
         Free tools and frameworks from 20 years of solving marketing problems at IBM, Adobe,
-        MoEngage, and two AI startups.
+        MoEngage, and dozens of tech startups.
       </p>
 
       {/* Row 1 — Marketing Maturity Score + Marketing Decision Advisor + Vendor Contract Check */}
