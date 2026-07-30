@@ -45,14 +45,15 @@ export default function NewsletterPage() {
           HERO
           ============================================================ */}
       <section className="bg-surface-cream px-6 py-16 md:py-24">
-        <div className="mx-auto max-w-2xl text-center">
+        <div className="mx-auto max-w-3xl text-center">
           <Eyebrow className="mb-4 flex justify-center">THE WORKBENCH</Eyebrow>
           <h1 className="mb-6 text-[32px] font-light leading-[1.1] tracking-[-0.64px] text-ink-900">
-            I build and test what works in marketing{' '}
-            <span className="text-ink-700">(so you don&apos;t have to)</span> and share
+            I build and test what works in marketing
+            <br />
+            <span className="text-ink-700">(so&nbsp;you don&apos;t have to)</span> and share
             everything I learn.
           </h1>
-          <p className="mb-10 text-base font-light leading-[1.4] text-ink-700">
+          <p className="mx-auto mb-10 max-w-xl text-base font-light leading-[1.4] text-ink-700">
             One build, one lesson, one thing you can use. Every week in your inbox.
           </p>
           <NewsletterSignupForm id="ml-newsletter-form" buttonVariant="primary" />
