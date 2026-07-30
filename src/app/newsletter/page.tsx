@@ -51,7 +51,7 @@ export default function NewsletterPage() {
             I build and test what works in marketing
             <br />
             <span className="text-ink-700">(so&nbsp;you don&apos;t have to)</span> and share
-            everything I learn.
+            everything I&nbsp;learn.
           </h1>
           <p className="mx-auto mb-10 max-w-xl text-base font-light leading-[1.4] text-ink-700">
             One build, one lesson, one thing you can use. Every week in your inbox.
