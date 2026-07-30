@@ -1,17 +1,26 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
+import Link from 'next/link'
 import Button from '@/components/ui/Button'
+import Eyebrow from '@/components/ui/Eyebrow'
 
 export const metadata: Metadata = {
   title: 'About - Jaydip Sikdar',
   description:
-    '20 years inside IBM, Adobe, Cisco, and MoEngage. Now building free marketing tools and advising AI startups as CMO.',
+    "I build and test what works in marketing (so you don't have to) and share everything I learn. 20 years across IBM, Adobe, Cisco, and MoEngage, now building free marketing tools and advising AI startups as CMO.",
 }
+
+const linkClasses = 'text-primary transition-colors hover:text-primary-hover'
 
 export default function AboutPage() {
   return (
     <main className="px-6 py-20 max-w-2xl mx-auto">
-      <h1 className="text-[32px] font-light tracking-[-0.64px] leading-[1.1] text-ink-900 mb-10">About</h1>
+      <Eyebrow className="mb-4">ABOUT</Eyebrow>
+      <h1 className="text-[32px] font-light tracking-[-0.64px] leading-[1.1] text-ink-900 mb-10">
+        I build and test what works in marketing{' '}
+        <span className="text-ink-700">(so&nbsp;you don&apos;t have to)</span> and share
+        everything I learn.
+      </h1>
 
       <Image
         src="/images/jaydip-sikdar.png"
@@ -23,52 +32,49 @@ export default function AboutPage() {
       />
 
       <div className="space-y-5 text-ink-700 text-lg leading-[1.4]">
+        <p>Right now, that means three things.</p>
         <p>
-          I&apos;m Jaydip Sikdar. Here&apos;s what 20 years inside IBM, Adobe, Cisco, and MoEngage
-          taught me: the gap between how large companies do marketing and how everyone else does
-          it isn&apos;t about talent or budget. It&apos;s about infrastructure.
+          I&apos;m building a set of free, interactive marketing tools at{' '}
+          <Link href="/" className={linkClasses}>jaydipsikdar.com</Link>. A{' '}
+          <Link href="/resources/vendor-check" className={linkClasses}>
+            vendor contract checker
+          </Link>{' '}
+          that scores your agency deal clause by clause. A{' '}
+          <Link href="/resources/marketing-advisor" className={linkClasses}>
+            marketing decision advisor
+          </Link>{' '}
+          built on patterns from 200+ CMO conversations. A{' '}
+          <Link href="/resources/marketing-maturity-score" className={linkClasses}>
+            marketing maturity scorecard
+          </Link>
+          . A{' '}
+          <Link href="/resources/content-office" className={linkClasses}>
+            content strategy workspace
+          </Link>
+          . Each one solves a specific problem in minutes. More are coming.
         </p>
         <p>
-          Enterprise marketing teams have decision frameworks for every recurring problem. Vendor
-          evaluation models. Launch playbooks. Positioning diagnostics they run quarterly. None of
-          this is revolutionary, it&apos;s just accumulated operational knowledge. And almost none
-          of it is accessible to the people outside those walls.
+          I write{' '}
+          <Link href="/newsletter" className={linkClasses}>The Workbench</Link>, a weekly
+          newsletter: one build, one lesson, one thing you can use today. And I host The Marketing
+          Couch, a podcast with 21 conversations (so far) with B2B marketing, product, sales, and
+          CS leaders about how they actually make decisions.
         </p>
         <p>
-          I know because I&apos;ve sat on both sides. I ran portfolio marketing and consulting
-          growth programs at IBM across five countries. At Adobe, I spent over six years leading
-          growth marketing for their consulting business across Americas, EMEA, and APAC, then moved
-          into customer success leadership for the region. At MoEngage, I led customer success for
-          India. At Cisco, I was among the first to market their mobile data services platform to
-          leading telecom operators globally. Across these roles (especially customer success), I
-          worked directly with 200+ CMOs, and the pattern became impossible to ignore: the most
-          common problems weren&apos;t unique. The same positioning mistakes, the same vendor traps,
-          the same launch blind spots showed up whether the company had 10 people or 10,000. The
-          difference was that larger companies had systems to catch them earlier.
-        </p>
-        <p>That&apos;s the problem I keep working on.</p>
-        <p>
-          <strong className="font-normal">The tools:</strong> I&apos;m building a set of free, interactive tools at
-          jaydipsikdar.com that package the frameworks I&apos;ve used and seen work. The Vendor
-          Contract Checker scores your agency contract clause-by-clause and flags what to
-          renegotiate. The Marketing Decision Advisor gives you a structured diagnosis and action
-          plan grounded in lessons from those 200+ CMO conversations. Each tool solves one specific
-          problem in minutes. More are in progress.
+          <strong className="font-normal">The backstory:</strong> 20 years of marketing across
+          enterprise tech and high-growth startups. IBM, Adobe, Cisco, MoEngage. I ran portfolio
+          marketing at IBM across five countries, led growth and customer success at Adobe across
+          Americas, EMEA, and APAC, and led customer success at MoEngage for India. Across those
+          roles, I worked with 200+ CMOs and kept seeing the same problems repeat (positioning
+          gaps, vendor misalignment, launch blind spots) regardless of company size.
         </p>
         <p>
-          <strong className="font-normal">The consulting:</strong> I work as CMO for AI and B2B SaaS
-          startups, typically $1M–$10M ARR. I build the full marketing function (positioning, GTM,
-          demand gen, ops, tech stack) and hire the team to run it after I leave. Two current
-          clients, both AI companies in India.
+          I also work as a consulting CMO for AI and B2B SaaS startups, building the marketing
+          function and hiring the team to run it after I leave.
         </p>
         <p>
-          <strong className="font-normal">The podcast:</strong> The Marketing Couch is 21 conversations with B2B
-          marketing, product, sales, and CS leaders about how they actually make decisions. Season 1
-          is complete. Available on Spotify, Apple Podcasts, and YouTube.
-        </p>
-        <p>
-          I&apos;ve guest-lectured on marketing strategy at Christ University, PES University,
-          Amity University, and FORE School of Management.
+          I guest-lecture on marketing strategy at business schools across India, including Christ
+          University, PES University, Amity University, and FORE School of Management.
         </p>
         <div className="pt-4">
           <Button href="/resources">Explore the tools</Button>
