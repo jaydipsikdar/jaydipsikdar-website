@@ -23,6 +23,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: 'https://jaydipsikdar.com/newsletter',
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
       url: 'https://jaydipsikdar.com/resources/vendor-check',
       lastModified,
       changeFrequency: 'monthly',
