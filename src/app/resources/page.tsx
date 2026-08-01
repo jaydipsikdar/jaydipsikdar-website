@@ -4,17 +4,17 @@ import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
 
 export const metadata: Metadata = {
-  title: 'Free marketing tools & frameworks | Jaydip Sikdar',
+  title: 'Free marketing tools & frameworks | Jaydeepp Sikdar',
   description:
     'Free AI-powered marketing tools: get tailored advice on positioning, brand, growth, AI strategy, and launches. Plus a vendor contract risk scorer and the CMO Boardroom Kit. Built from 20 years of marketing experience.',
   openGraph: {
-    title: 'Free marketing tools & frameworks | Jaydip Sikdar',
+    title: 'Free marketing tools & frameworks | Jaydeepp Sikdar',
     description:
       'Free AI-powered marketing tools: get tailored advice on positioning, brand, growth, AI strategy, and launches. Plus a vendor contract risk scorer and the CMO Boardroom Kit. Built from 20 years of marketing experience.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Free marketing tools & frameworks | Jaydip Sikdar',
+    title: 'Free marketing tools & frameworks | Jaydeepp Sikdar',
     description:
       'Free AI-powered marketing tools: get tailored advice on positioning, brand, growth, AI strategy, and launches. Plus a vendor contract risk scorer and the CMO Boardroom Kit. Built from 20 years of marketing experience.',
   },
@@ -111,7 +111,7 @@ export default function ResourcesPage() {
 
       </div>
 
-      {/* Row 2 — Jaydip's Content Office, full width */}
+      {/* Row 2 — Jaydeepp's Content Office, full width */}
       <div className="grid grid-cols-1 gap-8 mb-8">
         <Card className="flex flex-col md:flex-row md:items-center gap-8">
           <div className="flex-1">

@@ -4,19 +4,19 @@ import Card from '@/components/ui/Card'
 import Eyebrow from '@/components/ui/Eyebrow'
 
 export const metadata: Metadata = {
-  title: 'The Workbench | Jaydip Sikdar',
+  title: 'The Workbench | Jaydeepp Sikdar',
   description:
-    "Jaydip Sikdar's weekly newsletter. One build, one lesson, one thing you can use, every week in your inbox.",
+    "Jaydeepp Sikdar's weekly newsletter. One build, one lesson, one thing you can use, every week in your inbox.",
   openGraph: {
-    title: 'The Workbench | Jaydip Sikdar',
+    title: 'The Workbench | Jaydeepp Sikdar',
     description:
-      "Jaydip Sikdar's weekly newsletter. One build, one lesson, one thing you can use, every week in your inbox.",
+      "Jaydeepp Sikdar's weekly newsletter. One build, one lesson, one thing you can use, every week in your inbox.",
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'The Workbench | Jaydip Sikdar',
+    title: 'The Workbench | Jaydeepp Sikdar',
     description:
-      "Jaydip Sikdar's weekly newsletter. One build, one lesson, one thing you can use, every week in your inbox.",
+      "Jaydeepp Sikdar's weekly newsletter. One build, one lesson, one thing you can use, every week in your inbox.",
   },
 }
 
@@ -131,7 +131,7 @@ export default function NewsletterPage() {
       <section className="bg-surface-soft px-6 py-16 md:py-24">
         <div className="mx-auto max-w-[640px] text-center">
           <p className="mb-10 text-base font-light leading-[1.4] text-ink-900">
-            The Workbench is written by Jaydip Sikdar, a consulting CMO who spent 20 years
+            The Workbench is written by Jaydeepp Sikdar, a consulting CMO who spent 20 years
             across enterprise tech and high-growth startups. He builds practical marketing
             tools with AI and shares everything he learns. More at{' '}
             <Link

@@ -32,7 +32,7 @@ export async function sendReviewNotificationEmail(params: {
   const resend = new Resend(apiKey)
 
   const { error } = await resend.emails.send({
-    from: 'Jaydip Sikdar Website <onboarding@resend.dev>',
+    from: 'Jaydeepp Sikdar Website <onboarding@resend.dev>',
     to: REVIEW_NOTIFICATION_EMAIL,
     subject: `New review submitted — ${params.productSlug}`,
     text: body,

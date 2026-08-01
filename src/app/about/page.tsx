@@ -5,9 +5,9 @@ import Button from '@/components/ui/Button'
 import Eyebrow from '@/components/ui/Eyebrow'
 
 export const metadata: Metadata = {
-  title: 'About - Jaydip Sikdar',
+  title: 'About - Jaydeepp Sikdar',
   description:
-    "I build and test what works in marketing (so you don't have to) and share everything I learn. 20 years across IBM, Adobe, Cisco, and MoEngage, now building free marketing tools and advising AI startups as CMO.",
+    "I build and test what works in marketing and share everything I learn. 20 years across IBM, Adobe, Cisco, and MoEngage, now building free marketing tools and advising AI startups as CMO.",
 }
 
 const linkClasses = 'text-primary transition-colors hover:text-primary-hover'
@@ -17,14 +17,12 @@ export default function AboutPage() {
     <main className="px-6 py-20 max-w-2xl mx-auto">
       <Eyebrow className="mb-4">ABOUT</Eyebrow>
       <h1 className="text-[32px] font-light tracking-[-0.64px] leading-[1.1] text-ink-900 mb-10">
-        I build and test what works in marketing{' '}
-        <span className="text-ink-700">(so&nbsp;you don&apos;t have to)</span> and share
-        everything I learn.
+        I build and test what works in marketing and share everything I learn.
       </h1>
 
       <Image
         src="/images/jaydip-sikdar.png"
-        alt="Jaydip Sikdar"
+        alt="Jaydeepp Sikdar"
         width={150}
         height={150}
         className="rounded-pill mb-10 object-cover"

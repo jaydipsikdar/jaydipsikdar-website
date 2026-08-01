@@ -211,7 +211,7 @@ function buildPillarSystemPrompt(inputs: ContentOfficeInputs): string {
   const themeList = THEMES.map((t, i) => `${i + 1}. ${t.name}: ${t.description} (example: "${t.example}")`).join('\n')
   const structureList = STRUCTURES.map((s) => `- ${s.name}: ${s.description}`).join('\n')
 
-  return `You are building a content matrix for Jaydip's Content Office, a tool that turns one topic pillar into 10 distinct content ideas by running it through 10 different "themes" (ways of approaching the topic).
+  return `You are building a content matrix for Jaydeepp's Content Office, a tool that turns one topic pillar into 10 distinct content ideas by running it through 10 different "themes" (ways of approaching the topic).
 
 ${contextBlock(inputs)}
 
@@ -227,7 +227,7 @@ For each of the 10 themes, generate one content idea for the pillar given in the
 }
 
 function buildExtrasSystemPrompt(inputs: ContentOfficeInputs, matrixSummary: string): string {
-  return `You are finishing a content matrix for Jaydip's Content Office.
+  return `You are finishing a content matrix for Jaydeepp's Content Office.
 
 ${contextBlock(inputs)}
 

@@ -52,7 +52,7 @@ export default function RazorpayBookButton({
       key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
       amount: 99900,
       currency: 'INR',
-      name: 'Jaydip Sikdar',
+      name: 'Jaydeepp Sikdar',
       description: '1:1 Consulting Session (60 mins)',
       handler: function () {
         window.open(bookingUrl, '_blank', 'noopener,noreferrer')

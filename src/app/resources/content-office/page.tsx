@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import ContentOfficeFlow from '@/components/ContentOfficeFlow'
 
 export const metadata: Metadata = {
-  title: "Jaydip's Content Office | jaydipsikdar.com",
+  title: "Jaydeepp's Content Office | jaydipsikdar.com",
   description:
     'Your content system, built from five questions. Get a personalized content matrix: topics mapped to themes, structures, and channels.',
 }

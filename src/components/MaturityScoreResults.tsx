@@ -87,7 +87,7 @@ export default function MaturityScoreResults({ result }: { result: MaturityResul
           href="/resources/content-office"
           className="text-[color:var(--color-primary)] hover:text-[color:var(--color-primary-hover)] transition-colors"
         >
-          Try Jaydip&apos;s Content Office
+          Try Jaydeepp&apos;s Content Office
         </a>
         .
       </p>

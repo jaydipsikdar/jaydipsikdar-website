@@ -699,7 +699,7 @@ function buildCTA(doc: jsPDF, cur: Cursor) {
 
   const headingText = "Talk to someone who's reviewed 50+ vendor contracts"
   const bodyText =
-    "Book a 60-minute conversation with Jaydip Sikdar. Walk through the specific clauses in your contract, hear what he's seen work across similar deals, and decide your next move. This is experience-sharing, not legal advice."
+    "Book a 60-minute conversation with Jaydeepp Sikdar. Walk through the specific clauses in your contract, hear what he's seen work across similar deals, and decide your next move. This is experience-sharing, not legal advice."
   const linkText = 'Rs. 999  ·  Book at jaydipsikdar.com'
 
   setFont(doc, 11, 'bold')
@@ -768,7 +768,7 @@ function drawFooters(doc: jsPDF) {
 
     setFont(doc, 7.5, 'normal')
     setTextColor(doc, LIGHT_MUTED)
-    doc.text('Jaydip Sikdar  ·  jaydipsikdar.com', margin, textY)
+    doc.text('Jaydeepp Sikdar  ·  jaydipsikdar.com', margin, textY)
     doc.text('AI-assisted analysis, not legal advice.', pageWidth - margin, textY, { align: 'right' })
   }
 }

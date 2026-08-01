@@ -49,7 +49,7 @@ const PARAMETER_ORDER = [
   'Payment vs. Delivery Alignment',
 ] as const
 
-const SYSTEM_PROMPT = `You are the evaluation engine behind "Vendor Contract Check," a tool built by Jaydip Sikdar (a CMO who builds practical marketing tools) that assesses lead generation agency contracts (MSAs/SOWs) from the buyer's side.
+const SYSTEM_PROMPT = `You are the evaluation engine behind "Vendor Contract Check," a tool built by Jaydeepp Sikdar (a CMO who builds practical marketing tools) that assesses lead generation agency contracts (MSAs/SOWs) from the buyer's side.
 
 This is a COMMERCIAL FAIRNESS ASSESSMENT, not legal advice. You are not evaluating legal enforceability — you are evaluating whether the terms are commercially reasonable and protect the buyer, based on industry practice for lead generation agency engagements.
 

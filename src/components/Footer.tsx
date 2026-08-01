@@ -34,10 +34,10 @@ export default function Footer() {
       <div className="mx-auto max-w-[1200px] px-6 py-16">
         <div className="flex flex-col gap-12 md:flex-row md:justify-between">
           <div>
-            <p className="font-sans text-lg font-light text-ink-900">Jaydip Sikdar</p>
+            <p className="font-sans text-lg font-light text-ink-900">Jaydeepp Sikdar</p>
             <p className="mt-2 max-w-xs text-sm text-ink-500">
-              Fractional CMO and marketing consultant, building free tools and frameworks from
-              20 years in the seat.
+              Consulting CMO, building and testing what works in marketing so you don&apos;t
+              have to.
             </p>
             <a
               href={LINKEDIN_URL}
@@ -88,7 +88,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-16 flex flex-col-reverse items-center justify-between gap-4 border-t border-hairline pt-6 md:flex-row">
-          <p className="text-sm text-ink-500">© 2026 Jaydip Sikdar</p>
+          <p className="text-sm text-ink-500">© 2026 Jaydeepp Sikdar</p>
           <p className="text-xs text-ink-500">Unstoppable Sprints</p>
         </div>
       </div>

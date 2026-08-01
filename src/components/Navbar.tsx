@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { X, Menu } from 'lucide-react'
@@ -50,8 +51,15 @@ export default function Navbar() {
         }`}
       >
         <div className="mx-auto flex max-w-[1200px] items-center justify-between px-6 py-4">
-          <Link href="/" className="font-sans text-lg font-light text-ink-900 transition-colors hover:text-primary">
-            Jaydip Sikdar
+          <Link href="/" className="shrink-0 transition-opacity hover:opacity-80">
+            <Image
+              src="/images/jaydeepp-sikdar-logo.png"
+              alt="Jaydeepp Sikdar"
+              width={200}
+              height={50}
+              priority
+              className="h-9 w-auto"
+            />
           </Link>
 
           <ul className="hidden md:flex md:absolute md:left-1/2 md:-translate-x-1/2 items-center gap-8">
@@ -91,8 +99,14 @@ export default function Navbar() {
       {menuOpen && (
         <div className="fixed inset-0 z-50 flex flex-col bg-white" style={{ animation: 'fadeIn 0.15s ease-out' }}>
           <div className="flex items-center justify-between border-b border-hairline px-6 py-4">
-            <Link href="/" className="font-sans text-lg font-light text-ink-900" onClick={() => setMenuOpen(false)}>
-              Jaydip Sikdar
+            <Link href="/" onClick={() => setMenuOpen(false)}>
+              <Image
+                src="/images/jaydeepp-sikdar-logo.png"
+                alt="Jaydeepp Sikdar"
+                width={160}
+                height={40}
+                className="h-9 w-auto"
+              />
             </Link>
             <button
               onClick={() => setMenuOpen(false)}

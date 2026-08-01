@@ -173,12 +173,12 @@ function buildHeader(doc: jsPDF, cur: Cursor, result: ContentOfficeResult) {
 
   setFont(doc, 9, 'normal')
   setTextColor(doc, TEXT_MUTED)
-  doc.text('Jaydip Sikdar', cur.pageWidth / 2, cur.y + 5, { align: 'center' })
+  doc.text('Jaydeepp Sikdar', cur.pageWidth / 2, cur.y + 5, { align: 'center' })
   cur.addSpace(12)
 
   setFont(doc, 8, 'normal')
   setTextColor(doc, PRIMARY)
-  doc.text("JAYDIP'S CONTENT OFFICE", cur.pageWidth / 2, cur.y, { align: 'center' })
+  doc.text("JAYDEEPP'S CONTENT OFFICE", cur.pageWidth / 2, cur.y, { align: 'center' })
   cur.addSpace(9)
 
   setFont(doc, 22, 'normal')
@@ -473,7 +473,7 @@ function buildFooter(doc: jsPDF, cur: Cursor) {
 
   setFont(doc, 11, 'normal')
   setTextColor(doc, TEXT_BODY)
-  doc.text('Jaydip Sikdar', cur.pageWidth / 2, cur.y, { align: 'center' })
+  doc.text('Jaydeepp Sikdar', cur.pageWidth / 2, cur.y, { align: 'center' })
   cur.addSpace(6)
 
   setFont(doc, 9, 'normal')

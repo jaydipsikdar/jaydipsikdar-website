@@ -3,7 +3,7 @@ import { Suspense } from 'react'
 import MaturityScoreFlow from '@/components/MaturityScoreFlow'
 
 export const metadata: Metadata = {
-  title: 'Marketing Maturity Score - Jaydip Sikdar',
+  title: 'Marketing Maturity Score - Jaydeepp Sikdar',
   description:
     'A free diagnostic that scores your marketing maturity across 6 dimensions: positioning, demand generation, content, ops, measurement, and team. Get a radar chart, your top priority gaps, and a full report.',
 }

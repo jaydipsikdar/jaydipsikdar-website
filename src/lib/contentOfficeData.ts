@@ -1,4 +1,4 @@
-// Jaydip's Content Office — core taxonomy and shared types.
+// Jaydeepp's Content Office — core taxonomy and shared types.
 // Source of truth: 00-context/jaydips-content-office-spec.md
 
 export type ThemeId =

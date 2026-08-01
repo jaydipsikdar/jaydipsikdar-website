@@ -758,7 +758,7 @@ function buildCoverPage(doc: jsPDF, cur: Cursor) {
 
   setFont(doc, 16, 'bold')
   setTextColor(doc, WHITE)
-  doc.text('Jaydip Sikdar', cur.pageWidth / 2, 13, { align: 'center' })
+  doc.text('Jaydeepp Sikdar', cur.pageWidth / 2, 13, { align: 'center' })
   setFont(doc, 9.5, 'normal')
   doc.text('jaydipsikdar.com', cur.pageWidth / 2, 20, { align: 'center' })
 
@@ -1057,7 +1057,7 @@ function buildClosing(doc: jsPDF, cur: Cursor) {
   cur.addSpace(mmPt(14))
 
   cur.addSpace(8)
-  drawParagraph(doc, cur, '© 2026 Jaydip Sikdar', {
+  drawParagraph(doc, cur, '© 2026 Jaydeepp Sikdar', {
     fontSize: 8.5,
     color: MUTED,
     lineHeight: mmPt(12),
@@ -1081,7 +1081,7 @@ function drawFooters(doc: jsPDF) {
 
     setFont(doc, 7.5, 'normal')
     setTextColor(doc, LIGHT_MUTED)
-    doc.text('Jaydip Sikdar  ·  jaydipsikdar.com', margin, textY)
+    doc.text('Jaydeepp Sikdar  ·  jaydipsikdar.com', margin, textY)
     doc.text(`Page ${i} of ${pageCount}`, pageWidth - margin, textY, { align: 'right' })
   }
 }
