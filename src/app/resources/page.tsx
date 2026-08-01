@@ -115,7 +115,7 @@ export default function ResourcesPage() {
       <div className="grid grid-cols-1 gap-8 mb-8">
         <Card className="flex flex-col md:flex-row md:items-center gap-8">
           <div className="flex-1">
-            <h2 className="text-lg font-light text-ink-900 mb-3">Jaydip&apos;s Content Office</h2>
+            <h2 className="text-lg font-light text-ink-900 mb-3">Jaydeepp&apos;s Content Office</h2>
             <p className="text-ink-700 text-sm leading-[1.4] mb-3">
               Answer 5 questions about your business, audience, and pillars, and get a content
               matrix: your topics crossed with 10 proven content themes, each idea assigned a
