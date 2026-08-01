@@ -58,7 +58,7 @@ export default function Navbar() {
               width={200}
               height={50}
               priority
-              className="h-9 w-auto"
+              className="h-12 w-auto"
             />
           </Link>
 
@@ -105,7 +105,7 @@ export default function Navbar() {
                 alt="Jaydeepp Sikdar"
                 width={160}
                 height={40}
-                className="h-9 w-auto"
+                className="h-12 w-auto"
               />
             </Link>
             <button
