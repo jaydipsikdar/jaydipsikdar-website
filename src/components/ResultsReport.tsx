@@ -133,7 +133,7 @@ export default function ResultsReport({
       </div>
 
       <div className="text-center mb-10">
-        <Button href="https://www.jaydipsikdar.com/contact">
+        <Button href="https://jaydipsikdar.com/contact">
           Want to discuss the risks with me? Book a session
         </Button>
       </div>

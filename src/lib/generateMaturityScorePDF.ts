@@ -878,7 +878,7 @@ function buildFooter(doc: jsPDF, cur: Cursor) {
   setTextColor(doc, PRIMARY)
   const siteLinkWidth = doc.getTextWidth('jaydipsikdar.com')
   doc.textWithLink('jaydipsikdar.com', cur.pageWidth / 2 - siteLinkWidth / 2, cur.y, {
-    url: 'https://www.jaydipsikdar.com',
+    url: 'https://jaydipsikdar.com',
   })
   cur.addSpace(8)
 

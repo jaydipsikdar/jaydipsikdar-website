@@ -492,7 +492,7 @@ function buildFooter(doc: jsPDF, cur: Cursor) {
   setTextColor(doc, PRIMARY)
   const linkText = 'Take the Marketing Maturity Score at jaydipsikdar.com/resources/marketing-maturity-score'
   doc.textWithLink(linkText, cur.pageWidth / 2 - doc.getTextWidth(linkText) / 2, top + 16, {
-    url: 'https://www.jaydipsikdar.com/resources/marketing-maturity-score',
+    url: 'https://jaydipsikdar.com/resources/marketing-maturity-score',
   })
   cur.y = top + cardHeight + 8
 
