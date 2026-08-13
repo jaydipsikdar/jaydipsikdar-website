@@ -32,7 +32,7 @@ export default function ResourcesPage() {
         MoEngage, and dozens of tech startups.
       </p>
 
-      {/* Row 1 — Marketing Maturity Score + Marketing Decision Advisor + Vendor Contract Check */}
+      {/* Row 1 — Marketing Maturity Score + Marketing Decision Advisor + Vendor Contract Assessment */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 items-stretch">
 
         {/* Marketing Maturity Score */}
@@ -82,11 +82,11 @@ export default function ResourcesPage() {
           </div>
         </Card>
 
-        {/* Vendor Contract Check */}
+        {/* Vendor Contract Assessment */}
         <Card className="flex flex-col">
           <div className="grid grid-cols-1 gap-6 flex-1">
             <div>
-              <h2 className="text-lg font-light text-ink-900 mb-3">Vendor Contract Check</h2>
+              <h2 className="text-lg font-light text-ink-900 mb-3">Vendor Contract Assessment</h2>
               <p className="text-ink-700 text-sm leading-[1.4] mb-3">
                 Most vendor contracts are written to protect the vendor. This tool reads yours and
                 tells you where.
@@ -102,7 +102,7 @@ export default function ResourcesPage() {
               </p>
             </div>
             <div className="flex flex-col justify-end">
-              <Button href="/resources/vendor-check" className="w-full">
+              <Button href="/resources/vendor-contract-assessment" className="w-full">
                 Check your contract
               </Button>
             </div>

@@ -13,7 +13,7 @@ const REVIEW_TEXT_MAX = 500
 // to be rendered on (e.g. with a stray ?review=true left in it).
 const TOOL_PATHS: Record<ProductSlug, string> = {
   'marketing-advisor': '/resources/marketing-advisor',
-  'vendor-check': '/resources/vendor-check',
+  'vendor-check': '/resources/vendor-contract-assessment',
   'cmo-boardroom-kit': '/resources',
   'marketing-maturity-score': '/resources/marketing-maturity-score',
 }

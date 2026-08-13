@@ -29,7 +29,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: 'https://jaydipsikdar.com/resources/vendor-check',
+      url: 'https://jaydipsikdar.com/resources/vendor-contract-assessment',
       lastModified,
       changeFrequency: 'monthly',
       priority: 0.8,

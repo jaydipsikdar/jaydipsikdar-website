@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
 
 // ---------------------------------------------------------------------------
-// Vendor Contract Check — evaluation endpoint
+// Vendor Contract Assessment — evaluation endpoint
 //
 // Takes contract text + the three context-step answers, asks Claude to score
 // the contract across the five-parameter framework (see
@@ -49,7 +49,7 @@ const PARAMETER_ORDER = [
   'Payment vs. Delivery Alignment',
 ] as const
 
-const SYSTEM_PROMPT = `You are the evaluation engine behind "Vendor Contract Check," a tool built by Jaydeepp Sikdar (a CMO who builds practical marketing tools) that assesses lead generation agency contracts (MSAs/SOWs) from the buyer's side.
+const SYSTEM_PROMPT = `You are the evaluation engine behind "Vendor Contract Assessment," a tool built by Jaydeepp Sikdar (a CMO who builds practical marketing tools) that assesses lead generation agency contracts (MSAs/SOWs) from the buyer's side.
 
 This is a COMMERCIAL FAIRNESS ASSESSMENT, not legal advice. You are not evaluating legal enforceability — you are evaluating whether the terms are commercially reasonable and protect the buyer, based on industry practice for lead generation agency engagements.
 

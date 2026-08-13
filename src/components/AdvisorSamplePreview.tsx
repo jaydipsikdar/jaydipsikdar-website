@@ -7,7 +7,7 @@ import { IconSearch, IconTarget, IconChecklist, IconQuestion } from './AdvisorIc
 // Advisor report (Brand Strategy category), shown on the landing page so
 // visitors know what the real output looks like before they answer questions.
 // Not a live AI call. Mirrors the pattern in SampleReportPreview.tsx
-// (Vendor Contract Check).
+// (Vendor Contract Assessment).
 
 const SAMPLE = {
   category: 'Brand strategy',

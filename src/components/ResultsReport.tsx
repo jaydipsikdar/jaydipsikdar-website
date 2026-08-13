@@ -139,7 +139,7 @@ export default function ResultsReport({
       </div>
 
       <div className="border-t border-hairline pt-8">
-        <ReviewSubmissionForm productSlug="vendor-check" productName="Vendor Contract Check" />
+        <ReviewSubmissionForm productSlug="vendor-check" productName="Vendor Contract Assessment" />
       </div>
     </div>
   )

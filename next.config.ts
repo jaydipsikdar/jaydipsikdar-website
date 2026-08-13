@@ -1,7 +1,15 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  // No special config needed for v1
+  async redirects() {
+    return [
+      {
+        source: '/resources/vendor-check',
+        destination: '/resources/vendor-contract-assessment',
+        permanent: true,
+      },
+    ]
+  },
 }
 
 export default nextConfig

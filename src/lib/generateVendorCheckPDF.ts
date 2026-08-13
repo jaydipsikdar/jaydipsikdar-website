@@ -390,7 +390,7 @@ function buildHeader(doc: jsPDF, cur: Cursor) {
   const titleLineHeight = mmPt(20)
   setFont(doc, 16, 'bold')
   setTextColor(doc, DARK)
-  doc.text('Vendor contract check', cur.margin, cur.y + titleLineHeight * 0.75)
+  doc.text('Vendor contract assessment', cur.margin, cur.y + titleLineHeight * 0.75)
 
   setFont(doc, 9, 'normal')
   setTextColor(doc, MUTED)

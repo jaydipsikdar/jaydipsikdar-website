@@ -2,7 +2,7 @@
 // Kit's signup form (which doesn't pass a `group`) keeps working unchanged.
 const KIT_GROUP_ID = '191412705135953404'
 
-// Vendor Contract Check — group created manually in MailerLite.
+// Vendor Contract Assessment — group created manually in MailerLite.
 const VENDOR_CHECK_GROUP_ID = '192702998964602139'
 
 // Marketing Decision Advisor — group created manually in MailerLite.

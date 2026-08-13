@@ -96,7 +96,7 @@ export default function VendorCheckFlow() {
             id="review-form"
             className="review-pulse mt-12 pt-8 border-t border-hairline"
           >
-            <ReviewSubmissionForm productSlug="vendor-check" productName="Vendor Contract Check" />
+            <ReviewSubmissionForm productSlug="vendor-check" productName="Vendor Contract Assessment" />
           </div>
         ) : (
           <p className="text-center text-sm text-ink-500 mt-10">

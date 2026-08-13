@@ -34,8 +34,8 @@ export default function AboutPage() {
         <p>
           I&apos;m building a set of free, interactive marketing tools at{' '}
           <Link href="/" className={linkClasses}>jaydipsikdar.com</Link>. A{' '}
-          <Link href="/resources/vendor-check" className={linkClasses}>
-            vendor contract checker
+          <Link href="/resources/vendor-contract-assessment" className={linkClasses}>
+            vendor contract assessment
           </Link>{' '}
           that scores your agency deal clause by clause. A{' '}
           <Link href="/resources/marketing-advisor" className={linkClasses}>
