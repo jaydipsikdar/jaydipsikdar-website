@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: 'Marketing Maturity Score - Jaydeepp Sikdar',
   description:
     'A free diagnostic that scores your marketing maturity across 6 dimensions: positioning, demand generation, content, ops, measurement, and team. Get a radar chart, your top priority gaps, and a full report.',
+  alternates: {
+    canonical: '/resources/marketing-maturity-score',
+  },
 }
 
 export default function MarketingMaturityScorePage() {

@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "Jaydeepp's Content Office | jaydipsikdar.com",
   description:
     'Your content system, built from five questions. Get a personalized content matrix: topics mapped to themes, structures, and channels.',
+  alternates: {
+    canonical: '/resources/content-office',
+  },
 }
 
 export default function ContentOfficePage() {

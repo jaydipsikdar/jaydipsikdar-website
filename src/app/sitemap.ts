@@ -11,6 +11,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1.0,
     },
     {
+      url: 'https://jaydipsikdar.com/about',
+      lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
       url: 'https://jaydipsikdar.com/contact',
       lastModified,
       changeFrequency: 'monthly',
@@ -36,6 +42,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: 'https://jaydipsikdar.com/resources/marketing-advisor',
+      lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://jaydipsikdar.com/resources/marketing-maturity-score',
+      lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://jaydipsikdar.com/resources/content-office',
       lastModified,
       changeFrequency: 'monthly',
       priority: 0.8,

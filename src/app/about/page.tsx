@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   title: 'About - Jaydeepp Sikdar',
   description:
     "I build and test what works in marketing and share everything I learn. 20 years across IBM, Adobe, Cisco, and MoEngage, now building free marketing tools and advising AI startups as CMO.",
+  alternates: {
+    canonical: '/about',
+  },
 }
 
 const linkClasses = 'text-primary transition-colors hover:text-primary-hover'

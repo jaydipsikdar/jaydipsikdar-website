@@ -4,6 +4,9 @@ import RazorpayBookButton from '@/components/RazorpayBookButton'
 export const metadata: Metadata = {
   title: 'Contact - Jaydeepp Sikdar',
   description: 'Book a 60-minute consulting session or get in touch.',
+  alternates: {
+    canonical: '/contact',
+  },
 }
 
 export default function ContactPage() {

@@ -1,9 +1,17 @@
+import type { Metadata } from 'next'
+import Image from 'next/image'
 import RazorpayBookButton from '@/components/RazorpayBookButton'
 import KitSignupForm from '@/components/KitSignupForm'
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
 import Eyebrow from '@/components/ui/Eyebrow'
 import ColorField from '@/components/ui/ColorField'
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: '/',
+  },
+}
 
 const MATURITY_DIMENSIONS = [
   { label: 'Positioning', value: 72, color: 'var(--dim-positioning)' },
@@ -247,8 +255,7 @@ export default function HomePage() {
           </h2>
 
           <div className="flex justify-center mb-8">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src="/images/marketing-couch-cover.jpg"
               alt="The Marketing Couch Podcast"
               width={320}

@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: 'Vendor Contract Assessment - Jaydeepp Sikdar',
   description:
     'Paste your lead generation agency contract and get a scored, clause-by-clause fairness assessment before you sign.',
+  alternates: {
+    canonical: '/resources/vendor-contract-assessment',
+  },
 }
 
 export default function VendorCheckPage() {

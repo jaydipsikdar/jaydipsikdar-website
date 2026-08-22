@@ -18,6 +18,9 @@ export const metadata: Metadata = {
     description:
       "Jaydeepp Sikdar's weekly newsletter. One build, one lesson, one thing you can use, every week in your inbox.",
   },
+  alternates: {
+    canonical: '/newsletter',
+  },
 }
 
 // Future issues will follow this structure:

@@ -18,6 +18,9 @@ export const metadata: Metadata = {
     description:
       'Free AI-powered marketing tools: get tailored advice on positioning, brand, growth, AI strategy, and launches. Plus a vendor contract risk scorer and the CMO Boardroom Kit. Built from 20 years of marketing experience.',
   },
+  alternates: {
+    canonical: '/resources',
+  },
 }
 
 export default function ResourcesPage() {

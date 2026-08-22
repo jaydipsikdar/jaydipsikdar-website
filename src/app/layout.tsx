@@ -43,6 +43,23 @@ export const metadata: Metadata = {
   },
 }
 
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Jaydeepp Sikdar',
+  url: 'https://jaydipsikdar.com',
+  image: 'https://jaydipsikdar.com/images/jaydip-sikdar.png',
+  jobTitle: 'Consulting CMO',
+  description:
+    "20-year CMO turned builder, making practical marketing tools for people who don't have a marketing team.",
+  sameAs: [
+    'https://www.linkedin.com/in/jaydipsikdar/',
+    'https://open.spotify.com/show/0BNFOPu4roOCLSdM1sjWUN',
+    'https://podcasts.apple.com/us/podcast/the-marketing-couch/id1809552287',
+    'https://www.youtube.com/watch?v=YWkJzI8xfVc&list=PLDRiPzpWfnc4u3YA9vBK41tOYIwAm0Csl',
+  ],
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -51,6 +68,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
         {/* GA4 — Google Analytics 4 — Measurement ID: G-V5X6DHSLD7 */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-V5X6DHSLD7"
