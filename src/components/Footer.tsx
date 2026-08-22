@@ -36,8 +36,8 @@ export default function Footer() {
           <div>
             <p className="font-sans text-lg font-light text-ink-900">Jaydeepp Sikdar</p>
             <p className="mt-2 max-w-xs text-sm text-ink-500">
-              CMO, AI Builder, Educator, building and testing what works in marketing so you
-              don&apos;t have to.
+              CMO, AI Builder, and Educator. Building and testing what works in marketing so
+              you don&apos;t have to.
             </p>
             <a
               href={LINKEDIN_URL}
