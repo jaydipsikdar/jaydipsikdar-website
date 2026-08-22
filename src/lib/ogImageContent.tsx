@@ -59,7 +59,7 @@ export function OgImageContent() {
             maxWidth: '900px',
           }}
         >
-          Free marketing tools, frameworks, and 20 years of Marketing experience.
+          Free marketing tools, frameworks, and real experiments from 20 years of CMO work.
         </span>
       </div>
 
