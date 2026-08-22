@@ -478,7 +478,7 @@ function buildFooter(doc: jsPDF, cur: Cursor) {
 
   setFont(doc, 9, 'normal')
   setTextColor(doc, TEXT_MUTED)
-  doc.text('CMO turned builder', cur.pageWidth / 2, cur.y, { align: 'center' })
+  doc.text('CMO, AI Builder, Educator', cur.pageWidth / 2, cur.y, { align: 'center' })
   cur.addSpace(8)
 
   const cardHeight = 24

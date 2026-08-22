@@ -13,7 +13,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Jaydeepp Sikdar - CMO turned builder | Free marketing tools & frameworks',
+  title: 'Jaydeepp Sikdar - CMO, AI Builder, Educator | Marketing Tools & Frameworks',
   description:
     "20-year CMO turned builder, making practical marketing tools for people who don't have a marketing team. Free tools, frameworks, and resources for marketers, solopreneurs, and consultants.",
   metadataBase: new URL('https://jaydipsikdar.com'),
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: 'Jaydeepp Sikdar - CMO turned builder | Free marketing tools & frameworks',
+    title: 'Jaydeepp Sikdar - CMO, AI Builder, Educator | Marketing Tools & Frameworks',
     description:
       "20-year CMO turned builder, making practical marketing tools for people who don't have a marketing team. Free tools, frameworks, and resources for marketers, solopreneurs, and consultants.",
     url: 'https://jaydipsikdar.com',
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Jaydeepp Sikdar - CMO turned builder | Free marketing tools & frameworks',
+    title: 'Jaydeepp Sikdar - CMO, AI Builder, Educator | Marketing Tools & Frameworks',
     description:
       "20-year CMO turned builder, making practical marketing tools for people who don't have a marketing team. Free tools, frameworks, and resources for marketers, solopreneurs, and consultants.",
   },
@@ -49,7 +49,7 @@ const personJsonLd = {
   name: 'Jaydeepp Sikdar',
   url: 'https://jaydipsikdar.com',
   image: 'https://jaydipsikdar.com/images/jaydip-sikdar.png',
-  jobTitle: 'Consulting CMO',
+  jobTitle: 'CMO, AI Builder, Educator',
   description:
     "20-year CMO turned builder, making practical marketing tools for people who don't have a marketing team.",
   sameAs: [

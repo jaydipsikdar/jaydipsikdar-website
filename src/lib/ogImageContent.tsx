@@ -33,7 +33,7 @@ export function OgImageContent() {
             textTransform: 'uppercase',
           }}
         >
-          Consulting CMO
+          CMO · AI Builder · Educator
         </span>
       </div>
 

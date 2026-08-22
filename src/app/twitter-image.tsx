@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og'
 import { OgImageContent, ogImageSize } from '@/lib/ogImageContent'
 
 export const runtime = 'edge'
-export const alt = 'Jaydeepp Sikdar - CMO turned builder | Free marketing tools & frameworks'
+export const alt = 'Jaydeepp Sikdar - CMO, AI Builder, Educator | Marketing Tools & Frameworks'
 export const size = ogImageSize
 export const contentType = 'image/png'
 
