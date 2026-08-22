@@ -15,7 +15,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Jaydeepp Sikdar - CMO, AI Builder, Educator | Marketing Tools & Frameworks',
   description:
-    "20 years as CMO, AI Builder, and Educator, making practical marketing tools for people who don't have a marketing team. Free tools, frameworks, and resources for marketers, solopreneurs, and consultants.",
+    'CMO, AI Builder, and Educator. Building and sharing practical tools and frameworks so you can focus on solving real business problems.',
   metadataBase: new URL('https://jaydipsikdar.com'),
   icons: {
     icon: [
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Jaydeepp Sikdar - CMO, AI Builder, Educator | Marketing Tools & Frameworks',
     description:
-      "20 years as CMO, AI Builder, and Educator, making practical marketing tools for people who don't have a marketing team. Free tools, frameworks, and resources for marketers, solopreneurs, and consultants.",
+      'CMO, AI Builder, and Educator. Building and sharing practical tools and frameworks so you can focus on solving real business problems.',
     url: 'https://jaydipsikdar.com',
     siteName: 'Jaydeepp Sikdar',
     locale: 'en_IN',
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Jaydeepp Sikdar - CMO, AI Builder, Educator | Marketing Tools & Frameworks',
     description:
-      "20 years as CMO, AI Builder, and Educator, making practical marketing tools for people who don't have a marketing team. Free tools, frameworks, and resources for marketers, solopreneurs, and consultants.",
+      'CMO, AI Builder, and Educator. Building and sharing practical tools and frameworks so you can focus on solving real business problems.',
   },
   verification: {
     google: 'fSn7ta_cQWI0HUqg6ocgHDjAapiL9X-6YZ4RNp_FCm0',
@@ -51,7 +51,7 @@ const personJsonLd = {
   image: 'https://jaydipsikdar.com/images/jaydip-sikdar.png',
   jobTitle: 'CMO, AI Builder, Educator',
   description:
-    "20 years as CMO, AI Builder, and Educator, making practical marketing tools for people who don't have a marketing team.",
+    'CMO, AI Builder, and Educator. Building and sharing practical tools and frameworks so you can focus on solving real business problems.',
   sameAs: [
     'https://www.linkedin.com/in/jaydipsikdar/',
     'https://open.spotify.com/show/0BNFOPu4roOCLSdM1sjWUN',
