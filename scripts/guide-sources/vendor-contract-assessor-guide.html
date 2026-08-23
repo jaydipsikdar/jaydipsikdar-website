@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vendor Contract Assessor Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600;1,700;1,800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+  :root{
+    --bg:#FAF7F2;
+    --ink:#1A1A1A;
+    --muted:#5F594F;
+    --faint:#9A9389;
+    --line:#E5DED3;
+    --accent:#E8450A;
+    --accent-tint:#FBEADF;
+    --card:#FFFFFF;
+    --good:#2E7D4F;
+    --crit:#C0392B;
+    --dark:#161310;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:#E8E2D8;color:var(--ink);font-family:"Inter",-apple-system,BlinkMacSystemFont,sans-serif;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+
+  /* ---- page sheet ---- */
+  .page{
+    position:relative;width:820px;min-height:1160px;margin:26px auto;background:var(--bg);
+    padding:66px 64px 96px;box-shadow:0 10px 40px rgba(0,0,0,.14);overflow:hidden;
+  }
+  .page.dark{background:var(--dark);color:#F5F0E8}
+
+  h1,h2,h3{font-family:"Playfair Display",Georgia,serif;margin:0;line-height:1.06;font-weight:800;letter-spacing:-.01em;text-wrap:balance}
+  .em{font-style:italic;color:var(--accent);font-weight:700}
+  .ink-em{font-style:italic;font-weight:700}
+  p{margin:0 0 15px}
+  b,strong{font-weight:600}
+
+  /* ---- shared bits ---- */
+  .eyebrow{display:flex;align-items:center;gap:12px;font-family:"Inter";font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:22px}
+  .eyebrow::before{content:"";width:26px;height:2px;background:var(--accent);flex:none}
+  .timepill{float:right;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.08em;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:4px 11px;background:var(--card)}
+  .title{font-size:52px;margin-bottom:20px}
+  .title.sm{font-size:44px}
+  .lead{font-size:16.5px;color:var(--muted);max-width:640px;line-height:1.62}
+  .lead b{color:var(--ink)}
+
+  .callout{background:var(--accent-tint);border-left:3px solid var(--accent);border-radius:8px;padding:18px 22px;margin:26px 0;font-size:15px;line-height:1.55;color:var(--ink)}
+  .callout b{color:var(--accent)}
+
+  .sub-label{font-family:"Inter";font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin:30px 0 16px}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px}
+  .card.hi{border-color:var(--accent)}
+  .card h3{font-family:"Inter";font-size:15px;font-weight:700;letter-spacing:.02em;margin-bottom:9px}
+  .card h3 .k{color:var(--accent)}
+  .card p{font-size:14px;color:var(--muted);margin:0;line-height:1.5}
+
+  .num{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;font-family:"Inter";font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center}
+  .steps{display:flex;flex-direction:column;gap:15px}
+  .step{display:flex;gap:14px;align-items:flex-start}
+  .step p{margin:0;font-size:14.5px;line-height:1.5}
+
+  /* category list */
+  .catlist{display:flex;flex-direction:column;gap:0;margin:6px 0 0}
+  .catrow{display:flex;gap:16px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--line)}
+  .catrow:last-child{border-bottom:0}
+  .catrow .idx{font-family:"Playfair Display",serif;font-weight:800;font-size:22px;color:var(--accent);flex:none;width:26px}
+  .catrow .cn{font-weight:600;font-size:16px}
+  .catrow .cd{color:var(--muted);font-size:14.5px;margin-top:2px}
+
+  /* bands */
+  .bands{display:flex;gap:10px;margin-top:8px;flex-wrap:wrap}
+  .band{flex:1;min-width:150px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:13px 15px}
+  .band .r{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted)}
+  .band .n{font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px;margin-bottom:3px}
+  .band .sw{width:11px;height:11px;border-radius:3px}
+
+  /* 3 questions */
+  .qbar{display:flex;flex-direction:column;gap:10px;margin-top:6px}
+  .qbar .q{display:flex;gap:12px;align-items:baseline}
+  .qbar .q .qn{font-family:"IBM Plex Mono",monospace;color:var(--accent);font-size:13px;flex:none}
+  .qbar .q .qt b{font-weight:600}
+  .qbar .q .qt span{color:var(--muted)}
+
+  /* table */
+  table{width:100%;border-collapse:separate;border-spacing:0 8px;margin-top:8px}
+  th{background:var(--ink);color:#fff;font-family:"Inter";font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-align:left;padding:11px 14px}
+  th:first-child{border-radius:8px 0 0 8px}
+  th:last-child{border-radius:0 8px 8px 0}
+  td{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:13px 14px;font-size:13px;line-height:1.45;vertical-align:top}
+  td:first-child{border-left:1px solid var(--line);border-radius:8px 0 0 8px;font-weight:600;width:24%}
+  td:last-child{border-right:1px solid var(--line);border-radius:0 8px 8px 0}
+  .flag-good{color:var(--good);font-weight:600;font-size:11px;letter-spacing:.04em;display:block;margin-bottom:3px;text-transform:uppercase}
+  .flag-bad{color:var(--crit);font-weight:600;font-size:11px;letter-spacing:.04em;display:block;margin-bottom:3px;text-transform:uppercase}
+
+  /* prompt block */
+  .prompt{border-radius:12px;overflow:hidden;border:1px solid var(--line);margin:18px 0}
+  .prompt-head{background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:11px 16px}
+  .prompt-head .l{display:flex;align-items:center;gap:9px;font-family:"Inter";font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+  .prompt-head .l .dot{width:9px;height:9px;border-radius:2px;background:var(--accent)}
+  .prompt-head .r{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:#B9B1A5;letter-spacing:.04em}
+  .prompt-body{background:var(--card);padding:16px 18px;font-family:"IBM Plex Mono",monospace;font-size:11.5px;line-height:1.7;color:var(--ink);white-space:pre-wrap;word-break:break-word}
+
+  .setup-note{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 22px;font-size:14.5px;color:var(--muted);line-height:1.55;margin-bottom:6px}
+  .setup-note b{color:var(--ink)}
+
+  /* proof */
+  .verdict{display:flex;align-items:center;gap:20px;background:#F8E7E4;border:1px solid var(--crit);border-radius:12px;padding:18px 22px;margin:6px 0 22px}
+  .verdict .big{font-family:"Playfair Display",serif;font-weight:900;font-size:48px;color:var(--crit);line-height:1}
+  .verdict .big span{font-size:18px;color:var(--muted)}
+  .verdict .lab{font-size:14.5px;line-height:1.5}
+  .verdict .lab b{color:var(--crit)}
+  .score{margin-bottom:13px}
+  .score .t{display:flex;justify-content:space-between;font-size:14px;margin-bottom:5px}
+  .score .t b{font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:12.5px}
+  .track{height:8px;background:#EFE8DD;border:1px solid var(--line);border-radius:5px;overflow:hidden}
+  .track span{display:block;height:100%}
+  .fill-w{background:#C07D0A}.fill-c{background:var(--crit)}
+  .tc-w{color:#C07D0A}.tc-c{color:var(--crit)}
+  .top3{counter-reset:t;display:flex;flex-direction:column;gap:11px;margin-top:8px}
+  .t3{display:flex;gap:13px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .t3::before{counter-increment:t;content:counter(t);font-family:"Playfair Display",serif;font-weight:800;font-size:20px;color:var(--accent);flex:none;width:20px}
+  .t3 p{margin:0;font-size:13.5px;line-height:1.5}
+
+  /* footer running line */
+  .foot{position:absolute;left:64px;right:64px;bottom:40px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:14px;font-size:12px;color:var(--faint)}
+  .foot .cta{font-family:"Inter";font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-size:11.5px}
+  .page.dark .foot{border-top-color:#3A342C;color:#8A8175}
+  .page.dark .foot .cta{color:var(--accent)}
+
+  /* cover */
+  .cover-pill{display:inline-flex;align-items:center;gap:9px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:13px;font-weight:700;color:var(--ink)}
+  .cover-pill .dot{width:9px;height:9px;border-radius:50%;background:var(--accent)}
+  .cover-h{font-size:74px;line-height:1.0;margin:26px 0 0}
+  .cover-h .l2{color:var(--accent);display:block}
+  .cover-h .l3{font-style:italic;font-weight:700;display:block}
+  .cover-sub{font-size:17px;color:var(--muted);max-width:560px;margin-top:22px;line-height:1.55}
+  .cover-domain{position:absolute;left:64px;bottom:56px;font-family:"Inter";font-weight:700;letter-spacing:.24em;font-size:13px;color:var(--faint)}
+  .cover-mid{position:absolute;left:64px;right:64px;top:46%;transform:translateY(-50%)}
+
+  /* dark cta */
+  .cta-card{background:#211C17;border:1px solid #3A342C;border-radius:16px;padding:34px 36px;text-align:center;margin-top:30px}
+  .cta-card .kick{font-family:"Playfair Display",serif;font-weight:800;font-size:24px;color:#fff;margin-bottom:6px}
+  .cta-card .kick .em{color:var(--accent)}
+  .cta-card p{color:#C9C0B4;font-size:14.5px;max-width:460px;margin:0 auto 8px}
+  .cta-btn{display:inline-block;background:var(--accent);color:#fff;font-weight:700;font-size:15px;padding:14px 30px;border-radius:999px;margin-top:16px;text-decoration:none}
+  .cta-sub{display:block;margin-top:14px;color:#8A8175;font-size:13px}
+  .explore{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
+  .ex{background:#211C17;border:1px solid #3A342C;border-radius:12px;padding:15px 18px}
+  .ex span{display:block;font-family:"Inter";font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:5px}
+  .ex b{color:#F0EBE3;font-weight:600;font-size:14px}
+  .ex small{display:block;color:#8A8175;font-size:12px;font-weight:400;margin-top:2px}
+
+  @media print{
+    body{background:#fff}
+    .page{width:auto;min-height:auto;height:100vh;margin:0;box-shadow:none;page-break-after:always;padding:56px 54px 86px}
+    @page{size:A4;margin:0}
+  }
+  @media (max-width:880px){
+    .page{width:auto;padding:40px 26px 84px}
+    .cover-h{font-size:52px}.title{font-size:38px}.title.sm{font-size:34px}
+    .grid2{grid-template-columns:1fr}
+    .foot{left:26px;right:26px}.cover-domain{left:26px}.cover-mid{left:26px;right:26px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ PAGE 1 · COVER ============ -->
+<div class="page">
+  <div class="cover-mid">
+    <span class="cover-pill"><span class="dot"></span>Your Free Build Guide</span>
+    <h1 class="cover-h">Build a<span class="l2">Vendor Contract</span><span class="l3">Risk Checker</span></h1>
+    <p class="cover-sub">The full plan, the exact prompts, and the scoring logic to build a tool that reads any vendor contract and tells you where the risks are. You can build it in about 15 minutes with Claude Code. No legal team. No coding.</p>
+  </div>
+  <div class="cover-domain">JAYDIPSIKDAR.COM · THE WORKBENCH SERIES</div>
+</div>
+
+<!-- ============ PAGE 2 · WHY ============ -->
+<div class="page">
+  <div class="eyebrow">Why I built this</div>
+  <h2 class="title">Never get burned by a<br><span class="em">vendor contract</span> again</h2>
+  <p class="lead">Last month I ran a performance review for a lead generation agency I had hired to book demos for my sales team. They missed the target. So I thought of putting some penalty on them, and I pulled up the contract to check. There was nothing there. No penalty for missing goals. They still got paid for their time. And if I wanted to walk away, I had to give them a month's notice.</p>
+  <p class="lead" style="margin-top:14px">I felt cheated. But then I realized it was my own mistake. I should have read that contract properly before I signed it. So I built a tool that does exactly that, and this guide shows you how to build your own.</p>
+
+  <div class="callout"><b>This is not legal advice.</b> It is a simple fairness check from the buyer's side. Does this contract actually protect the person signing it? Use it to catch the risks, so you walk into the negotiation prepared.</div>
+
+  <div class="sub-label">What you'll build</div>
+  <div class="grid2">
+    <div class="card"><h3><span class="k">1 ·</span> THE SCORECARD</h3><p>Five checks, 20 points each. One score out of 100, and a clear risk level you can read in a second.</p></div>
+    <div class="card"><h3><span class="k">2 ·</span> THE THREE QUESTIONS</h3><p>A 30 second context step that fits the read to your vendor, your stakes, and your stage.</p></div>
+    <div class="card"><h3><span class="k">3 ·</span> THE REPORT</h3><p>The red flags, what to watch out for, and what looks good. Each one with what to actually say to the vendor.</p></div>
+    <div class="card"><h3><span class="k">4 ·</span> THE NEGOTIATION LIST</h3><p>Your top three things to fix before you sign. This is the whole point.</p></div>
+  </div>
+
+  <div class="foot"><span>The Workbench Series · a build guide by Jaydip Sikdar</span><span class="cta">Jaydipsikdar.com</span></div>
+</div>
+
+<!-- ============ PAGE 3 · THE LOGIC ============ -->
+<div class="page">
+  <span class="timepill">THE MODEL</span>
+  <div class="eyebrow">How it scores</div>
+  <h2 class="title">Five checks,<br><span class="em">one hundred points</span></h2>
+  <p class="lead">The tool reads the contract and scores it on the five things that decide whether a vendor deal is fair. Each one is worth 20 points. Add them up and you get a single score. And because a weak contract loses points, <b>a lower score means higher risk.</b></p>
+
+  <div class="catlist">
+    <div class="catrow"><span class="idx">1</span><div><div class="cn">Deliverable Clarity</div><div class="cd">Are the deliverables specific and measurable, or just a vague scope?</div></div></div>
+    <div class="catrow"><span class="idx">2</span><div><div class="cn">Performance Accountability</div><div class="cd">If they do not deliver, is there any penalty or consequence?</div></div></div>
+    <div class="catrow"><span class="idx">3</span><div><div class="cn">Data Ownership</div><div class="cd">Who owns the data that gets created during the engagement?</div></div></div>
+    <div class="catrow"><span class="idx">4</span><div><div class="cn">Exit Terms</div><div class="cd">Can you walk away, or are you locked in?</div></div></div>
+    <div class="catrow"><span class="idx">5</span><div><div class="cn">Payment vs. Delivery Alignment</div><div class="cd">Are you paying for results, or just for their time?</div></div></div>
+  </div>
+
+  <div class="sub-label">Risk bands. Lower score, higher risk.</div>
+  <div class="bands">
+    <div class="band"><div class="n"><span class="sw" style="background:#2E7D4F"></span>Low</div><div class="r">80 to 100</div></div>
+    <div class="band"><div class="n"><span class="sw" style="background:#C07D0A"></span>Moderate</div><div class="r">60 to 79</div></div>
+    <div class="band"><div class="n"><span class="sw" style="background:#E8450A"></span>High</div><div class="r">40 to 59</div></div>
+    <div class="band"><div class="n"><span class="sw" style="background:#C0392B"></span>Critical</div><div class="r">0 to 39</div></div>
+  </div>
+
+  <div class="sub-label">The three questions it asks first</div>
+  <div class="qbar">
+    <div class="q"><span class="qn">1</span><div class="qt"><b>What kind of vendor is this?</b> <span>Lead or demand gen, performance marketing, PR or content, other.</span></div></div>
+    <div class="q"><span class="qn">2</span><div class="qt"><b>What is most at stake?</b> <span>Qualified pipeline, budget and cash flow, or a clean exit.</span></div></div>
+    <div class="q"><span class="qn">3</span><div class="qt"><b>Where are you in the process?</b> <span>Reviewing before signing, already signed, or renewing.</span></div></div>
+  </div>
+
+  <div class="foot"><span>The Workbench Series · a build guide by Jaydip Sikdar</span><span class="cta">Jaydipsikdar.com</span></div>
+</div>
+
+<!-- ============ PAGE 4 · CONDITIONS ============ -->
+<div class="page">
+  <div class="eyebrow">The rules behind each score</div>
+  <h2 class="title sm">What each check<br><span class="em">rewards and penalizes</span></h2>
+  <p class="lead" style="margin-bottom:6px">This is the logic the tool uses. Green flags earn points. Red flags lose them. Put these conditions into your prompt, so the scoring is clear and repeatable, and not a black box.</p>
+
+  <table>
+    <thead><tr><th>Check</th><th>Earns points</th><th>Loses points</th></tr></thead>
+    <tbody>
+      <tr><td>Deliverable Clarity</td><td><span class="flag-good">Green flags</span>A clear definition of a "qualified" deliverable, a named sign-off authority, measurable targets.</td><td><span class="flag-bad">Red flags</span>Vague scope, "subject to market conditions", no acceptance criteria.</td></tr>
+      <tr><td>Performance Accountability</td><td><span class="flag-good">Green flags</span>Fixed targets, a penalty or make-good for shortfalls, a remediation period.</td><td><span class="flag-bad">Red flags</span>"Not a guarantee", no penalty, paid in full whatever the outcome.</td></tr>
+      <tr><td>Data Ownership</td><td><span class="flag-good">Green flags</span>You own the contacts, engagement history and reports, with a clear return on exit.</td><td><span class="flag-bad">Red flags</span>The vendor keeps the data, return depends on payment, no data protection terms.</td></tr>
+      <tr><td>Exit Terms</td><td><span class="flag-good">Green flags</span>Reasonable notice, the right to exit if targets are missed, a pro-rata refund.</td><td><span class="flag-bad">Red flags</span>Lock-in, no refund of advance, "targets exhausted" decided by the vendor alone.</td></tr>
+      <tr><td>Payment vs. Delivery</td><td><span class="flag-good">Green flags</span>Milestones or holdbacks, paying in arrears, payment tied to proof of work.</td><td><span class="flag-bad">Red flags</span>100% advance, no refund, fee or tax (like GST) that does not add up.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout" style="margin-top:20px"><b>How the report reads.</b> For every check the tool shows three buckets. Red Flags, What to Watch Out For, and What Looks Good. And for each finding it gives you three lines. What the contract says, why it matters, and what to propose to the vendor.</div>
+
+  <div class="foot"><span>The Workbench Series · a build guide by Jaydip Sikdar</span><span class="cta">Jaydipsikdar.com</span></div>
+</div>
+
+<!-- ============ PAGE 5 · PROMPTS I ============ -->
+<div class="page">
+  <div class="eyebrow">The build · Prompts 1 &amp; 2</div>
+  <h2 class="title sm">Plan it, then<br><span class="em">build it</span></h2>
+  <div class="setup-note"><b>Setup, once.</b> You need the Claude desktop app on at least the $20 plan. Using Codex? The same prompts work there. There is no terminal, and no folder to set up. We are just making one HTML file that opens in your browser. I use <b>Opus</b> for the plan, then switch to <b>Sonnet</b> to build, because it is faster and lighter on tokens.</div>
+
+  <div class="prompt">
+    <div class="prompt-head"><span class="l"><span class="dot"></span>Prompt 1 · Plan (Opus)</span><span class="r">Paste into Claude Code</span></div>
+    <div class="prompt-body">I want to build a Vendor Contract Assessment tool as a single, self-contained HTML file (all CSS and JavaScript inline, no backend, no API keys, no build step). Before writing any code, plan it out for me.
+
+It scores a pasted contract out of 100 across exactly these 5 categories, 20 points each: (1) Deliverable Clarity, (2) Performance Accountability, (3) Data Ownership, (4) Exit Terms, (5) Payment vs. Delivery Alignment.
+
+Design a transparent, rule-based scoring engine (no LLM calls). For each category propose about 4 checks, the clause patterns or keywords to look for, the points each is worth (adding up to 20), and whether it adds or subtracts. Also define: the 3 context questions to ask first (vendor type, what is at stake, stage in the process); the risk bands where a LOWER score is HIGHER risk (80 to 100 Low, 60 to 79 Moderate, 40 to 59 High, 0 to 39 Critical); and the report structure (per category: Red Flags, What to Watch Out For, What Looks Good, each with what the contract says, why it matters, what to propose) ending in a "Top 3 Priorities Before You Sign" list. Give me the plan first. Do not write the app yet.</div>
+  </div>
+
+  <div class="prompt">
+    <div class="prompt-head"><span class="l"><span class="dot"></span>Prompt 2 · Build (Sonnet)</span><span class="r">Paste into Claude Code</span></div>
+    <div class="prompt-body">The plan looks good. Build it as one file called vendor-contract-assessor.html, everything inline, opens directly in a browser, no build step.
+
+Flow: a header; a large text box to paste the contract, with a "Continue" button; the 3 questions we planned; then an "Assess Contract" button. On assess, run the rule-based engine and show a dashboard: a horizontal bar per category (0 to 20) colour-coded by strength, plus a large total out of 100 and the overall risk level with a matching colour. Warm off-white background, restrained type, good spacing. On-screen only, no PDF or download.</div>
+  </div>
+
+  <div class="foot"><span>The Workbench Series · a build guide by Jaydip Sikdar</span><span class="cta">Jaydipsikdar.com</span></div>
+</div>
+
+<!-- ============ PAGE 6 · PROMPTS II ============ -->
+<div class="page">
+  <div class="eyebrow">The build · Prompts 3 to 5</div>
+  <h2 class="title sm">The report, the<br><span class="em">run, the extras</span></h2>
+
+  <div class="prompt">
+    <div class="prompt-head"><span class="l"><span class="dot"></span>Prompt 3 · The report (Sonnet)</span><span class="r">Paste into Claude Code</span></div>
+    <div class="prompt-body">Now build the detailed report below the dashboard. For each of the 5 categories, add a section with three labelled buckets: Red Flags, What to Watch Out For, and What Looks Good. For every finding show three short lines: what the contract says, why it matters, and what to propose to the vendor. At the very bottom, add a highlighted box called "Top 3 Priorities Before You Sign" that pulls the three highest-impact issues from across all categories into a prioritised list. Keep it all on-screen and easy to scan.</div>
+  </div>
+
+  <div class="prompt">
+    <div class="prompt-head"><span class="l"><span class="dot"></span>Prompt 4 · Run &amp; verify (Sonnet)</span><span class="r">Paste into Claude Code</span></div>
+    <div class="prompt-body">Let's test it on a real contract. Open vendor-contract-assessor.html in the preview and run a self-check using the agreement I'm pasting below. Walk through pasting it, answering the 3 questions as the buyer, and assessing it. Show me the category scores, the total, and the top 3 priorities. If any score or finding looks wrong or unfair, tell me why and fix the logic.
+
+[ paste the contract text here ]</div>
+  </div>
+
+  <div class="prompt">
+    <div class="prompt-head"><span class="l"><span class="dot"></span>Prompt 5 · Optional extras</span><span class="r">Paste into Claude Code</span></div>
+    <div class="prompt-body">Two optional upgrades: (1) let me upload a .pdf or .docx and pull the text into the browser instead of pasting, and (2) add a "Load sample contract" button so anyone can try the tool in one click. Keep it a single file if you can; if a library is needed, load it from a CDN.</div>
+  </div>
+
+  <div class="foot"><span>The Workbench Series · a build guide by Jaydip Sikdar</span><span class="cta">Jaydipsikdar.com</span></div>
+</div>
+
+<!-- ============ PAGE 7 · PROOF ============ -->
+<div class="page">
+  <div class="eyebrow">It works · a real example</div>
+  <h2 class="title sm">One real contract:<br><span class="em">41 out of 100</span></h2>
+  <p class="lead" style="margin-bottom:8px">Here is the tool run on a real marketing agreement, checked from the buyer's side. Two of the five checks fail badly. And that is exactly where the negotiation starts.</p>
+
+  <div class="verdict"><div class="big">41<span>/100</span></div><div class="lab">Overall verdict: <b>High Risk.</b> This contract is written to protect the vendor, not the buyer. You can still work with it, but only after three fixes.</div></div>
+
+  <div class="score"><div class="t"><span>Deliverable Clarity</span><b class="tc-w">12 / 20</b></div><div class="track"><span class="fill-w" style="width:60%"></span></div></div>
+  <div class="score"><div class="t"><span>Performance Accountability</span><b class="tc-c">4 / 20</b></div><div class="track"><span class="fill-c" style="width:20%"></span></div></div>
+  <div class="score"><div class="t"><span>Data Ownership</span><b class="tc-w">12 / 20</b></div><div class="track"><span class="fill-w" style="width:60%"></span></div></div>
+  <div class="score"><div class="t"><span>Exit Terms</span><b class="tc-c">8 / 20</b></div><div class="track"><span class="fill-c" style="width:40%"></span></div></div>
+  <div class="score"><div class="t"><span>Payment vs. Delivery Alignment</span><b class="tc-c">5 / 20</b></div><div class="track"><span class="fill-c" style="width:25%"></span></div></div>
+
+  <div class="sub-label">Top 3 priorities before you sign</div>
+  <div class="top3">
+    <div class="t3"><p><b>Put accountability in writing.</b> The vendor promises 12 to 15 meetings, but the contract calls them "not a guarantee", with no penalty. Ask for a minimum meetings SLA, with a make-good month or a partial credit if they fall short.</p></div>
+    <div class="t3"><p><b>Do not pay everything upfront for work that is not guaranteed.</b> Move to monthly in arrears, or milestones, or add a pro-rata refund if you exit early. And fix the GST contradiction (one place says plus 18%, another says inclusive).</p></div>
+    <div class="t3"><p><b>Close the data and exit gaps.</b> Add a data protection clause with breach notification and a deletion certificate. Drop the "data returned only after dues are paid" condition. And fix the 5 day versus 7 day termination notice.</p></div>
+  </div>
+
+  <div class="foot"><span>The Workbench Series · a build guide by Jaydip Sikdar</span><span class="cta">Jaydipsikdar.com</span></div>
+</div>
+
+<!-- ============ PAGE 8 · CTA ============ -->
+<div class="page dark">
+  <div class="eyebrow">Your next step</div>
+  <h2 class="title sm" style="color:#fff">Build it, or<br><span class="em">skip the build</span></h2>
+  <p class="lead" style="color:#C9C0B4">You now have the plan, the exact prompts, and the scoring logic. Build your own in about 15 minutes. Or use the hosted, AI-powered version, and put your energy into the negotiation instead of the wiring.</p>
+
+  <div class="cta-card">
+    <div class="kick">The <span class="em">Workbench</span></div>
+    <p>Practical tools for founders and CMOs who have no legal team and no time to spare. I build them in the open, then hand you the prompts.</p>
+    <p style="color:#fff;font-weight:600;margin-top:14px">Want this without building it? Try the hosted vendor contract tool, or book a CMO consult.</p>
+    <a class="cta-btn" href="https://jaydipsikdar.com/resources/vendor-check">Try the hosted tool</a>
+    <span class="cta-sub">jaydipsikdar.com/resources/vendor-check</span>
+  </div>
+
+  <div class="explore">
+    <div class="ex"><span>More free tools</span><b>jaydipsikdar.com/resources</b><small>Contract check, CMO kit and more</small></div>
+    <div class="ex"><span>Watch the build</span><b>The Workbench on YouTube</b><small>Tools built live, start to finish</small></div>
+    <div class="ex"><span>The newsletter</span><b>One build, one lesson, one insight</b><small>jaydipsikdar.com/newsletter</small></div>
+    <div class="ex"><span>Work with me</span><b>Fractional CMO consult</b><small>jaydipsikdar.com/contact</small></div>
+  </div>
+
+  <div class="foot"><span>Ready to protect your next vendor deal?</span><span class="cta">Jaydipsikdar.com</span></div>
+</div>
+
+</body>
+</html>
