@@ -6,17 +6,17 @@ import Eyebrow from '@/components/ui/Eyebrow'
 export const metadata: Metadata = {
   title: 'The Workbench | Jaydeepp Sikdar',
   description:
-    "Jaydeepp Sikdar's weekly newsletter. One build, one lesson, one thing you can use, every week in your inbox.",
+    "Jaydeepp Sikdar's weekly newsletter. One build, one lesson, one insight, every week in your inbox.",
   openGraph: {
     title: 'The Workbench | Jaydeepp Sikdar',
     description:
-      "Jaydeepp Sikdar's weekly newsletter. One build, one lesson, one thing you can use, every week in your inbox.",
+      "Jaydeepp Sikdar's weekly newsletter. One build, one lesson, one insight, every week in your inbox.",
   },
   twitter: {
     card: 'summary_large_image',
     title: 'The Workbench | Jaydeepp Sikdar',
     description:
-      "Jaydeepp Sikdar's weekly newsletter. One build, one lesson, one thing you can use, every week in your inbox.",
+      "Jaydeepp Sikdar's weekly newsletter. One build, one lesson, one insight, every week in your inbox.",
   },
   alternates: {
     canonical: '/newsletter',
@@ -57,9 +57,9 @@ export default function NewsletterPage() {
             everything I&nbsp;learn.
           </h1>
           <p className="mx-auto mb-10 max-w-xl text-base font-light leading-[1.4] text-ink-700">
-            One build, one lesson, one thing you can use. Every week in your inbox.
+            One build, one lesson, one insight. Every week in your inbox.
           </p>
-          <NewsletterSignupForm id="ml-newsletter-form" buttonVariant="primary" />
+          <NewsletterSignupForm id="ml-newsletter-form" />
         </div>
       </section>
 
@@ -98,7 +98,7 @@ export default function NewsletterPage() {
 
           {issues.length === 0 ? (
             <p className="mx-auto max-w-lg text-center text-base font-light leading-[1.4] text-ink-500">
-              The first issue is coming soon. Subscribe above so you don&apos;t miss it.
+              The first issue is coming soon. Check back shortly to subscribe.
             </p>
           ) : (
             <div className="mx-auto max-w-2xl divide-y divide-hairline">
@@ -145,7 +145,7 @@ export default function NewsletterPage() {
             </Link>
             .
           </p>
-          <NewsletterSignupForm id="ml-newsletter-form-about" buttonVariant="secondary" />
+          <NewsletterSignupForm id="ml-newsletter-form-about" />
         </div>
       </section>
     </main>
@@ -154,52 +154,37 @@ export default function NewsletterPage() {
 
 const VALUE_PROPS = [
   {
-    title: 'Builds & tools',
+    title: 'The build',
     description:
-      'Practical marketing tools built with AI. The prompts, the process, the mistakes.',
+      'A marketing tool I built with AI, start to finish. The prompts, the process, the mistakes.',
   },
   {
-    title: 'Frameworks that work',
-    description:
-      'Tested strategies from 20 years across enterprise tech and high-growth startups.',
-  },
-  {
-    title: 'Honest lessons',
+    title: 'The lesson',
     description: "What worked, what failed, and what I'd do differently. No fluff.",
+  },
+  {
+    title: 'The insight',
+    description:
+      'One idea you can act on this week, drawn from 20 years across enterprise tech and startups.',
   },
 ]
 
 /**
- * Visual placeholder for the MailerLite signup embed. The real embed
- * snippet gets pasted into the element carrying `id` after launch; this
- * markup exists only to hold the space with the correct sizing and
- * styling until then.
+ * Launching-soon notice. The newsletter is not open for signups yet, so
+ * instead of a non-functional form this shows an honest "launching soon"
+ * state. At launch, the real MailerLite embed gets pasted into the element
+ * carrying `id`, replacing this notice.
  */
-function NewsletterSignupForm({
-  id,
-  buttonVariant,
-}: {
-  id: string
-  buttonVariant: 'primary' | 'secondary'
-}) {
-  const buttonStyles =
-    buttonVariant === 'primary'
-      ? 'bg-primary text-white hover:bg-primary-hover active:bg-primary-press'
-      : 'bg-white text-primary border border-primary hover:bg-primary-subtle/40 active:bg-primary-subtle/60'
-
+function NewsletterSignupForm({ id }: { id: string }) {
   return (
-    <div id={id} className="mx-auto flex w-full max-w-[480px] flex-col gap-3 sm:flex-row">
-      <input
-        type="email"
-        placeholder="Your email address"
-        className="h-11 w-full rounded-sm border border-hairline-input bg-white px-4 text-sm text-ink-900 placeholder-ink-500 transition-colors focus:border-primary focus:outline-none sm:flex-1"
-      />
-      <button
-        type="button"
-        className={`h-11 w-full shrink-0 rounded-pill px-6 text-[16px] font-normal transition-colors duration-150 ease-out sm:w-auto ${buttonStyles}`}
-      >
-        Subscribe
-      </button>
+    <div
+      id={id}
+      className="mx-auto inline-flex items-center gap-2.5 rounded-pill border border-primary/30 bg-primary-subtle/25 px-5 py-3"
+    >
+      <span className="h-2 w-2 shrink-0 rounded-full bg-primary" aria-hidden />
+      <span className="text-sm font-normal text-ink-900">
+        Launching soon. Subscriptions open shortly.
+      </span>
     </div>
   )
 }

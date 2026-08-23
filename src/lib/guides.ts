@@ -105,7 +105,7 @@ export const GUIDES: Record<string, Guide> = {
       'The sample contract in the guide scored 41 out of 100. High risk. The guide shows you exactly why, category by category.',
 
     form: {
-      heading: 'Get the guide',
+      heading: 'Download the guide',
       subcopy: 'Enter your email and download it right here. No waiting on your inbox.',
       buttonIdle: 'Download the guide',
       buttonLoading: 'One sec...',
@@ -118,20 +118,20 @@ export const GUIDES: Record<string, Guide> = {
     crossSellHeading: 'While you are here',
     crossSell: [
       {
-        label: 'Try the AI version',
+        label: 'Check your contract with the live tool',
         description:
           'Paste a contract and get the full scored report back, no building required.',
         href: '/resources/vendor-contract-assessment',
       },
       {
-        label: 'More Work Bench builds',
+        label: 'More Workbench builds',
         description:
           'Watch how each of these tools gets made, start to finish, on YouTube.',
         href: YOUTUBE_WORKBENCH,
         external: true,
       },
       {
-        label: 'Get the newsletter',
+        label: 'Subscribe to the Workbench newsletter',
         description:
           'One practical marketing tool or framework at a time. No filler.',
         href: '/newsletter',
