@@ -14,8 +14,14 @@ const MATURITY_SCORE_GROUP_ID = '193980625736173142'
 // Content Office — group created manually in MailerLite.
 const CONTENT_OFFICE_GROUP_ID = '194163307787060328'
 
+// Vendor Contract Guide (video lead magnet) — the free build guide gated at
+// /vendor-guide. Separate from VENDOR_CHECK_GROUP_ID so the "here's your guide"
+// automation stays distinct from people who used the hosted AI tool.
+const VENDOR_GUIDE_GROUP_ID = '196596003310143270'
+
 function resolveGroupId(group?: string): string {
   if (group === 'vendor-check') return VENDOR_CHECK_GROUP_ID
+  if (group === 'vendor-guide') return VENDOR_GUIDE_GROUP_ID
   if (group === 'marketing-advisor') return MARKETING_ADVISOR_GROUP_ID
   if (group === 'maturity-score') return MATURITY_SCORE_GROUP_ID
   if (group === 'content-office') return CONTENT_OFFICE_GROUP_ID

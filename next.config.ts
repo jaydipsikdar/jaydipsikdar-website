@@ -8,6 +8,12 @@ const nextConfig: NextConfig = {
         destination: '/resources/vendor-contract-assessment',
         permanent: true,
       },
+      // Clean spoken URL for the video lead magnet.
+      {
+        source: '/vendor-guide',
+        destination: '/resources/vendor-guide',
+        permanent: false,
+      },
     ]
   },
 }

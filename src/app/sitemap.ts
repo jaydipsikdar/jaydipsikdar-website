@@ -1,7 +1,15 @@
 import type { MetadataRoute } from 'next'
+import { getAllGuideSlugs } from '@/lib/guides'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date()
+
+  const guideEntries: MetadataRoute.Sitemap = getAllGuideSlugs().map((slug) => ({
+    url: `https://jaydipsikdar.com/resources/${slug}`,
+    lastModified,
+    changeFrequency: 'monthly',
+    priority: 0.8,
+  }))
 
   return [
     {
@@ -58,5 +66,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.8,
     },
+    ...guideEntries,
   ]
 }
