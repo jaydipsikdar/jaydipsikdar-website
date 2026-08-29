@@ -75,6 +75,7 @@ Jaydeepp`
     const { error } = await resend.emails.send({
       from: resolveFromAddress(),
       to: params.email,
+      replyTo: process.env.RESEND_REPLY_TO || 'theworkbench@unstoppable.club',
       subject: 'Welcome to The Workbench',
       html,
       text,

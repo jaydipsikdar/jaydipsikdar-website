@@ -9,7 +9,7 @@
 //   RESEND_API_KEY
 //   RESEND_NEWSLETTER_AUDIENCE_ID   (the "Newsletter" audience in Resend)
 //   RESEND_FROM_EMAIL               (an address on your verified domain,
-//                                    e.g. "The Workbench <jaydip@unstoppable.club>")
+//                                    e.g. "The Workbench <theworkbench@jaydipsikdar.com>")
 //
 // Sending needs a domain verified in Resend. Until then this errors clearly.
 
@@ -101,6 +101,7 @@ async function main(): Promise<void> {
   const created = await resend.broadcasts.create({
     audienceId: audienceId!,
     from: from!,
+    replyTo: process.env.RESEND_REPLY_TO || 'theworkbench@unstoppable.club',
     subject,
     html,
     name: `New post: ${slug}`,

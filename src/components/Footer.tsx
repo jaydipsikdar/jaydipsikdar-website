@@ -89,9 +89,8 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col-reverse items-center justify-between gap-4 border-t border-hairline pt-6 md:flex-row">
+        <div className="mt-16 flex items-center justify-center border-t border-hairline pt-6">
           <p className="text-sm text-ink-500">© 2026 Jaydeepp Sikdar</p>
-          <p className="text-xs text-ink-500">Unstoppable Sprints</p>
         </div>
       </div>
     </footer>
