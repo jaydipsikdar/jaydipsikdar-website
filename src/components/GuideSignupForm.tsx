@@ -1,20 +1,28 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Button from './ui/Button'
 import TextInput from './ui/TextInput'
 import type { Guide } from '@/lib/guides'
+import { getRememberedEmail, rememberEmail } from '@/lib/subscriberMemory'
 
 type Props = {
-  group: string
+  source: string
   pdfHref: string
   copy: Guide['form']
 }
 
-export default function GuideSignupForm({ group, pdfHref, copy }: Props) {
+export default function GuideSignupForm({ source, pdfHref, copy }: Props) {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [isNewSubscriber, setIsNewSubscriber] = useState(true)
+
+  // Returning visitors: prefill the email they used before so they don't have
+  // to retype it to grab another (or the same) resource.
+  useEffect(() => {
+    const remembered = getRememberedEmail()
+    if (remembered) setEmail(remembered)
+  }, [])
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -24,11 +32,12 @@ export default function GuideSignupForm({ group, pdfHref, copy }: Props) {
       const res = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, group }),
+        body: JSON.stringify({ email, source }),
       })
 
       if (!res.ok) throw new Error('Subscription failed')
       const data = await res.json()
+      rememberEmail(email)
       setIsNewSubscriber(data.isNewSubscriber ?? true)
       setStatus('success')
       triggerDownload(pdfHref)

@@ -52,7 +52,7 @@ export default function GuideLanding({ guide }: { guide: Guide }) {
             <h2 className="text-lg font-light text-ink-900 mb-2">{guide.form.heading}</h2>
             <p className="text-sm text-ink-700 leading-[1.4] mb-5">{guide.form.subcopy}</p>
             <GuideSignupForm
-              group={guide.mailerLiteGroup}
+              source={guide.source}
               pdfHref={guide.pdfHref}
               copy={guide.form}
             />

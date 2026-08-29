@@ -1,71 +1,46 @@
 import type { MetadataRoute } from 'next'
-import { getAllGuideSlugs } from '@/lib/guides'
+import { getAllArticles } from '@/lib/writing'
+import { GUIDES } from '@/lib/guides'
 
+const SITE = 'https://jaydipsikdar.com'
+
+// The sitemap Google (and answer engines) crawl. Static pages + tools are
+// listed explicitly; Writing articles and guides are pulled from their
+// registries so new content shows up automatically.
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date()
+  const staticPaths = [
+    '',
+    '/about',
+    '/resources',
+    '/resources/marketing-maturity-score',
+    '/resources/marketing-advisor',
+    '/resources/vendor-contract-assessment',
+    '/resources/content-office',
+    '/newsletter',
+    '/writing',
+    '/contact',
+  ]
 
-  const guideEntries: MetadataRoute.Sitemap = getAllGuideSlugs().map((slug) => ({
-    url: `https://jaydipsikdar.com/resources/${slug}`,
-    lastModified,
+  const staticEntries: MetadataRoute.Sitemap = staticPaths.map((path) => ({
+    url: `${SITE}${path}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: path === '' ? 1 : 0.7,
+  }))
+
+  const articleEntries: MetadataRoute.Sitemap = getAllArticles().map((a) => ({
+    url: `${SITE}/writing/${a.slug}`,
+    lastModified: new Date(a.updated ?? a.date),
     changeFrequency: 'monthly',
     priority: 0.8,
   }))
 
-  return [
-    {
-      url: 'https://jaydipsikdar.com',
-      lastModified,
-      changeFrequency: 'weekly',
-      priority: 1.0,
-    },
-    {
-      url: 'https://jaydipsikdar.com/about',
-      lastModified,
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: 'https://jaydipsikdar.com/contact',
-      lastModified,
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
-    {
-      url: 'https://jaydipsikdar.com/resources',
-      lastModified,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://jaydipsikdar.com/newsletter',
-      lastModified,
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://jaydipsikdar.com/resources/vendor-contract-assessment',
-      lastModified,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://jaydipsikdar.com/resources/marketing-advisor',
-      lastModified,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://jaydipsikdar.com/resources/marketing-maturity-score',
-      lastModified,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://jaydipsikdar.com/resources/content-office',
-      lastModified,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    ...guideEntries,
-  ]
+  const guideEntries: MetadataRoute.Sitemap = Object.values(GUIDES).map((g) => ({
+    url: `${SITE}/resources/${g.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.6,
+  }))
+
+  return [...staticEntries, ...articleEntries, ...guideEntries]
 }

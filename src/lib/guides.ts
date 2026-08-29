@@ -1,7 +1,7 @@
 // Guide registry — the single source of truth for every gated guide landing
 // page. Each entry drives one page rendered by the shared GuideLanding
 // template at /[guideSlug]. To add a new guide: drop its PDF in
-// public/downloads, create a MailerLite group and wire it in mailerlite.ts,
+// public/downloads, pick a short `source` key (used to tag the subscriber),
 // then add one entry here. No new page code required.
 
 export type GuideBullet = {
@@ -19,8 +19,8 @@ export type GuideCrossSellItem = {
 export type Guide = {
   /** URL slug and route param. Keep it short and speakable. */
   slug: string
-  /** MailerLite group key, mapped in lib/mailerlite.ts resolveGroupId(). */
-  mailerLiteGroup: string
+  /** Subscriber source tag recorded on capture, e.g. 'vendor-guide'. */
+  source: string
   /** Public path to the downloadable PDF in /public/downloads. */
   pdfHref: string
 
@@ -60,7 +60,7 @@ const YOUTUBE_WORKBENCH =
 export const GUIDES: Record<string, Guide> = {
   'vendor-guide': {
     slug: 'vendor-guide',
-    mailerLiteGroup: 'vendor-guide',
+    source: 'vendor-guide',
     pdfHref: '/downloads/vendor-contract-assessor-guide.pdf',
 
     eyebrow: 'Free guide',

@@ -135,7 +135,7 @@ export function computeResult(answers: Answers, aiAnswers: AIAnswers = {}): Matu
   }
 }
 
-export function buildMailerLiteTags(qualifiers: Qualifiers, result: MaturityResult): string[] {
+export function buildSubscriberTags(qualifiers: Qualifiers, result: MaturityResult): string[] {
   const weakestDimensionId = result.weakest[0]?.dimensionId
   return [
     `role:${qualifiers.role}`,

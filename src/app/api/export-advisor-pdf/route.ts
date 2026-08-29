@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { generateAdvisorPDF } from '@/lib/generateAdvisorPDF'
-import { subscribeToMailerLite } from '@/lib/mailerlite'
+import { subscribe } from '@/lib/subscribers'
 import type { MarketingAdvisorResult } from '@/components/AdvisorResults'
 
 const PDF_BUCKET = 'vendor-check-reports'
@@ -81,15 +81,24 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Could not store PDF' }, { status: 502 })
   }
 
-  const subscribeResult = await subscribeToMailerLite({
-    email: body.email,
-    group: 'marketing-advisor',
-    fields: { advisor_pdf_url: url },
-  })
-
-  if (!subscribeResult.ok) {
-    return NextResponse.json({ error: subscribeResult.detail }, { status: subscribeResult.status })
+  // The PDF is generated and stored above — that's the deliverable. Recording
+  // the subscriber is secondary and must never block the download the visitor
+  // is waiting on, so failures are logged, not surfaced.
+  let isNewSubscriber = true
+  try {
+    const subscribeResult = await subscribe({
+      email: body.email,
+      source: 'marketing-advisor',
+      fields: { advisor_pdf_url: url },
+    })
+    if (subscribeResult.ok) {
+      isNewSubscriber = subscribeResult.isNewSubscriber
+    } else {
+      console.error('[export-advisor-pdf] subscribe failed:', subscribeResult.detail)
+    }
+  } catch (err) {
+    console.error('[export-advisor-pdf] subscribe threw:', err)
   }
 
-  return NextResponse.json({ success: true, url, isNewSubscriber: subscribeResult.isNewSubscriber })
+  return NextResponse.json({ success: true, url, isNewSubscriber })
 }

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import Card from '@/components/ui/Card'
 import Eyebrow from '@/components/ui/Eyebrow'
+import NewsletterSubscribeForm from '@/components/NewsletterSubscribeForm'
 
 export const metadata: Metadata = {
   title: 'The Workbench | Jaydeepp Sikdar',
@@ -59,7 +60,7 @@ export default function NewsletterPage() {
           <p className="mx-auto mb-10 max-w-xl text-base font-light leading-[1.4] text-ink-700">
             One build, one lesson, one insight. Every week in your inbox.
           </p>
-          <NewsletterSignupForm id="ml-newsletter-form" />
+          <NewsletterSubscribeForm id="ml-newsletter-form" />
         </div>
       </section>
 
@@ -98,7 +99,7 @@ export default function NewsletterPage() {
 
           {issues.length === 0 ? (
             <p className="mx-auto max-w-lg text-center text-base font-light leading-[1.4] text-ink-500">
-              The first issue is coming soon. Check back shortly to subscribe.
+              The first issue is coming soon. Subscribe above and it lands in your inbox the day it ships.
             </p>
           ) : (
             <div className="mx-auto max-w-2xl divide-y divide-hairline">
@@ -145,7 +146,7 @@ export default function NewsletterPage() {
             </Link>
             .
           </p>
-          <NewsletterSignupForm id="ml-newsletter-form-about" />
+          <NewsletterSubscribeForm id="ml-newsletter-form-about" />
         </div>
       </section>
     </main>
@@ -168,23 +169,3 @@ const VALUE_PROPS = [
       'One idea you can act on this week, drawn from 20 years across enterprise tech and startups.',
   },
 ]
-
-/**
- * Launching-soon notice. The newsletter is not open for signups yet, so
- * instead of a non-functional form this shows an honest "launching soon"
- * state. At launch, the real MailerLite embed gets pasted into the element
- * carrying `id`, replacing this notice.
- */
-function NewsletterSignupForm({ id }: { id: string }) {
-  return (
-    <div
-      id={id}
-      className="mx-auto inline-flex items-center gap-2.5 rounded-pill border border-primary/30 bg-primary-subtle/25 px-5 py-3"
-    >
-      <span className="h-2 w-2 shrink-0 rounded-full bg-primary" aria-hidden />
-      <span className="text-sm font-normal text-ink-900">
-        Launching soon. Subscriptions open shortly.
-      </span>
-    </div>
-  )
-}

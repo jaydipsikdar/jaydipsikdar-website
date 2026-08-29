@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
-import { subscribeToMailerLite } from '@/lib/mailerlite'
+import { subscribe } from '@/lib/subscribers'
 import { generateContentOfficePDF } from '@/lib/generateContentOfficePDF'
 import type { ContentOfficeResult } from '@/lib/contentOfficeData'
 
@@ -90,7 +90,7 @@ export async function POST(request: Request) {
 
   // The PDF is already generated and stored, so the download link works
   // regardless of what happens below. Saving the email on the submission
-  // record and subscribing to MailerLite are secondary and shouldn't block
+  // record and subscribing are secondary and shouldn't block
   // or fail the response the visitor is waiting on.
   if (body.submissionId) {
     const { error: updateError } = await supabase
@@ -105,11 +105,11 @@ export async function POST(request: Request) {
   try {
     // Extra fields (starter_post_1_*, top_underused_theme) exist so the Day
     // 3 / Day 7 follow-up automations can reference real per-user content
-    // via MailerLite merge tags. See docs/content-office-email-templates.md.
+    // via subscriber fields. See docs/content-office-email-templates.md.
     const firstPost = body.result.starterSequence[0]
-    const subscribeResult = await subscribeToMailerLite({
+    const subscribeResult = await subscribe({
       email: body.email,
-      group: 'content-office',
+      source: 'content-office',
       fields: {
         role: body.result.inputs.role,
         audience: body.result.inputs.audience,
@@ -123,10 +123,10 @@ export async function POST(request: Request) {
       },
     })
     if (!subscribeResult.ok) {
-      console.error('[content-office-report] MailerLite subscribe failed:', subscribeResult.detail)
+      console.error('[content-office-report] subscribe failed:', subscribeResult.detail)
     }
   } catch (err) {
-    console.error('[content-office-report] MailerLite subscribe threw:', err)
+    console.error('[content-office-report] subscribe threw:', err)
   }
 
   return NextResponse.json({ success: true, url: pdfUrl })

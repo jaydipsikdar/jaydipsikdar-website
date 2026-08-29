@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
-import { subscribeToMailerLite } from '@/lib/mailerlite'
+import { subscribe } from '@/lib/subscribers'
 import { generateMaturityScorePDF } from '@/lib/generateMaturityScorePDF'
 import { aiStageForScore, type Qualifiers } from '@/lib/maturityScoreData'
 import type { MaturityResult } from '@/lib/maturityScoring'
@@ -81,7 +81,7 @@ export async function POST(request: Request) {
   // The PDF is already generated and stored at this point — that's the
   // actual deliverable, and the download link works regardless of what
   // happens below. Saving the email on the submission record and
-  // subscribing to MailerLite (for tags + future nurture sequences) are
+  // subscribing (for tags + future nurture sequences) are
   // secondary, so neither should block or fail the response the visitor
   // is waiting on.
 
@@ -97,9 +97,9 @@ export async function POST(request: Request) {
   const weakestDimension = body.result.weakest[0]?.dimensionId ?? ''
 
   try {
-    const subscribeResult = await subscribeToMailerLite({
+    const subscribeResult = await subscribe({
       email: body.email,
-      group: 'maturity-score',
+      source: 'maturity-score',
       fields: {
         role: body.qualifiers.role,
         stage: body.qualifiers.stage,
@@ -111,10 +111,10 @@ export async function POST(request: Request) {
       },
     })
     if (!subscribeResult.ok) {
-      console.error('[maturity-score-report] MailerLite subscribe failed:', subscribeResult.detail)
+      console.error('[maturity-score-report] subscribe failed:', subscribeResult.detail)
     }
   } catch (err) {
-    console.error('[maturity-score-report] MailerLite subscribe threw:', err)
+    console.error('[maturity-score-report] subscribe threw:', err)
   }
 
   return NextResponse.json({ success: true, url: pdfUrl })

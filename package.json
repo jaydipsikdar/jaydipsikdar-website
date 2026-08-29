@@ -7,19 +7,25 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "generate-kit": "npx tsx scripts/generate-kit-pdf.ts"
+    "generate-kit": "npx tsx scripts/generate-kit-pdf.ts",
+    "send-broadcast": "npx tsx scripts/send-new-post-broadcast.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.111.0",
     "@supabase/supabase-js": "^2.110.6",
+    "gray-matter": "^4.0.3",
     "jspdf": "^4.2.1",
     "lucide-react": "^1.26.0",
     "mammoth": "^1.12.0",
     "next": "^15.1.0",
+    "next-mdx-remote": "^6.0.0",
     "pdfjs-dist": "^6.1.200",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "reading-time": "^1.5.0",
     "recharts": "^3.10.0",
+    "rehype-slug": "^6.0.0",
+    "remark-gfm": "^4.0.1",
     "resend": "^6.17.2"
   },
   "devDependencies": {
