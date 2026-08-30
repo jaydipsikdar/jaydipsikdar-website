@@ -57,13 +57,12 @@ export default function NewsletterSubscribeForm({ id }: { id: string }) {
         <div className="flex items-center gap-2.5">
           <span className="h-2 w-2 shrink-0 rounded-full bg-primary" aria-hidden />
           <span className="text-sm font-normal text-ink-900">
-            You&apos;re in. The first issue lands in your inbox soon.
+            You&apos;re in. A welcome email is on its way.
           </span>
         </div>
         <p className="mt-2 text-sm font-light leading-relaxed text-ink-500">
-          I just sent you a welcome email. If it is not there in a minute, check your
-          Promotions tab and spam folder. Hit reply with your question or ask. I read every
-          email from my subscribers.
+          If it&apos;s not in your inbox, check Promotions or spam and move it to your main
+          inbox so you don&apos;t miss the next issue. Have a question? Just reply, I read every email.
         </p>
       </div>
     )
