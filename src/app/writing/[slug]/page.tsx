@@ -12,6 +12,13 @@ import AuthorBio from '@/components/writing/AuthorBio'
 import TableOfContents from '@/components/writing/TableOfContents'
 import EngagementBar from '@/components/writing/EngagementBar'
 import ArticleAudioPlayer from '@/components/writing/ArticleAudioPlayer'
+import NewsletterPromo from '@/components/writing/NewsletterPromo'
+
+const SIDEBAR_SUBSCRIBE = {
+  heading: 'Get new essays in your inbox',
+  subcopy: 'One email when something new goes up. No noise, unsubscribe anytime.',
+  source: 'writing-sidebar',
+} as const
 
 const SITE = 'https://jaydipsikdar.com'
 const AUTHOR = 'Jaydeepp Sikdar'
@@ -196,9 +203,15 @@ export default async function ArticlePage({
           <hr className="my-10 border-hairline" />
           <EngagementBar slug={slug} title={article.title} url={url} />
 
-          {/* Author card on mobile (sidebar hides below lg) */}
-          <div className="mt-10 lg:hidden">
+          {/* Author card + subscribe on mobile (sidebar hides below lg) */}
+          <div className="mt-10 space-y-6 lg:hidden">
             <AuthorBio />
+            <NewsletterPromo
+              variant="compact"
+              heading={SIDEBAR_SUBSCRIBE.heading}
+              subcopy={SIDEBAR_SUBSCRIBE.subcopy}
+              source={SIDEBAR_SUBSCRIBE.source}
+            />
           </div>
         </div>
 
@@ -207,6 +220,12 @@ export default async function ArticlePage({
           <div className="sticky top-24 space-y-8">
             <TableOfContents headings={article.headings} />
             <AuthorBio />
+            <NewsletterPromo
+              variant="compact"
+              heading={SIDEBAR_SUBSCRIBE.heading}
+              subcopy={SIDEBAR_SUBSCRIBE.subcopy}
+              source={SIDEBAR_SUBSCRIBE.source}
+            />
           </div>
         </aside>
       </div>

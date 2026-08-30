@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Clock } from 'lucide-react'
 import { getAllArticles } from '@/lib/writing'
+import NewsletterPromo from '@/components/writing/NewsletterPromo'
 
 export const metadata: Metadata = {
   title: 'Writing | Jaydeepp Sikdar',
@@ -44,6 +45,12 @@ export default function WritingIndexPage() {
           Essays and practical thinking on GTM strategy, marketing problems, the consulting craft,
           and building AI tools that solve real go-to-market problems.
         </p>
+
+        <NewsletterPromo
+          source="writing-index"
+          heading="Get new essays in your inbox"
+          subcopy="One email when something new goes up. GTM strategy, marketing, and building AI tools that solve real problems. Unsubscribe anytime."
+        />
       </header>
 
       {articles.length === 0 ? (

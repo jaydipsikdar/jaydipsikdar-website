@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import Button from './ui/Button'
 import TextInput from './ui/TextInput'
+import NewsletterConfirmation from './NewsletterConfirmation'
 import {
   getRememberedEmail,
   rememberEmail,
@@ -48,34 +49,10 @@ export default function NewsletterSubscribeForm({ id }: { id: string }) {
     }
   }
 
-  if (status === 'success') {
+  if (status === 'success' || alreadyMember) {
     return (
-      <div
-        id={id}
-        className="mx-auto max-w-md rounded-xl border border-primary/30 bg-primary-subtle/25 px-5 py-4 text-left"
-      >
-        <div className="flex items-center gap-2.5">
-          <span className="h-2 w-2 shrink-0 rounded-full bg-primary" aria-hidden />
-          <span className="text-sm font-normal text-ink-900">
-            You&apos;re in. A welcome email is on its way.
-          </span>
-        </div>
-        <p className="mt-2 text-sm font-light leading-relaxed text-ink-500">
-          If it&apos;s not in your inbox, check Promotions or spam and move it to your main
-          inbox so you don&apos;t miss the next issue. Have a question? Just reply, I read every email.
-        </p>
-      </div>
-    )
-  }
-
-  if (alreadyMember) {
-    return (
-      <div
-        id={id}
-        className="mx-auto inline-flex items-center gap-2.5 rounded-pill border border-primary/30 bg-primary-subtle/25 px-5 py-3"
-      >
-        <span className="h-2 w-2 shrink-0 rounded-full bg-primary" aria-hidden />
-        <span className="text-sm font-normal text-ink-900">You&apos;re on the list.</span>
+      <div id={id} className="mx-auto max-w-md">
+        <NewsletterConfirmation state={status === 'success' ? 'success' : 'returning'} />
       </div>
     )
   }
