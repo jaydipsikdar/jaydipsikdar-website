@@ -48,16 +48,35 @@ export default function NewsletterSubscribeForm({ id }: { id: string }) {
     }
   }
 
-  if (alreadyMember || status === 'success') {
+  if (status === 'success') {
+    return (
+      <div
+        id={id}
+        className="mx-auto max-w-md rounded-xl border border-primary/30 bg-primary-subtle/25 px-5 py-4 text-left"
+      >
+        <div className="flex items-center gap-2.5">
+          <span className="h-2 w-2 shrink-0 rounded-full bg-primary" aria-hidden />
+          <span className="text-sm font-normal text-ink-900">
+            You&apos;re in. The first issue lands in your inbox soon.
+          </span>
+        </div>
+        <p className="mt-2 text-sm font-light leading-relaxed text-ink-500">
+          I just sent you a welcome email. If it is not there in a minute, check your
+          Promotions tab and spam folder. Hit reply with your question or ask. I read every
+          email from my subscribers.
+        </p>
+      </div>
+    )
+  }
+
+  if (alreadyMember) {
     return (
       <div
         id={id}
         className="mx-auto inline-flex items-center gap-2.5 rounded-pill border border-primary/30 bg-primary-subtle/25 px-5 py-3"
       >
         <span className="h-2 w-2 shrink-0 rounded-full bg-primary" aria-hidden />
-        <span className="text-sm font-normal text-ink-900">
-          {status === 'success' ? "You're in. Thank you." : "You're on the list."}
-        </span>
+        <span className="text-sm font-normal text-ink-900">You&apos;re on the list.</span>
       </div>
     )
   }

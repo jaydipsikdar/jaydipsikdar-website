@@ -101,7 +101,7 @@ async function main(): Promise<void> {
   const created = await resend.broadcasts.create({
     audienceId: audienceId!,
     from: from!,
-    replyTo: process.env.RESEND_REPLY_TO || 'theworkbench@unstoppable.club',
+    replyTo: process.env.RESEND_REPLY_TO || 'theworkbench@jaydipsikdar.com',
     subject,
     html,
     name: `New post: ${slug}`,

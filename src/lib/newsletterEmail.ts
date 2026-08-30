@@ -33,16 +33,9 @@ function articleListText(): string {
     .join('\n')
 }
 
-// Sends the one-time welcome to a newly opted-in subscriber. Best-effort: the
-// caller must not let a failure here block the signup response. Returns true if
-// Resend accepted the send.
-export async function sendNewsletterWelcomeEmail(params: { email: string }): Promise<boolean> {
-  const apiKey = process.env.RESEND_API_KEY
-  if (!apiKey) {
-    console.warn('[newsletter] RESEND_API_KEY not set, skipping welcome email')
-    return false
-  }
-
+// Builds the welcome email content (subject, html, text). Extracted so a
+// preview/test script can render exactly what production sends.
+export function buildNewsletterWelcomeEmail(): { subject: string; html: string; text: string } {
   const recentHtml = articleListHtml()
   const recentText = articleListText()
 
@@ -70,13 +63,28 @@ Read the archive anytime at ${SITE}/writing
 
 Jaydeepp`
 
+  return { subject: 'Welcome to The Workbench', html, text }
+}
+
+// Sends the one-time welcome to a newly opted-in subscriber. Best-effort: the
+// caller must not let a failure here block the signup response. Returns true if
+// Resend accepted the send.
+export async function sendNewsletterWelcomeEmail(params: { email: string }): Promise<boolean> {
+  const apiKey = process.env.RESEND_API_KEY
+  if (!apiKey) {
+    console.warn('[newsletter] RESEND_API_KEY not set, skipping welcome email')
+    return false
+  }
+
+  const { subject, html, text } = buildNewsletterWelcomeEmail()
+
   try {
     const resend = new Resend(apiKey)
     const { error } = await resend.emails.send({
       from: resolveFromAddress(),
       to: params.email,
-      replyTo: process.env.RESEND_REPLY_TO || 'theworkbench@unstoppable.club',
-      subject: 'Welcome to The Workbench',
+      replyTo: process.env.RESEND_REPLY_TO || 'theworkbench@jaydipsikdar.com',
+      subject,
       html,
       text,
     })
