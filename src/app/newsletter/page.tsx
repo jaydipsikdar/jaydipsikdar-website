@@ -7,17 +7,17 @@ import NewsletterSubscribeForm from '@/components/NewsletterSubscribeForm'
 export const metadata: Metadata = {
   title: 'The Workbench | Jaydeepp Sikdar',
   description:
-    "Jaydeepp Sikdar's weekly newsletter. One build, one lesson, one insight, every week in your inbox.",
+    "Jaydeepp Sikdar's newsletter. One build, one lesson, one insight, every alternate week in your inbox.",
   openGraph: {
     title: 'The Workbench | Jaydeepp Sikdar',
     description:
-      "Jaydeepp Sikdar's weekly newsletter. One build, one lesson, one insight, every week in your inbox.",
+      "Jaydeepp Sikdar's newsletter. One build, one lesson, one insight, every alternate week in your inbox.",
   },
   twitter: {
     card: 'summary_large_image',
     title: 'The Workbench | Jaydeepp Sikdar',
     description:
-      "Jaydeepp Sikdar's weekly newsletter. One build, one lesson, one insight, every week in your inbox.",
+      "Jaydeepp Sikdar's newsletter. One build, one lesson, one insight, every alternate week in your inbox.",
   },
   alternates: {
     canonical: '/newsletter',
@@ -58,7 +58,7 @@ export default function NewsletterPage() {
             everything I&nbsp;learn.
           </h1>
           <p className="mx-auto mb-10 max-w-xl text-base font-light leading-[1.4] text-ink-700">
-            One build, one lesson, one insight. Every week in your inbox.
+            One build, one lesson, one insight. Every alternate week in your inbox.
           </p>
           <NewsletterSubscribeForm id="ml-newsletter-form" />
         </div>

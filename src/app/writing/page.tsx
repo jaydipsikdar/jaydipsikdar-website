@@ -5,11 +5,11 @@ import { getAllArticles } from '@/lib/writing'
 import NewsletterPromo from '@/components/writing/NewsletterPromo'
 
 export const metadata: Metadata = {
-  title: 'Writing | Jaydeepp Sikdar',
+  title: 'Writing from The Workbench | Jaydeepp Sikdar',
   description:
     'Essays and practical thinking on GTM strategy, marketing problems, the consulting craft, and building AI tools that solve real marketing and go-to-market problems.',
   openGraph: {
-    title: 'Writing | Jaydeepp Sikdar',
+    title: 'Writing from The Workbench | Jaydeepp Sikdar',
     description:
       'Essays and practical thinking on GTM strategy, marketing problems, the consulting craft, and building AI tools that solve real marketing and go-to-market problems.',
     url: 'https://jaydipsikdar.com/writing',
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Writing | Jaydeepp Sikdar',
+    title: 'Writing from The Workbench | Jaydeepp Sikdar',
     description:
       'Essays and practical thinking on GTM strategy, marketing problems, and building AI tools that solve real marketing problems.',
   },
@@ -39,17 +39,18 @@ export default function WritingIndexPage() {
     <main className="mx-auto max-w-3xl px-6 py-20">
       <header className="mb-14">
         <h1 className="text-[32px] font-light leading-[1.1] tracking-[-0.64px] text-ink-900">
-          Writing
+          Writing from <span className="italic">The Workbench</span>
         </h1>
         <p className="mt-4 max-w-xl text-ink-700 leading-[1.6]">
-          Essays and practical thinking on GTM strategy, marketing problems, the consulting craft,
-          and building AI tools that solve real go-to-market problems.
+          Something is always brewing. Every alternate week, a new essay: practical thinking on GTM
+          strategy, marketing problems, the consulting craft, and building AI tools that solve real
+          go-to-market problems.
         </p>
 
         <NewsletterPromo
           source="writing-index"
-          heading="Get new essays in your inbox"
-          subcopy="One email when something new goes up. GTM strategy, marketing, and building AI tools that solve real problems. Unsubscribe anytime."
+          heading="Get it in your inbox"
+          subcopy="One useful nugget every week: a newsletter one week, an essay the next, two of each a month. GTM, marketing, and building AI tools. Unsubscribe anytime."
         />
       </header>
 

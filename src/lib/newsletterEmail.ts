@@ -42,25 +42,41 @@ export function buildNewsletterWelcomeEmail(): { subject: string; html: string; 
   const html = `<div style="font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:520px;margin:0 auto;color:#13233d;">
   <p style="font-size:18px;font-weight:300;margin:0 0 16px 0;">Welcome to The Workbench.</p>
   <p style="font-size:15px;line-height:1.6;color:#34465d;margin:0 0 16px 0;">
-    You're on the list. Every week I send one thing I built, one lesson from building it, and one insight you can use, drawn from 20 years across enterprise tech and startups.
+    You're on the list. One useful nugget from me every week.
   </p>
+  <p style="font-size:15px;line-height:1.6;color:#34465d;margin:0 0 16px 0;">
+    Every alternate week, a short newsletter: one thing I built, one lesson from building it, and one insight from 20 years across enterprise tech and startups, focused on GTM and marketing.
+  </p>
+  <p style="font-size:15px;line-height:1.6;color:#34465d;margin:0 0 16px 0;">
+    The weeks in between, a longer essay: practical thinking on GTM strategy, marketing problems, the consulting craft, and building AI tools that solve real go-to-market problems.
+  </p>
+  <p style="font-size:15px;line-height:1.6;color:#34465d;margin:0 0 12px 0;">
+    While you wait for the next one, explore what is already published:
+  </p>
+  <ul style="list-style:none;padding:0;margin:0 0 24px 0;">
+    <li style="margin:0 0 8px 0;color:#34465d;font-size:15px;">Essays: <a href="${SITE}/writing" style="color:#e84500;text-decoration:none;">jaydipsikdar.com/writing</a></li>
+    <li style="margin:0;color:#34465d;font-size:15px;">Newsletter: <a href="${SITE}/newsletter" style="color:#e84500;text-decoration:none;">jaydipsikdar.com/newsletter</a></li>
+  </ul>
   ${
     recentHtml
-      ? `<p style="font-size:15px;line-height:1.6;color:#34465d;margin:0 0 12px 0;">While you wait for the first issue, here is some recent writing:</p>${recentHtml}`
+      ? `<p style="font-size:15px;line-height:1.6;color:#34465d;margin:0 0 12px 0;">A recent essay to start with:</p>${recentHtml}`
       : ''
   }
-  <p style="font-size:15px;line-height:1.6;color:#34465d;margin:0 0 16px 0;">
-    You can always read the archive at <a href="${SITE}/writing" style="color:#e84500;text-decoration:none;">jaydipsikdar.com/writing</a>.
-  </p>
   <p style="font-size:15px;line-height:1.6;color:#34465d;margin:24px 0 0 0;">Jaydeepp</p>
 </div>`
 
   const text = `Welcome to The Workbench.
 
-You're on the list. Every week I send one thing I built, one lesson from building it, and one insight you can use, drawn from 20 years across enterprise tech and startups.
-${recentText ? `\nWhile you wait for the first issue, here is some recent writing:\n${recentText}\n` : ''}
-Read the archive anytime at ${SITE}/writing
+You're on the list. One useful nugget from me every week.
 
+Every alternate week, a short newsletter: one thing I built, one lesson from building it, and one insight from 20 years across enterprise tech and startups, focused on GTM and marketing.
+
+The weeks in between, a longer essay: practical thinking on GTM strategy, marketing problems, the consulting craft, and building AI tools that solve real go-to-market problems.
+
+While you wait for the next one, explore what is already published:
+Essays: ${SITE}/writing
+Newsletter: ${SITE}/newsletter
+${recentText ? `\nA recent essay to start with:\n${recentText}\n` : ''}
 Jaydeepp`
 
   return { subject: 'Welcome to The Workbench', html, text }

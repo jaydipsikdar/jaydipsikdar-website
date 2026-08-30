@@ -15,8 +15,8 @@ import ArticleAudioPlayer from '@/components/writing/ArticleAudioPlayer'
 import NewsletterPromo from '@/components/writing/NewsletterPromo'
 
 const SIDEBAR_SUBSCRIBE = {
-  heading: 'Get new essays in your inbox',
-  subcopy: 'One email when something new goes up. No noise, unsubscribe anytime.',
+  heading: 'Get it in your inbox',
+  subcopy: 'A newsletter one week, an essay the next. Two of each a month. Unsubscribe anytime.',
   source: 'writing-sidebar',
 } as const
 
