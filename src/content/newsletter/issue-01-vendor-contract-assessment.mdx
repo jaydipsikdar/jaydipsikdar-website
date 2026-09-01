@@ -1,0 +1,165 @@
+---
+number: 1
+title: An essential tool for checking your vendor contract before you sign
+description: Issue one of The Workbench. One build, one lesson, one insight. A tool that scores any vendor contract out of 100 before you sign it.
+date: 2026-09-01
+published: false
+---
+
+Welcome to The Workbench.
+
+Every issue is the same three things. One build. One lesson. One insight.
+
+No filler in between.
+
+## The build: an essential tool for checking your vendor contract before you sign
+
+Last month I was doing a performance review with a lead generation vendor.
+
+Their job was to book demo meetings for my sales team.
+
+They had missed the number.
+
+So I went to check the contract. I wanted to see what the penalty clause said.
+
+There was none.
+
+Which means this. Even when they miss their quarterly goals, they still get their monthly retainer.
+
+Nothing stops them.
+
+They were getting paid for putting in their time. Not for actually booking the meetings.
+
+I felt cheated when I read that.
+
+And the first thing I thought was: how do I stop this happening to me again?
+
+Then a bigger thought. How do I stop it happening to everyone else?
+
+Because most of us skim these contracts. We do not read them line by line. And that is exactly where the clause that hurts you is sitting.
+
+So I built a tool that reads the contract for me. And now for you.
+
+### What it does
+
+You paste the contract, or upload the PDF.
+
+You answer three quick questions.
+
+It scores the contract out of 100.
+
+It is tuned for lead generation and demand gen agency contracts. Run a different kind of vendor through it and it still scores it, but it tells you upfront the read is directional, not tuned.
+
+One thing to be clear on: this is a commercial fairness check, not legal advice. It tells you whether the terms protect you as the buyer. Not whether they hold up in court.
+
+### The three questions, and why they are there
+
+What kind of vendor this is. What is most at stake for you. And where you are: before signing, already signed, or renewing.
+
+The first question decides whether you get the tuned read or the directional one.
+
+The other two do not touch the score at all. They only change the framing. Someone renegotiating gets different language back than someone about to sign for the first time.
+
+### How it is built
+
+Almost nothing runs on a server.
+
+The file upload and the text extraction happen inside your browser. Your contract is never stored anywhere.
+
+There is one call out to Claude. It carries your contract, your three answers, and the scoring framework locked in behind the scenes.
+
+Here is the part I built carefully.
+
+I do not ask Claude to write a report and hope the formatting holds. I force the answer into one fixed shape: a score, a verdict, five breakdowns, red and green flags, and the top three priorities.
+
+If it does not come back in that exact shape, the tool fails on purpose. Better that than showing you something half broken.
+
+No memory between runs. No database. One contract in, one clean result out.
+
+### The scoring, and the actual rules
+
+Five checks. 20 points each. 100 total.
+
+- **Deliverable clarity.** A fixed number and a named sign-off, or a vague range they can underdeliver against and still call it "compliant"?
+- **Performance accountability.** Real money held back against the target, or is "we will give you more time" the only consequence?
+- **Data ownership.** Do you keep the leads and campaign data you paid for, spelled out in writing?
+- **Exit terms.** Can you walk if they keep missing, or does only the vendor get to decide when it is over?
+- **Payment vs. delivery.** Is anything held back until they deliver, or is it all paid upfront regardless?
+
+One rule I put in on purpose.
+
+If a clause is simply missing from the contract, that is not a neutral score. It is a 0 to 5.
+
+Silence is not neutral. Silence favors the vendor. So the tool scores it that way instead of being generous.
+
+Score bands: 80 and up is strong. 60 to 79 is moderate. 40 to 59 is weak. Under 40 is high risk.
+
+I ran a real agreement through it.
+
+41 out of 100. High risk.
+
+Three things to fix before signing. Put a real penalty on missed targets. Stop paying everything upfront for work that is not guaranteed. And fix the data and the exit terms.
+
+**Want to build this one yourself?**
+
+I have put the whole thing in a free guide.
+
+Every prompt, in the order I ran them. The full build, step by step. No code, no API key.
+
+[Build your own vendor contract checker](/resources/vendor-guide)
+
+<NewsletterPromo
+  heading="Get the next issue in your inbox"
+  subcopy="One build, one lesson, one insight, every alternate week. An essay the weeks between. Unsubscribe anytime."
+  source="newsletter-issue-inline"
+/>
+
+## The lesson: write the scorecard before you sign
+
+A few years back I hired a freelance designer off a referral.
+
+No brief. No milestones. Just "let's see how it goes."
+
+Three weeks in, we did not agree on what "done" looked like.
+
+Not because the work was bad. Because neither of us wrote down what good meant before we started.
+
+Now I write the scorecard before the kickoff call. Not after the first draft misses.
+
+What does a 10 out of 10 deliverable actually look like?
+
+What is the one thing that, if it is missing, means we start over?
+
+Takes ten minutes. Saves the argument three weeks later.
+
+Whatever you are about to sign this week, a vendor, a hire, a partnership, write down what you are grading it on before you commit.
+
+You cannot hold anyone to a standard you invented after the fact.
+
+## The insight: name the number that kills it
+
+One thing to try this week.
+
+Before your next vendor call, pick the one number that would make you walk away.
+
+Not a vague "if it is not working out." An actual number.
+
+Response time under 4 hours. Cost per lead under a fixed amount. Uptime above 99%.
+
+Then say it out loud in the negotiation.
+
+"If this number does not hold, we renegotiate or we are done."
+
+Most vendors will not blink. Because a real number filters for the ones who can actually hit it.
+
+Vague expectations protect no one.
+
+A number you named out loud, on the record, protects you.
+
+---
+
+That is issue one.
+
+Reply and tell me your contract score, or what you are building this week. I read every email.
+
+Jaydip

@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { getAllArticles } from '@/lib/writing'
+import { getAllIssues } from '@/lib/newsletter'
 import { GUIDES } from '@/lib/guides'
 
 const SITE = 'https://jaydipsikdar.com'
@@ -35,6 +36,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }))
 
+  const issueEntries: MetadataRoute.Sitemap = getAllIssues().map((i) => ({
+    url: `${SITE}/newsletter/${i.slug}`,
+    lastModified: new Date(i.date),
+    changeFrequency: 'monthly',
+    priority: 0.8,
+  }))
+
   const guideEntries: MetadataRoute.Sitemap = Object.values(GUIDES).map((g) => ({
     url: `${SITE}/resources/${g.slug}`,
     lastModified: new Date(),
@@ -42,5 +50,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }))
 
-  return [...staticEntries, ...articleEntries, ...guideEntries]
+  return [...staticEntries, ...articleEntries, ...issueEntries, ...guideEntries]
 }
