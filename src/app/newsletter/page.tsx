@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { ArrowRight, Clock } from 'lucide-react'
 import Eyebrow from '@/components/ui/Eyebrow'
 import NewsletterSubscribeForm from '@/components/NewsletterSubscribeForm'
-import { getAllIssues } from '@/lib/newsletter'
+import { getListedIssues } from '@/lib/newsletter'
 
 export const metadata: Metadata = {
   title: 'The Workbench | Jaydeepp Sikdar',
@@ -34,7 +34,7 @@ function formatDate(iso: string): string {
 }
 
 export default function NewsletterPage() {
-  const issues = getAllIssues()
+  const issues = getListedIssues()
   const [latest, ...rest] = issues
 
   return (

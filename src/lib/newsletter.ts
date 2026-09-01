@@ -21,6 +21,10 @@ export type IssueFrontmatter = {
   date: string
   /** Set false to keep a file in the repo without publishing it. */
   published?: boolean
+  /** When true, an unpublished issue is still LISTED in the archive (for
+   *  review), but stays noindex and out of the sitemap. Ignored once
+   *  published is true. */
+  preview?: boolean
   /** Optional social share image path under /public. */
   ogImage?: string
 }
@@ -50,6 +54,7 @@ function readIssueFile(slug: string): Issue | null {
     description: fm.description,
     date: fm.date,
     published: fm.published ?? true,
+    preview: fm.preview ?? false,
     ogImage: fm.ogImage,
     readingMinutes: Math.max(1, Math.round(readingTime(content).minutes)),
     content,
@@ -64,13 +69,24 @@ function allSlugs(): string[] {
     .map((f) => f.replace(/\.mdx$/, ''))
 }
 
-/** Every published issue, newest first - for the archive listing and sitemap. */
-export function getAllIssues(): IssueMeta[] {
+function sortedMeta(filter: (i: Issue) => boolean): IssueMeta[] {
   return allSlugs()
     .map(readIssueFile)
-    .filter((i): i is Issue => i !== null && i.published !== false)
+    .filter((i): i is Issue => i !== null && filter(i))
     .sort((a, b) => (a.date < b.date ? 1 : -1))
     .map(({ content: _content, ...meta }) => meta)
+}
+
+/** Published issues only - for the sitemap and search index. */
+export function getPublishedIssues(): IssueMeta[] {
+  return sortedMeta((i) => i.published !== false)
+}
+
+/** Issues shown on the /newsletter archive: published ones, plus unpublished
+ *  ones flagged `preview: true` (visible for review, but kept noindex and out
+ *  of the sitemap). Newest first. */
+export function getListedIssues(): IssueMeta[] {
+  return sortedMeta((i) => i.published !== false || i.preview === true)
 }
 
 /** A single issue by slug, or null. Returns unpublished files too so a direct
@@ -81,5 +97,5 @@ export function getIssue(slug: string): Issue | null {
 
 /** Slugs for generateStaticParams - published only. */
 export function getPublishedIssueSlugs(): string[] {
-  return getAllIssues().map((i) => i.slug)
+  return getPublishedIssues().map((i) => i.slug)
 }
