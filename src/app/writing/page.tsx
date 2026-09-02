@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Clock } from 'lucide-react'
+import { Clock, ArrowRight } from 'lucide-react'
 import { getAllArticles } from '@/lib/writing'
 import NewsletterPromo from '@/components/writing/NewsletterPromo'
 
@@ -91,6 +91,24 @@ export default function WritingIndexPage() {
           ))}
         </ul>
       )}
+
+      {/* Cross-link to the newsletter */}
+      <div className="mt-16 flex flex-col items-center gap-3 rounded-2xl border border-hairline bg-surface-soft/50 p-7 text-center sm:flex-row sm:justify-between sm:text-left">
+        <div>
+          <p className="text-[15px] font-normal text-ink-900">Looking for the builds?</p>
+          <p className="mt-1 text-[14px] font-light leading-[1.5] text-ink-700">
+            The Workbench newsletter walks through a marketing tool I build with AI, every alternate
+            week.
+          </p>
+        </div>
+        <Link
+          href="/newsletter"
+          className="inline-flex shrink-0 items-center gap-1.5 text-sm font-normal text-primary transition-colors hover:text-primary-hover"
+        >
+          See the newsletter
+          <ArrowRight size={15} strokeWidth={1.75} />
+        </Link>
+      </div>
     </main>
   )
 }

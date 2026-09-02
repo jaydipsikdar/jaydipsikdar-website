@@ -84,10 +84,10 @@ export default function NewsletterPage() {
           <div className="mx-auto mb-14 max-w-xl text-center">
             <Eyebrow className="mb-4 flex justify-center">EVERY ISSUE</Eyebrow>
             <h2 className="text-[27px] font-light leading-[1.12] tracking-[-0.3px] text-ink-900">
-              One build, one lesson, one insight
+              What lands in your inbox
             </h2>
             <p className="mt-4 text-[15px] font-light leading-[1.6] text-ink-700">
-              Three things, no filler in between. Here is what lands in your inbox.
+              Three things, one email, no filler in between.
             </p>
           </div>
 
@@ -207,6 +207,27 @@ export default function NewsletterPage() {
               )}
             </div>
           )}
+        </div>
+      </section>
+
+      {/* ============================================================
+          CROSS-LINK TO WRITING
+          ============================================================ */}
+      <section className="px-6 pt-16">
+        <div className="mx-auto flex max-w-[640px] flex-col items-center gap-3 rounded-2xl border border-hairline bg-white p-7 text-center sm:flex-row sm:justify-between sm:text-left">
+          <div>
+            <p className="text-[15px] font-normal text-ink-900">Prefer long-form?</p>
+            <p className="mt-1 text-[14px] font-light leading-[1.5] text-ink-700">
+              The weeks between issues, I publish an essay on GTM, marketing, and building with AI.
+            </p>
+          </div>
+          <Link
+            href="/writing"
+            className="inline-flex shrink-0 items-center gap-1.5 text-sm font-normal text-primary transition-colors hover:text-primary-hover"
+          >
+            Read the essays
+            <ArrowRight size={15} strokeWidth={1.75} />
+          </Link>
         </div>
       </section>
 
