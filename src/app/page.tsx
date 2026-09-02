@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
+import { Mail, PenLine } from 'lucide-react'
 import RazorpayBookButton from '@/components/RazorpayBookButton'
 import KitSignupForm from '@/components/KitSignupForm'
 import Button from '@/components/ui/Button'
@@ -240,6 +241,60 @@ export default function HomePage() {
               </div>
             </div>
 
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+          NEWSLETTER — compact band (warm), links to /newsletter
+          ============================================================ */}
+      <section id="newsletter-band" className="bg-surface-cream px-6 py-14">
+        <div className="mx-auto flex max-w-[1100px] flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-start gap-4">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-hairline bg-white text-primary">
+              <Mail size={20} strokeWidth={1.5} />
+            </span>
+            <div>
+              <Eyebrow className="mb-1.5">THE WORKBENCH NEWSLETTER</Eyebrow>
+              <h2 className="text-[22px] font-light leading-[1.15] tracking-[-0.3px] text-ink-900">
+                One build, one lesson, one insight
+              </h2>
+              <p className="mt-1.5 max-w-md text-[15px] font-light leading-[1.5] text-ink-700">
+                A marketing tool I build with AI, plus a lesson and one idea you can use. Every
+                alternate week in your inbox.
+              </p>
+            </div>
+          </div>
+          <div className="shrink-0 sm:pl-4">
+            <Button href="/newsletter">Read the newsletter</Button>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+          WRITING — compact band (cool), links to /writing
+          ============================================================ */}
+      <section id="writing-band" className="bg-surface-soft px-6 py-14">
+        <div className="mx-auto flex max-w-[1100px] flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-start gap-4">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-hairline bg-white text-ink-900">
+              <PenLine size={20} strokeWidth={1.5} />
+            </span>
+            <div>
+              <Eyebrow className="mb-1.5">WRITING</Eyebrow>
+              <h2 className="text-[22px] font-light leading-[1.15] tracking-[-0.3px] text-ink-900">
+                Essays from The Workbench
+              </h2>
+              <p className="mt-1.5 max-w-md text-[15px] font-light leading-[1.5] text-ink-700">
+                Practical thinking on GTM, marketing, and building AI tools that solve real
+                problems. A new essay the weeks between issues.
+              </p>
+            </div>
+          </div>
+          <div className="shrink-0 sm:pl-4">
+            <Button href="/writing" variant="secondary">
+              Read the essays
+            </Button>
           </div>
         </div>
       </section>
