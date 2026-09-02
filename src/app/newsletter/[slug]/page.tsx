@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import type { ReactNode } from 'react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { compileMDX } from 'next-mdx-remote/rsc'
@@ -75,9 +76,24 @@ export default async function IssuePage({
 
   const url = `${SITE}/newsletter/${slug}`
 
+  // Section titles ("One build", "One lesson", "One insight") are the only h2s in
+  // an issue. Recolor just those to the brand deep orange, reusing the shared h2
+  // styling so Writing articles keep their default ink heading color.
+  const issueComponents = {
+    ...mdxComponents,
+    h2: (props: { children?: ReactNode; id?: string }) => (
+      <h2
+        id={props.id}
+        className="mt-12 mb-4 scroll-mt-24 text-[24px] font-light leading-[1.2] tracking-tight text-primary"
+      >
+        {props.children}
+      </h2>
+    ),
+  }
+
   const { content } = await compileMDX({
     source: issue.content,
-    components: mdxComponents,
+    components: issueComponents,
     options: {
       parseFrontmatter: false,
       mdxOptions: { remarkPlugins: [remarkGfm], rehypePlugins: [rehypeSlug] },
