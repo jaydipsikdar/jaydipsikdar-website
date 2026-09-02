@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { Mail, PenLine } from 'lucide-react'
-import RazorpayBookButton from '@/components/RazorpayBookButton'
 import KitSignupForm from '@/components/KitSignupForm'
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
@@ -180,6 +179,28 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================
+          NEWSLETTER — compact band, links to /newsletter
+          ============================================================ */}
+      <section id="newsletter-band" className="bg-surface-cream px-6 py-14">
+        <div className="mx-auto flex max-w-xl flex-col items-center gap-5 text-center">
+          <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-hairline bg-white text-primary">
+            <Mail size={20} strokeWidth={1.5} />
+          </span>
+          <div>
+            <Eyebrow className="mb-1.5 flex justify-center">THE WORKBENCH NEWSLETTER</Eyebrow>
+            <h2 className="text-[22px] font-light leading-[1.15] tracking-[-0.3px] text-ink-900">
+              One build, one lesson, one insight
+            </h2>
+            <p className="mx-auto mt-1.5 max-w-md text-[15px] font-light leading-[1.5] text-ink-700">
+              A marketing tool I build with AI, plus a lesson and one idea you can use. Every
+              alternate week in your inbox.
+            </p>
+          </div>
+          <Button href="/newsletter">Read the newsletter</Button>
+        </div>
+      </section>
+
+      {/* ============================================================
           WHAT YOU'LL FIND HERE — two columns
           ============================================================ */}
       <section id="how-i-work" className="px-6 py-16 md:py-24 bg-surface-soft">
@@ -235,9 +256,7 @@ export default function HomePage() {
                 </p>
               </div>
               <div className="mt-auto">
-                <RazorpayBookButton className="inline-flex items-center justify-center gap-2 rounded-pill bg-primary px-4 py-2.5 text-sm font-normal text-white transition-colors hover:bg-primary-hover">
-                  Book a consultation, ₹999
-                </RazorpayBookButton>
+                <Button href="/contact">Book a consultation call</Button>
               </div>
             </div>
 
@@ -246,31 +265,9 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================
-          NEWSLETTER — compact band (warm), links to /newsletter
+          WRITING — compact band, links to /writing
           ============================================================ */}
-      <section id="newsletter-band" className="bg-surface-cream px-6 py-14">
-        <div className="mx-auto flex max-w-xl flex-col items-center gap-5 text-center">
-          <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-hairline bg-white text-primary">
-            <Mail size={20} strokeWidth={1.5} />
-          </span>
-          <div>
-            <Eyebrow className="mb-1.5 flex justify-center">THE WORKBENCH NEWSLETTER</Eyebrow>
-            <h2 className="text-[22px] font-light leading-[1.15] tracking-[-0.3px] text-ink-900">
-              One build, one lesson, one insight
-            </h2>
-            <p className="mx-auto mt-1.5 max-w-md text-[15px] font-light leading-[1.5] text-ink-700">
-              A marketing tool I build with AI, plus a lesson and one idea you can use. Every
-              alternate week in your inbox.
-            </p>
-          </div>
-          <Button href="/newsletter">Read the newsletter</Button>
-        </div>
-      </section>
-
-      {/* ============================================================
-          WRITING — compact band (cool), links to /writing
-          ============================================================ */}
-      <section id="writing-band" className="bg-surface-soft px-6 py-14">
+      <section id="writing-band" className="bg-surface-cream px-6 py-14">
         <div className="mx-auto flex max-w-xl flex-col items-center gap-5 text-center">
           <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-hairline bg-white text-ink-900">
             <PenLine size={20} strokeWidth={1.5} />
