@@ -5,8 +5,8 @@ import { notFound } from 'next/navigation'
 import { compileMDX } from 'next-mdx-remote/rsc'
 import remarkGfm from 'remark-gfm'
 import rehypeSlug from 'rehype-slug'
-import { ArrowLeft, Clock } from 'lucide-react'
-import { getIssue, getPublishedIssueSlugs } from '@/lib/newsletter'
+import { ArrowLeft, ArrowRight, Clock } from 'lucide-react'
+import { getIssue, getPublishedIssueSlugs, getListedIssues } from '@/lib/newsletter'
 import { mdxComponents } from '@/components/writing/mdxComponents'
 import EngagementBar from '@/components/writing/EngagementBar'
 import NewsletterSubscribeForm from '@/components/NewsletterSubscribeForm'
@@ -15,6 +15,14 @@ import Eyebrow from '@/components/ui/Eyebrow'
 const SITE = 'https://jaydipsikdar.com'
 const AUTHOR = 'Jaydeepp Sikdar'
 const DEFAULT_OG = '/images/jaydip-sikdar.png'
+
+// Every issue follows the same 3-2-1 shape, so the in-issue nav is fixed. The
+// ids match the slugs rehype-slug generates from the section headings.
+const SECTIONS = [
+  { id: 'one-build', label: 'One build' },
+  { id: 'one-lesson', label: 'One lesson' },
+  { id: 'one-insight', label: 'One insight' },
+]
 
 export function generateStaticParams() {
   return getPublishedIssueSlugs().map((slug) => ({ slug }))
@@ -75,6 +83,8 @@ export default async function IssuePage({
   if (!issue) notFound()
 
   const url = `${SITE}/newsletter/${slug}`
+  // Other issues for the right rail's archive. Excludes the one being read.
+  const otherIssues = getListedIssues().filter((i) => i.slug !== slug)
 
   // Section titles ("One build", "One lesson", "One insight") are the only h2s in
   // an issue. Recolor just those to the brand deep orange, reusing the shared h2
@@ -134,7 +144,8 @@ export default async function IssuePage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
-      <div className="mx-auto max-w-[720px]">
+      <div className="mx-auto flex max-w-[1040px] justify-center gap-14">
+        <div className="w-full max-w-[720px]">
         <Link
           href="/newsletter"
           className="inline-flex items-center gap-1.5 text-sm text-ink-500 transition-colors hover:text-primary"
@@ -174,6 +185,72 @@ export default async function IssuePage({
           </p>
           <NewsletterSubscribeForm id="newsletter-issue-subscribe" />
         </section>
+        </div>
+
+        {/* Right rail: in-issue nav plus the archive, so the wide desktop margin
+            carries navigation instead of empty space. Hidden on mobile, where
+            the single column and the "All issues" link already cover it. */}
+        <aside className="hidden w-[236px] shrink-0 lg:block">
+          <div className="sticky top-24 space-y-9">
+            <nav aria-label="In this issue">
+              <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.14em] text-ink-500">
+                In this issue
+              </p>
+              <ul className="space-y-px border-l border-hairline">
+                {SECTIONS.map((s) => (
+                  <li key={s.id}>
+                    <a
+                      href={`#${s.id}`}
+                      className="-ml-px block border-l border-transparent py-1 pl-4 text-sm font-light text-ink-700 transition-colors hover:border-primary hover:text-primary"
+                    >
+                      {s.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            {otherIssues.length > 0 ? (
+              <div>
+                <p className="mb-4 text-[11px] font-medium uppercase tracking-[0.14em] text-ink-500">
+                  More issues
+                </p>
+                <ul className="space-y-4">
+                  {otherIssues.slice(0, 5).map((i) => (
+                    <li key={i.slug}>
+                      <Link href={`/newsletter/${i.slug}`} className="group block">
+                        <span className="text-xs text-ink-500">Issue {i.number}</span>
+                        <span className="mt-0.5 block text-sm font-light leading-snug text-ink-700 transition-colors group-hover:text-primary">
+                          {i.title}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                <Link
+                  href="/newsletter"
+                  className="mt-5 inline-flex items-center gap-1 text-sm text-primary transition-colors hover:text-primary-hover"
+                >
+                  All issues
+                  <ArrowRight size={14} strokeWidth={1.75} />
+                </Link>
+              </div>
+            ) : (
+              <div className="rounded-lg border border-hairline bg-surface-soft/50 p-4">
+                <p className="text-sm font-light leading-[1.5] text-ink-700">
+                  This is where past issues will live. A new one drops every alternate week.
+                </p>
+                <Link
+                  href="/newsletter"
+                  className="mt-3 inline-flex items-center gap-1 text-sm text-primary transition-colors hover:text-primary-hover"
+                >
+                  The Workbench
+                  <ArrowRight size={14} strokeWidth={1.75} />
+                </Link>
+              </div>
+            )}
+          </div>
+        </aside>
       </div>
     </main>
   )
