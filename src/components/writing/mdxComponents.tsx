@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import NewsletterPromo from './NewsletterPromo'
 
 // Brand-styled elements and custom blocks made available to every article's
@@ -26,6 +27,63 @@ function FAQ({ question, children }: { question: string; children: ReactNode }) 
       <p className="mb-2 font-normal text-ink-900">{question}</p>
       <div className="text-ink-700 leading-[1.65]">{children}</div>
     </div>
+  )
+}
+
+// A full-width illustration for an article or issue. Rounded, hairline-framed,
+// responsive. Pass real pixel dimensions so next/image can reserve space.
+function Figure({
+  src,
+  alt,
+  caption,
+  width = 1536,
+  height = 1024,
+}: {
+  src: string
+  alt: string
+  caption?: string
+  width?: number
+  height?: number
+}) {
+  return (
+    <figure className="not-prose my-10 sm:my-12">
+      <div className="overflow-hidden rounded-2xl border border-hairline bg-white">
+        <Image
+          src={src}
+          alt={alt}
+          width={width}
+          height={height}
+          sizes="(max-width: 768px) 100vw, 720px"
+          className="h-auto w-full"
+        />
+      </div>
+      {caption && (
+        <figcaption className="mt-3 text-center text-[13px] leading-[1.5] text-ink-500">
+          {caption}
+        </figcaption>
+      )}
+    </figure>
+  )
+}
+
+// A pull-quote "blob": a large quotation mark and oversized light text that
+// breaks up a long run of body copy and lets the eye rest. Echo a strong line
+// from the surrounding section rather than introducing a new claim.
+function PullQuote({ children }: { children: ReactNode }) {
+  return (
+    <figure className="not-prose my-11 sm:my-14">
+      <div className="relative overflow-hidden rounded-2xl bg-surface-cream/60 px-8 py-9 sm:px-12 sm:py-11">
+        <span
+          aria-hidden
+          className="pointer-events-none absolute -top-4 left-4 select-none font-serif text-[86px] leading-none text-primary/25 sm:text-[108px]"
+        >
+          &ldquo;
+        </span>
+        <p className="relative text-[22px] font-light leading-[1.4] tracking-[-0.3px] text-ink-900 sm:text-[27px]">
+          {children}
+        </p>
+      </div>
+    </figure>
   )
 }
 
@@ -94,4 +152,6 @@ export const mdxComponents = {
   KeyTakeaways,
   FAQ,
   NewsletterPromo,
+  Figure,
+  PullQuote,
 }
