@@ -87,6 +87,62 @@ function PullQuote({ children }: { children: ReactNode }) {
   )
 }
 
+// A numberless "example output" card for the tool, mirroring the real report's
+// language (five parameters, red flags, the fix to push for) without asserting
+// an overall score, since a reader's own contract could land anywhere. A taste
+// of the output, not the full report.
+function SampleScorecard() {
+  const rows = [
+    {
+      name: 'Performance accountability',
+      flag: '15-day remedy, not real accountability',
+      fix: 'Hold the final month’s payment until the quarterly target is met.',
+    },
+    {
+      name: 'Payment vs. delivery',
+      flag: 'Full retainer paid before delivery',
+      fix: 'Hold back 30% until each quarter’s delivery is verified.',
+    },
+    {
+      name: 'Data ownership',
+      flag: 'No CRM-exportable data guaranteed',
+      fix: 'Name every contact and record you keep, in export-ready format.',
+    },
+  ]
+  return (
+    <figure className="not-prose my-10 sm:my-12">
+      <div className="rounded-2xl border border-hairline bg-white p-6 sm:p-7">
+        <p className="mb-1 text-[11px] font-medium uppercase tracking-[0.14em] text-ink-500">
+          Example output
+        </p>
+        <p className="mb-5 text-[15px] font-light leading-[1.5] text-ink-700">
+          Every contract comes back scored across five parameters, each with its red flags and the
+          exact fix to push for.
+        </p>
+        <div className="divide-y divide-hairline">
+          {rows.map((r) => (
+            <div key={r.name} className="py-4 first:pt-0 last:pb-0">
+              <div className="mb-2 flex flex-wrap items-center gap-2">
+                <span className="text-[15px] font-normal text-ink-900">{r.name}</span>
+                <span className="rounded-pill bg-red-50 px-2.5 py-0.5 text-[12px] text-red-700">
+                  {r.flag}
+                </span>
+              </div>
+              <p className="text-[13px] leading-[1.5] text-ink-700">
+                <span className="font-normal text-ink-900">Fix: </span>
+                {r.fix}
+              </p>
+            </div>
+          ))}
+        </div>
+        <p className="mt-5 text-[12px] leading-[1.5] text-ink-500">
+          Plus a plain-language verdict and your top three fixes, ranked.
+        </p>
+      </div>
+    </figure>
+  )
+}
+
 export const mdxComponents = {
   h2: (props: { children?: ReactNode; id?: string }) => (
     <h2
@@ -154,4 +210,5 @@ export const mdxComponents = {
   NewsletterPromo,
   Figure,
   PullQuote,
+  SampleScorecard,
 }
